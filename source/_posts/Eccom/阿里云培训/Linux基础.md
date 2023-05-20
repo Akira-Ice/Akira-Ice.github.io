@@ -83,17 +83,11 @@ hidden: true
 
 处理文本文件的语言，强大的文本分析工具。
 
-##### 查看个挂载点的可用空间
+查看个挂载点的可用空间：`df -h | awk 'print 1234'`
 
-`df -h | awk 'print 1234'`
+查看每个用户的shell：` awk -F ':' '{print $1, $7}' /etc/pawword`
 
-##### 查看每个用户的shell
-
-` awk -F ':' '{print $1, $7}' /etc/pawword`
-
-##### 查看长度大于80字节的日志信息
-
-`awk 'length > 80' /var/log/messages`
+查看长度大于80字节的日志信息：`awk 'length > 80' /var/log/messages`
 
 ### 文件查找
 
@@ -226,7 +220,7 @@ hidden: true
 
 网络时间协议
 
-### NTPServer的时间来源大概有一下几项
+### NTPServer的时间来源
 
 1. GPS、北斗等卫星系统
 2. 原子钟
@@ -266,3 +260,139 @@ hidden: true
 #### 检查NTP时间同步情况
 
 `ntpq -p`
+
+## 软件管理
+
+### yum
+
+自动处理依赖关系。
+
+#### 配置文件
+
+`/etc/yum.repos.d/*.repo`
+
+- [名称] - yum源名称
+- name - yum源的描述信息
+- baseurl - yum源地址
+- gpgcheck - 是否检查GPGKEy
+- enable - 是否可用
+
+#### 常用命令
+
+- 查看可用包版本
+
+  `yum list packname`
+
+- 安装
+
+  `yum install packname`
+
+- 搜索
+
+  `yum search xx`
+
+- 删除
+
+  `yum remove packname`
+
+### 源码编译安装
+
+## DNS 解析
+
+### dig
+
+#### 基本用法
+
+`dig aliyun.com`
+
+#### 查看反向解析
+
+`dig -x 104.205.34.3`
+
+#### 从根服务器开始追踪一个域名的解析过程
+
+`dig +trace aliyun.com`
+
+### nslookup
+
+#### 直接查询
+
+`nslookup aliyun.com`
+
+#### 反向查询
+
+`nslookup ip`
+
+### DNS问题排查思路
+
+- 用户不能访问，运维可访问
+
+  - 用户DNS设置问题
+
+- 用户与运维都不能访问
+
+  - 检查DNS服务是否能 ping 通
+
+  - 查看DNS服务器的53端口是否可用
+
+    `telnet <IP> 53`
+
+## 网络配置
+
+### 查看网络
+
+#### ifconfig
+
+用于显示或设置网络设备。
+
+查看活动网卡：`ifconfig`
+
+查看指定网卡：`ifconfig eth0`
+
+查看所有网卡：`ifconfig -a`
+
+#### netstat
+
+查看路由表：`netstat -rn 、 route -n`
+
+查看某端口：`netstat -antulp | grep ：80`
+
+查看所有监听端口：`netstat -antulp | grep LISTEN`
+
+#### 网卡配置文件
+
+文件目录：`/etc/sysconfig/network-scripts/ifcfg-*`
+
+- IPADDR —— IP地址
+- NETMASK —— 子网掩码
+- GATEWAY —— 网关
+
+#### 全局网络配置
+
+文件目录：`/etc/sysconfig/network`
+
+- HOSTNAME —— 主机名
+- GATEWAY —— 默认网关
+
+## 日志查看
+
+### 系统登录日志
+
+登录成功日志：`last [userName]`
+
+登录失败日志：`lastb`
+
+命令记录：`history`
+
+###  常用日志文件
+
+系统启动后的信息和错误日志：`/var/log/message`
+
+安全相关的日志：`/var/log/secure`
+
+定时任务相关的日志：`/var/log/corn`
+
+守护进程启动和停止相关的日志：`/var/log/boot.log`
+
+用户登录、注销及系统启动、停机的事件日志：`/var/log/wtmp`
+
