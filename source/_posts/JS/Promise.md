@@ -3,6 +3,7 @@ title: Promise
 categories:
   - [JavaScript]
 tags: 
+  - JavaScript
 ---
 
 # Promise

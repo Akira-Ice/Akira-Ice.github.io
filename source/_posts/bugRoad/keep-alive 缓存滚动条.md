@@ -3,8 +3,7 @@ title: keep-alive 缓存滚动条
 categories:
   - [BugRoad]
 tags: 
-  - keep-alive
-  - scroll
+  - BugRoad
 ---
 
 # keep-alive 缓存滚动条

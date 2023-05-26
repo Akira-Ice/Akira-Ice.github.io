@@ -3,6 +3,7 @@ title: Es6
 categories:
   - [JavaScript,核心]
 tags: 
+  - JavaScript
 ---
 
 # ES6

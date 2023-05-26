@@ -3,6 +3,8 @@ title: 阿里云培训 - Linux基础
 categories:
   - [work,Eccom]
 tags: 
+  - 阿里云培训
+  - Linux
 ---
 
 # Linux基础

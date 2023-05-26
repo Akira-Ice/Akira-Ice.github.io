@@ -3,6 +3,7 @@ title: call-apply-bind
 categories:
   - [JavaScript]
 tags: 
+  - JavaScript
 ---
 
 ### call-apply-bind

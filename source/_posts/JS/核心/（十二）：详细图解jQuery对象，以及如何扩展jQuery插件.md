@@ -3,6 +3,7 @@ title: 详细图解jQuery对象，以及如何扩展jQuery插件
 categories:
   - [JavaScript,核心]
 tags: 
+  - JavaScript
 ---
 
 # jQuery对象

@@ -3,7 +3,7 @@ title: padding 导致滚动内容不全
 categories:
   - [BugRoad]
 tags: 
-  - scroll
+  - BugRoad
 ---
 
 # padding 导致滚动内容不全

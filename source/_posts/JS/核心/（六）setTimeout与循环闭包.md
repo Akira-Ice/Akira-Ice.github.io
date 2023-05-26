@@ -3,6 +3,7 @@ title: setTimeout与循环闭包
 categories:
   - [JavaScript,核心]
 tags: 
+  - JavaScript
 ---
 
 执行上下文，采用函数调用栈这种特殊的数据结构的调用特性。

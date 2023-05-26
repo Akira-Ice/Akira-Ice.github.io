@@ -3,6 +3,7 @@ title: NPM & YARN 常用命令
 categories:
   - [BugRoad]
 tags: 
+  - BugRoad
 ---
 
 # NPM & YARN 常用命令

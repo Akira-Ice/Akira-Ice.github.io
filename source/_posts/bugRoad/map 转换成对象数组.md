@@ -3,7 +3,7 @@ title: map 转换成对象数组
 categories:
   - [BugRoad]
 tags: 
-  - Array.from
+  - BugRoad
 ---
 
 # map 转换成对象数组

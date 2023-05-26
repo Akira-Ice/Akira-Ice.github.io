@@ -3,7 +3,7 @@ title: element-plus 表单自定义验证
 categories:
   - [BugRoad]
 tags: 
-  - element-plus
+  - BugRoad
 ---
 
 # element-plus 表单自定义验证

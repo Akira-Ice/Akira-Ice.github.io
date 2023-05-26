@@ -3,7 +3,7 @@ title: nodeJS 打包
 categories:
   - [BugRoad]
 tags: 
-  - pkg
+  - BugRoad
 ---
 
 # nodeJS 打包

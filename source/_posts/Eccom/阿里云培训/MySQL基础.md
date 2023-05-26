@@ -3,6 +3,8 @@ title: 阿里云培训 - MySQL基础
 categories:
   - [work,Eccom]
 tags: 
+  - 阿里云培训
+  - MySQL
 ---
 
 # MySQL基础
