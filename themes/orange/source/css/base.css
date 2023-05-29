@@ -9,7 +9,7 @@ body {
   letter-spacing: 0.01rem;
   background-color: var(--bg-body);
   transition: color 400ms ease-in-out 0s, background-color 400ms ease-in-out 0s;
-  font-family: "JetBrains Mono", "LXGW WenKai", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "JetBrains Mono", "LXGW WenKai", "PingFang SC", system-ui, "Microsoft YaHei", sans-serif;
 }
 
 body.hidden {
