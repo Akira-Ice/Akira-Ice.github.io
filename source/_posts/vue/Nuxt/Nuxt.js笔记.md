@@ -20,20 +20,185 @@ tags:
 
 ## 目录结构
 
-```bash
-- assets   			// 静态资源- css /image /js等
-- components  	// 组件存放
-- layouts  			// 页面主布局 相当于APP.vue
-- middleware 		// 中间件存放
-- pages    			// 主页面 此文件夹文件会自动生成相对路由(按文件名生成)
-- plugins  			// 用于存放引入插件的js
-- static   			// 静态资源-不需要经过处理的
-- store   	 		// vuex
+约定俗成的目录结构 -> 良好的起点
 
-nuxt.config.js  // nuxt 相关配置
+### pages
+
+nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由组件的位置。
+
+不同的是，nuxt 在原有的基础上增加了一些特殊的属性。
+
+#### 动态路由
+
+类似动态设置路由的 params 参数，通过  `_paramName.vue` 创建路由组件。
+
+#### 忽略路由
+
+倘若需要忽略某些路由，通过 `-xxx.vue` 即可。
+
+当通过 `/paramValue` 访问时，可通过上下文(context.params)可接收 paramValue。
+
+```vue
+<template>
+  <h1>{{ slug }}</h1>
+</template>
+
+<script>
+  export default {
+    async asyncData({ params }) {
+      const slug = params.slug // When calling /abc the slug will be "abc"
+      return { slug }
+    }
+  }
+</script>
 ```
 
-## 配置
+#### 额外的配置
+
+1. asyncData: Function
+
+   组件加载前调用，可接受一个 context 函数参数，即当前页面上下文，返回值将被 nuxt 混入到 data 中去。
+
+   ```js
+   export default {
+     asyncData(context) {
+       return { name: 'World' }
+     }
+   }
+   ```
+
+2. fetch: Function
+
+   用于获取异步数据，和 asyncData 类似，但只能在服务端路由渲染时调用，且只在首次加载页面时触发。
+
+   ```vue
+   <script>
+     export default {
+       data() {
+         return {
+           posts: []
+         }
+       },
+       async fetch() {
+         this.posts = await fetch('https://api.nuxtjs.dev/posts').then(res =>
+           res.json()
+         )
+       }
+     }
+   </script>
+   ```
+
+3. head: Function
+
+   设置当前页面的一些 head 信息，nuxt 通过 `vue-meta` 进行更新。
+
+4. layout: String
+
+   配置当前页面的布局。
+
+5. loading: Boolean
+
+   配置当前是否使用顶部加载样式。
+
+   若设为 false，可手动通过 `this.$nuxt.$loading.finish()` 和 `this.$nuxt.$loading.start()`。
+
+6. transition: Object
+
+   配置页面动效。
+
+7. scrollToTop: Boolean
+
+   配置当前页面是否回调顶部。
+
+8. middleware: String | Array
+
+   配置当前页面中间件，将在页面渲染前调用。
+
+9. key: String
+
+   类似 Vue 组件上的 key，只不过这里是作用在 router-link 上。
+
+### components
+
+非路由组件。
+
+通过 nuxt.config.js 下的 components 配置是否自动扫描 components 下的所有组件。
+
+#### 懒加载
+
+直接在组件前面加上 `Lazy` 即可，在一些事件之后加载渲染组件。
+
+#### 嵌套路由
+
+例如以下目录结构：
+
+```bash
+components/
+  base/
+      foo/
+         CustomButton.vue
+```
+
+得到的最终路由：`<BaseFooCustomButton />`
+
+### Assets
+
+资源文件：Stylus、Sass、images、fonts。
+
+#### Images
+
+在 template 中，可通过 `~/assets/xxx.png` 访问。
+
+```html
+<template>
+  <img src="~/assets/your_image.png" />
+</template>
+```
+
+但在 css 文件中，则不需要斜杠。
+
+```css
+background: url('~assets/banner.svg');
+```
+
+#### Styles
+
+nuxt 允许通过 nuxt.config.js 配置全局样式。
+
+```js
+export default {
+  css: [
+    // Load a Node.js module directly (here it's a Sass file)
+    'bulma',
+    // CSS file in the project
+    '~/assets/css/main.css',
+    // SCSS file in the project
+    '~/assets/css/main.scss'
+  ]
+}
+```
+
+### Static
+
+静态资源，改目录下一般包含一些永远不会改变的资源，且将会直接映射到服务器的根目录下。
+
+static 下的文件可通过 `/` 直接访问。
+
+```html
+<!-- Static image from static directory -->
+<img src="/my-image.png" />
+
+<!-- webpacked image from assets directory -->
+<img src="~/assets/my-image-2.png" />
+```
+
+若 nuxt.config.js 中配置了 router.base 属性，项目将在子目录下部署，届时就需要加上 base 才能访问到静态资源。
+
+当然也可以通过配置 static.prefix 为 false 来取消前缀。
+
+---
+
+## nuxt.config.js
 
 ```js
 head: { 
@@ -563,3 +728,127 @@ export default {
   }
 }
 ```
+
+## 资源文件
+
+资源文件的处理还是通过集成 webpack 加载器(loader)来实现：vue-loader, file-loader, url-loader。
+
+uel-loader 可以将小于阈值的文件转成 base-64 码，小文件 base-64 化能有效减少 HTTP 请求数。
+
+### webpack构建
+
+默认情况，vue-loader 自动使用 css-loader 和 Vue 模版编译器来编译处理 vue 文件和样式。其中，所有资源 URL 均被解析成 require 引用。
+
+> 注意：从 Nuxt 2.0 开始，`~/alias` 将无法在 css 文件正确解析。需要使用 `~assets` 或 `@` 别名。
+
+## 插件
+
+在运行 Vue.js 应用程序之前执行 js 插件，例如一些三方库和模块。
+
+> 需要注意的是，在任何 Vue 组件的生命周期内，只有 `beforeCreate` 和 `creatd` 这两个生命周期在**客户端和服务端**被调用。其他生命周期函数金在客户端被调用。
+>
+> 建议：插件命名方式通过适用范围来命名，例如 `foo.cilent.js`。
+
+### 使用第三方模块
+
+正常安装依赖、导入、使用。
+
+### 使用Vue插件
+
+待定...
+
+### 注入根组件和上下文
+
+#### 注入Vue实例
+
+例如在 Vue 原型上挂载一个函数。
+
+```js
+/** plugins/vue-inject.js */
+import Vue from 'vue'
+
+Vue.prototype.$myInjectedFunction = string =>
+  console.log('This is an example', string)
+```
+
+```js
+/** nuxt.config.js */
+export default {
+  plugins: ['~/plugins/vue-inject.js']
+}
+```
+
+这样，您就可以在所有 Vue 组件中使用该函数。
+
+```js
+export default {
+  mounted() {
+    this.$myInjectedFunction('test')
+  }
+}
+```
+
+#### 注入context
+
+context 注入方式和在其它 vue 应用程序中注入类似。
+
+```js
+/** plugins/ctx-inject.js */
+export default ({ app }, inject) => {
+  // Set the function directly on the context.app object
+  app.myInjectedFunction = string =>
+    console.log('Okay, another function', string)
+}
+```
+
+```js
+/** nuxt.config.js */
+export default {
+  plugins: ['~/plugins/ctx-inject.js']
+}
+```
+
+现在，只要您获得 context，你就可以使用该函数（例如在`asyncData`和`fetch`中）。 
+
+```js
+/** ctx-example-component.vue */
+export default {
+  asyncData(context) {
+    context.app.myInjectedFunction('ctx!')
+  }
+}
+```
+
+#### inject注入
+
+通过 inject 注入方式，可以在 context、vue 实例、Vuex 中直接通过`$xxx`使用。
+
+```js
+/** lugins/combined-inject.js */
+export default ({ app }, inject) => {
+  inject('myInjectedFunction', string => console.log('That was easy!', string))
+}
+```
+
+```js
+/** nuxt.config.js */
+export default {
+  plugins: ['~/plugins/combined-inject.js']
+}
+```
+
+### 限制
+
+通过 mode 来配置插件适用范围。
+
+```js
+/** nuxt.config.js */
+export default {
+  plugins: [
+    { src: '~/plugins/both-sides.js' },
+    { src: '~/plugins/client-only.js', mode: 'client' },
+    { src: '~/plugins/server-only.js', mode: 'server' }
+  ]
+}
+```
+
