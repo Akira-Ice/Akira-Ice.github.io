@@ -28,11 +28,11 @@ nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由
 
 不同的是，nuxt 在原有的基础上增加了一些特殊的属性。
 
-#### 动态路由
+**动态路由**
 
 类似动态设置路由的 params 参数，通过  `_paramName.vue` 创建路由组件。
 
-#### 忽略路由
+**忽略路由**
 
 倘若需要忽略某些路由，通过 `-xxx.vue` 即可。
 
@@ -53,7 +53,7 @@ nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由
 </script>
 ```
 
-#### 额外的配置
+**额外的配置**
 
 1. asyncData: Function
 
@@ -124,11 +124,11 @@ nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由
 
 通过 nuxt.config.js 下的 components 配置是否自动扫描 components 下的所有组件。
 
-#### 懒加载
+**懒加载**
 
 直接在组件前面加上 `Lazy` 即可，在一些事件之后加载渲染组件。
 
-#### 嵌套路由
+**嵌套路由**
 
 例如以下目录结构：
 
@@ -145,7 +145,7 @@ components/
 
 资源文件：Stylus、Sass、images、fonts。
 
-#### Images
+**Images**
 
 在 template 中，可通过 `~/assets/xxx.png` 访问。
 
@@ -161,7 +161,7 @@ components/
 background: url('~assets/banner.svg');
 ```
 
-#### Styles
+**Styles**
 
 nuxt 允许通过 nuxt.config.js 配置全局样式。
 
@@ -196,22 +196,434 @@ static 下的文件可通过 `/` 直接访问。
 
 当然也可以通过配置 static.prefix 为 false 来取消前缀。
 
----
+### nuxt.config.js
 
-## nuxt.config.js
+nuxt 的配置文件。
+
+1. [alias](https://v2.nuxt.com/docs/configuration-glossary/configuration-alias/)
+
+   配置目录别名。
+
+2. [build](https://v2.nuxt.com/docs/configuration-glossary/configuration-build/)
+
+   配置 webpack，包括 loader、filenames、transpilation。
+
+3. [css](https://v2.nuxt.com/docs/configuration-glossary/configuration-css/)
+
+   配置全局 css 文件。
+
+4. [generate](https://v2.nuxt.com/docs/configuration-glossary/configuration-generate/)
+
+   命令 `nuxt g` 相关配置。
+
+5. [head](https://v2.nuxt.com/docs/configuration-glossary/configuration-head/)
+
+   配置 web head。
+
+6. [loading](https://v2.nuxt.com/docs/configuration-glossary/configuration-loading/)
+
+   配置页面加载。
+
+7. [modules](https://v2.nuxt.com/docs/configuration-glossary/configuration-modules/)
+
+   加载第三方库。
+
+8. [plugins](https://v2.nuxt.com/docs/configuration-glossary/configuration-plugins/)
+
+   加载插件。
+
+9. [router](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/)
+
+   配置 nuxt 路由。
+
+10. [server](https://v2.nuxt.com/docs/configuration-glossary/configuration-server/)
+
+    配置服务相关属性。
+
+11. srcDir
+
+    配置当前 nuxt 应用的源目录。
+
+12. .gitignore
+
+    配置忽略文件。
+
+## 视图
+
+![nuxt-views-schema](https://www.nuxtjs.cn/nuxt-views-schema.svg)
+
+### 页面
+
+同 Vue 组件一致，只不过 nuxt 为每一个页面添加了一些特殊的属性。
+
+```vue
+<template>
+  <h1 class="red">Hello {{ name }}!</h1>
+</template>
+
+<script>
+  export default {
+    asyncData (context) {
+      // called every time before loading the component
+      return { name: 'World' }
+    },
+    fetch () {
+      // The fetch method is used to fill the store before rendering the page
+    },
+    head () {
+      // Set Meta Tags for this Page
+    },
+    // and more functionality to discover
+    ...
+  }
+</script>
+
+<style>
+  .red {
+    color: red;
+  }
+</style>
+```
+
+配置项：
+
+> 只要是函数式写法，第一个参数都可以接收到当前页面的上下文(context)。
+
+1. `asyncData: Function`
+
+   服务端获取并渲染数据，asyncData 在组件**初始化之前**执行。
+
+2. `fetch: Function`
+
+   用于渲染前处理状态机(store)中的数据，与 `asyncData` 方法类似，但他不会设置组件的数据。
+
+3. `head: Object | Function`
+
+   配置head、html。
+
+4. `key: String | Function`
+
+   配置 `<router-view>` 组件的 `key` 属性。
+
+5. `layout: String | Function`
+
+   配置页面布局文件。
+
+6. `loading: Boolean`
+
+   配置是否加载进度条选项。
+
+7. `middleware: String | Array`
+
+   配置中间件文件。
+
+8. `scrollToTop: Boolean`
+
+   控制页面渲染前是否滚动至页面顶部。
+
+9. `transition: String | Object | Function`
+
+   配置过渡动效。
+
+10. `validate: (context: any) => Boolean`
+
+    配置路由参数校验。
+
+11. `watchQuery: Boolean | Array`
+
+    监听属性变化，执行所有组件方法(asyncData, fetch, validate, layout,...)
+
+### 布局
+
+layout 目录下创建自定义布局。
+
+#### 默认布局
+
+入口：`layouts/default.vue`
+
+**注意**：在布局文件中需要添加 `<nuxt/>` 组件用于显示页面的主体内容。
+
+```vue
+<template>
+  <nuxt />
+</template>
+```
+
+#### 自定义布局
+
+每个页面可以配置独自的布局，自定义布局文件应在 `layouts` 目录下，且需要确保在布局文件中添加 `<Nuxt/>` 来显示页面。
+
+```vue
+/** layouts/blob.vue */
+<template>
+  <div>
+    <div>My blog navigation bar here</div>
+    <Nuxt />
+  </div>
+</template>
+
+/** pages/posts.vue */
+<template>
+  <!-- Your template -->
+</template>
+<script>
+  export default {
+    layout: 'blog'
+    // page component definitions
+  }
+</script>
+```
+
+#### 错误页面
+
+```vue
+/** layouts/error.vue */
+<template>
+  <div>
+    <h1 v-if="error.statusCode === 404">Page not found</h1>
+    <h1 v-else>An error occurred</h1>
+    <NuxtLink to="/">Home page</NuxtLink>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ['error'],
+    layout: 'error' // you can set a custom layout for the error page
+  }
+</script>
+```
+
+### app.html
+
+可根据 nuxt.config.js 中的配置动态配置根入口文件的相关属性。
+
+```html
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+  <head {{ HEAD_ATTRS }}>
+    {{ HEAD }}
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
+  </body>
+</html>
+```
+
+## context
+
+![c12c33](https://s2.loli.net/2023/05/31/6wLcWYTUzMymNOZ.png)
+
+context 在 nuxt 提供的一些函数中是可用的，比如：asyncData、plugins、middleware、nuxtServerInit，其属性如上图。
+
+> 不要与 action 中的 context 混淆！
 
 ```js
-head: { 
-    title: '', 
-    meta: [],  
-    link: []
-},
-loading: { color: '#3B8070' },  // 加载时的顶部进程颜色
-css: [],     										// 引入css
-plugins:[],  										// 引入插件 js
-router: {},  										// 配置router相关内容
-build: {}    										// 配置webpack相关内容
+function (context) { // Could be asyncData, nuxtServerInit, ...
+  // Always available
+  const {
+    app,
+    store,
+    route,
+    params,
+    query,
+    env,
+    isDev,
+    isHMR,
+    redirect,
+    error,
+    $config
+  } = context
+
+  // Only available on the Server-side
+  if (process.server) {
+    const { req, res, beforeNuxtRender, beforeSerialize } = context
+  }
+
+  // Only available on the Client-side
+  if (process.client) {
+    const { from, nuxtState } = context
+  }
+}
 ```
+
+### 获取路由 params 参数
+
+```js
+export default {
+  async asyncData(context) {
+    const id = context.params.id
+    try {
+      // Using the nuxtjs/http module here exposed via context.app
+      const post = await context.app.$http.$get(
+        `https://api.nuxtjs.dev/posts/${id}`
+      )
+      return { post }
+    } catch (e) {
+      context.error(e) // Show the nuxt error page with the thrown error
+    }
+  }
+}
+```
+
+### 访问 store 并重定向（鉴权）
+
+```js
+export default {
+  middleware({ store, redirect }) {
+    // retrieving keys via object destructuring
+    const isAuthenticated = store.state.authenticated
+    if (!isAuthenticated) {
+      return redirect('/login')
+    }
+  }
+}
+```
+
+## Helper
+
+nuxt 的辅助器。
+
+### $nuxt
+
+`$nuxt` 可以在 vue 组件中通过 `this.$nuxt` 访问，在客户端也可以通过 `window.$nuxt` 访问。
+
+#### 检查用户是否联网
+
+`$nuxt.isOffline` 提供了快速查明用户是否连接互联网。
+
+```html
+<template>
+  <div>
+    <div v-if="$nuxt.isOffline">You are offline</div>
+    <Nuxt />
+  </div>
+</template>
+```
+
+#### 刷新页面数据
+
+`$nuxt.refresh` 方法将重新调用 asyncData、fetch 重新获取数据。
+
+```html
+<template>
+  <div>
+    <div>{{ content }}</div>
+    <button @click="refresh">Refresh</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    asyncData() {
+      return { content: 'Created at: ' + new Date() }
+    },
+    methods: {
+      refresh() {
+        this.$nuxt.refresh()
+      }
+    }
+  }
+</script>
+```
+
+#### 控制加载条
+
+可通过 `$nuxt.$loading` 实现对加载条的控制。
+
+```js
+export default {
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    })
+  }
+}
+```
+
+### window.onNuxtReady
+
+在 nuxt 应用加载就绪之后执行一些回调。
+
+```js
+window.onNuxtReady(() => {
+  console.log('Nuxt is ready and mounted')
+})
+```
+
+### Process
+
+nuxt 集成了三个标志（client、server、static），用于判断当前应用程序在服务器、客户端或静态站点上呈现，通常在 asyncData 中使用。
+
+```html
+<template>
+  <h1>I am rendered on the {{ renderedOn }} side</h1>
+</template>
+
+<script>
+  export default {
+    asyncData() {
+      return { renderedOn: process.client ? 'client' : 'server' }
+    }
+  }
+</script>
+```
+
+## SSR
+
+服务端渲染，nuxt 亦为此而生，所谓服务端渲染，即在服务端进行页面编译解析成 html，再交给客户端渲染，至此不需要浏览器进行 js 的解析以及执行。
+
+Node.js server 是必要的：
+
+1. js 的执行需要 node 环境的。
+2. node 环境还需要做一些配置来实现编译执行 vue 应用。
+
+nuxt 也可以通过 serverMiddleware 来拓展和控制服务端：
+
+```js
+/** server-middleware/logger.js */
+export default function (req, res, next) {
+  console.log(req.url)
+  next()
+}
+
+
+/** nuxt.config.js */
+export default {
+  serverMiddleware: ['~/server-middleware/logger']
+}
+```
+
+由于是在服务端的原因，通常情况是不可以访问到浏览器独有的 `window` 对象的，只能在  `beforeMount` 和 `mounted` 中访问。
+
+ssr的步骤：
+
+1. 客户端 -> 服务端
+
+   浏览器给 nodejs 服务端发出初始化请求。Nuxt 将生成 html 并返回给浏览器，并且会执行 asyncData、nuxtServerInit、Fetch。
+
+2. 服务端 -> 浏览器
+
+   浏览器接收到 html 进行渲染页面，然后 Vue.js 的 hydration 机制开始运作，使页面响应式，进而实现页面交互。
+
+3. 浏览器 -> 浏览器
+
+   页面之间的跳转通过 `<NuxtLink>` 来完成，除非你刷新页面，整个 ssr 流程将重新进行。
+
+注意事项：
+
+1. window or document is undefined
+
+   这基本是由于在服务端执行的缘故，建议使用 `process.cilent` 判断之后执行。
+
+   ```js
+   if (process.client) {
+     require('external_library')
+   }
+   ```
+
+---
 
 ## 路由
 
@@ -477,161 +889,6 @@ export default {
 1. nuxt.config.js
 2. 匹配布局
 3. 匹配页面
-
-## 视图
-
-![nuxt-views-schema](https://www.nuxtjs.cn/nuxt-views-schema.svg)
-
-### 模板
-
-入口： app.html
-
-```html
-<!DOCTYPE html>
-<html {{ HTML_ATTRS }}>
-  <head {{ HEAD_ATTRS }}>
-    {{ HEAD }}
-  </head>
-  <body {{ BODY_ATTRS }}>
-    {{ APP }}
-  </body>
-</html>
-```
-
-### 布局
-
-layout 目录下创建自定义布局。
-
-#### 默认布局
-
-入口：`layouts/default.vue`
-
-**注意**：在布局文件中需要添加 `<nuxt/>` 组件用于显示页面的主体内容。
-
-```vue
-<template>
-  <nuxt />
-</template>
-```
-
-#### 自定义布局
-
-每个页面可以配置独自的布局。
-
-入口：`layouts/xxx.vue`
-
-```vue
-<template>
-  <!-- Your template -->
-</template>
-<script>
-  export default {
-    layout: 'xxx'
-  }
-</script>
-```
-
-#### 错误页面
-
-入口：`layouts/error.vue`
-
-```vue
-<template>
-  <div class="container">
-    <h1 v-if="error.statusCode === 404">页面不存在</h1>
-    <h1 v-else>应用发生错误异常</h1>
-    <nuxt-link to="/">首 页</nuxt-link>
-  </div>
-</template>
-
-<script>
-  export default {
-    props: ['error'],
-    layout: 'blog' // 你可以为错误页面指定自定义的布局
-  }
-</script>
-```
-
-### 页面
-
-同 Vue 组件一致。
-
-```vue
-<template>
-  <h1 class="red">Hello {{ name }}!</h1>
-</template>
-
-<script>
-  export default {
-    asyncData (context) {
-      // called every time before loading the component
-      return { name: 'World' }
-    },
-    fetch () {
-      // The fetch method is used to fill the store before rendering the page
-    },
-    head () {
-      // Set Meta Tags for this Page
-    },
-    // and more functionality to discover
-    ...
-  }
-</script>
-
-<style>
-  .red {
-    color: red;
-  }
-</style>
-```
-
-页面配置项：
-
-> 只要是函数式写法，第一个参数都可以接收到当前页面的上下文(context)。
-
-1. `asyncData: Function`
-
-   服务端获取并渲染数据，asyncData 在组件**初始化之前**执行。
-
-2. `fetch: Function`
-
-   用于渲染前处理状态机(store)中的数据，与 `asyncData` 方法类似，但他不会设置组件的数据。
-
-3. `head: Object | Function`
-
-   配置head、html。
-
-4. `key: String | Function`
-
-   配置 `<router-view>` 组件的 `key` 属性。
-
-5. `layout: String | Function`
-
-   配置页面布局文件。
-
-6. `loading: Boolean`
-
-   配置是否加载进度条选项。
-
-7. `middleware: String | Array`
-
-   配置中间件文件。
-
-8. `scrollToTop: Boolean`
-
-   控制页面渲染前是否滚动至页面顶部。
-
-9. `transition: String | Object | Function`
-
-   配置过渡动效。
-
-10. `validate: (context: any) => Boolean`
-
-    配置路由参数校验。
-
-11. `watchQuery: Boolean | Array`
-
-    监听属性变化，执行所有组件方法(asyncData, fetch, validate, layout,...)
 
 ## 数据获取
 
