@@ -1,9 +1,9 @@
 ---
 title: Nuxt.js
 categories: 
-  - Nuxt3
+  - Nuxt
 tags: 
-  - Nuxt3
+  - Nuxt
 ---
 
 # Nuxt.js
@@ -660,3 +660,1061 @@ ssr的步骤：
 8. `beforeDestory`
 
    在组件被销毁之前调用，适合做一些清理工作或者事件解绑定等任务。
+
+## 路由
+
+nuxt 将根据 pages 目录下文件自动生成路由配置。
+
+### 基础路由
+
+文件树：
+
+```text
+pages/
+--| user/
+-----| index.vue
+-----| one.vue
+--| index.vue
+```
+
+自动生成路由配置：
+
+```js
+router: {
+  routes: [
+    {
+      name: 'index',
+      path: '/',
+      component: 'pages/index.vue'
+    },
+    {
+      name: 'user',
+      path: '/user',
+      component: 'pages/user/index.vue'
+    },
+    {
+      name: 'user-one',
+      path: '/user/one',
+      component: 'pages/user/one.vue'
+    }
+  ]
+}
+```
+
+### 动态路由
+
+类似原 vue-router 中 `/:id`，在 nuxt 中通过 `_id.vue` 这种下划线命名方式实现。
+
+文件树：
+
+```text
+pages/
+--| _slug/
+-----| comments.vue
+-----| index.vue
+--| users/
+-----| _id.vue
+--| index.vue
+```
+
+自动生成：
+
+```js
+router: {
+  routes: [
+    {
+      name: 'index',
+      path: '/',
+      component: 'pages/index.vue'
+    },
+    {
+      name: 'users-id',
+      path: '/users/:id?',
+      component: 'pages/users/_id.vue'
+    },
+    {
+      name: 'slug',
+      path: '/:slug',
+      component: 'pages/_slug/index.vue'
+    },
+    {
+      name: 'slug-comments',
+      path: '/:slug/comments',
+      component: 'pages/_slug/comments.vue'
+    }
+  ]
+}
+```
+
+#### 路由参数
+
+在路由组件本地可通过 `this.$route.params.parameterName`。
+
+### 嵌套路由
+
+即子路由。nuxt 中通过创建于子目录同名的 vue 文件实现。
+
+> 注意：需要在父级添加 `<NuxtChild/>` ；来显示子组件内容。
+
+文件树：
+
+```text
+pages/
+--| users/
+-----| _id.vue
+-----| index.vue
+--| users.vue
+```
+
+自动生成：
+
+```js
+router: {
+  routes: [
+    {
+      path: '/users',
+      component: 'pages/users.vue',
+      children: [
+        {
+          path: '',
+          component: 'pages/users/index.vue',
+          name: 'users'
+        },
+        {
+          path: ':id',
+          component: 'pages/users/_id.vue',
+          name: 'users-id'
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 路由拓展
+
+#### [@nuxt.js/router](https://github.com/nuxt-community/router-module)
+
+该方式可以使用自己的路由配置来覆盖重写 nuxt 自动生成的路由配置。
+
+具体使用参考官方库。
+
+> 注意：我们的 router.js 需要暴露 createRouter 出去。
+
+#### [router.extendRoutes](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#extendroutes)
+
+通过 nuxt.config.js 进行拓展路由。
+
+添加路由：
+
+```js
+export default {
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '*',
+        component: resolve(__dirname, 'pages/404.vue')
+      })
+    }
+  }
+}
+```
+
+路由排序：
+
+```js
+import { sortRoutes } from '@nuxt/utils'
+export default {
+  router: {
+    extendRoutes(routes, resolve) {
+      // Add some routes here ...
+
+      // and then sort them
+      sortRoutes(routes)
+    }
+  }
+}
+```
+
+### 路由配置
+
+路由配置在 nuxt.config.js 中的 router 模块。
+
+1. [base: string](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#base)
+
+   路由根路径。
+
+2. [extendRoutes: function](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#extendroutes)
+
+   路由拓展。
+
+3. [fallback: boolean](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#fallback)
+
+   当浏览器不支持 history 模式时，是否回退使用 hash 模式。
+
+4. [mode: 'hash' | 'history'](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#mode)
+
+   配置路由模式，但不建议修改，因为会影响到服务端渲染。
+
+5. [scrollBehavior](https://v3.router.vuejs.org/guide/advanced/scroll-behavior.html#async-scrolling)
+
+   路由跳转后配置滚动条行为。
+
+## 数据获取
+
+nuxt 支持传统的数据获取方式，例如 vue 的 mounted 周期中获取数据。但只有使用 nuxt 特有的 hook 才能在服务器端渲染期间呈现数据。
+
+nuxt 获取数据的钩子有：asyncData、fetch。
+
+### 执行周期
+
+`fetch` 钩子函数和 `asyncData` 钩子函数都是用于在组件渲染前获取异步数据的钩子函数，但它们的调用周期和触发时机不完全一样。
+
+在 Nuxt.js 应用程序中，`fetch` 钩子函数会在服务端渲染（SSR）期间和客户端渲染（CSR）期间分别被调用。具体来说：
+
+- 在 SSR 期间，`fetch` 钩子函数会在服务器端组件实例化之后、页面渲染之前被调用，此时可以获取到异步数据并将其保存到 Vuex store 中，以便在页面渲染时使用。
+- 在 CSR 期间，`fetch` 钩子函数会在每次路由导航切换时被调用，此时也可以获取异步数据并更新 Vuex store 中的状态。
+
+而对于 `asyncData` 钩子函数，则仅在客户端渲染时被调用，在服务端渲染期间不会执行。具体来说：
+
+- 在 CSR 期间，`asyncData` 钩子函数会在组件实例化之前被调用，并且会等待 Promise 对象被解决后再继续页面的渲染过程。这个阶段可以理解为初始化前。
+- 在组件实例化完成之后，会进入`created`生命周期钩子函数，此时组件的 DOM 节点已经生成，但是尚未被渲染到页面上。
+- 等到组件的 `mounted` 生命周期钩子函数调用时，组件的 DOM 节点已经成功地渲染到了页面上。
+
+因此，在 Nuxt.js 应用程序中，如果需要在组件渲染前就获取异步数据并使用，应该优先考虑使用 `fetch` 钩子函数；如果异步数据获取与页面渲染无关，可以考虑使用 `asyncData` 钩子函数。
+
+### fetch
+
+在渲染页面前填充状态树(store)数据，不会设置组件的数据，可应用在所有组件上。
+
+其还提供了 this.$fetchState 用于获取 fetch 状态，并在页面展示相关信息。
+
+$fetchState 示例：
+
+```html
+<template>
+  <div>
+    <p v-if="$fetchState.pending">Fetching mountains...</p>
+    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <div v-else>
+      <h1>Nuxt Mountains</h1>
+      <ul>
+        <li v-for="mountain of mountains">{{ mountain.title }}</li>
+      </ul>
+      <button @click="$fetch">Refresh</button>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        mountains: []
+      }
+    },
+    async fetch() {
+      this.mountains = await fetch(
+        'https://api.nuxtjs.dev/mountains'
+      ).then(res => res.json())
+    }
+  }
+</script>
+```
+
+监听路由参数信息，进行调用 fetch 更新数据：
+
+```js
+export default {
+  watch: {
+    '$route.query': '$fetch'
+  },
+  async fetch() {
+    // Called also on query changes
+  }
+}
+```
+
+同样，在 `<nuxt>` 组件上使用 `keep-alive` 可进行组件数据缓存。
+
+nuxt 还提供了 `this.$fetchState.timestamp` 用于记录最后一次 fetch 的时间戳，可在缓存组件超过一定时间后，进行数据刷新。
+
+```html
+<template> ... </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        posts: []
+      }
+    },
+    activated() {
+      // Call fetch again if last fetch more than 30 sec ago
+      if (this.$fetchState.timestamp <= Date.now() - 30000) {
+        this.$fetch()
+      }
+    },
+    async fetch() {
+      this.posts = await fetch('https://api.nuxtjs.dev/posts').then(res =>
+        res.json()
+      )
+    }
+  }
+</script>
+```
+
+### asyncData
+
+在服务器端获取渲染数据，并返回给当前组件的 data，且不能访问到 this 以及 组件实例。不同于 fetch，该钩子函数只能应用于组件页面。
+
+```html
+<template>
+  <div>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.description }}</p>
+  </div>
+</template>
+
+<script>
+  export default {
+    async asyncData({ params, $http }) {
+      const post = await $http.$get(`https://api.nuxtjs.dev/posts/${params.id}`)
+      return { post }
+    }
+  }
+</script>
+```
+
+## Meta 和 SEO
+
+### 全局配置
+
+nuxt.config.js -> head。
+
+```js
+export default {
+  head: {
+    title: 'my website title',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'my website description'
+      }
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  }
+}
+```
+
+### 局部配置
+
+对象形式：
+
+```js
+<script>
+export default {
+  head: {
+    title: 'Home page',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Home page description'
+      }
+    ],
+  }
+}
+</script>
+```
+
+函数形式：
+
+```html
+<template>
+  <h1>{{ title }}</h1>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        title: 'Home page'
+      }
+    },
+    head() {
+      return {
+        title: this.title,
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content: 'Home page description'
+          }
+        ]
+      }
+    }
+  }
+</script>
+```
+
+### 外部资源
+
+通过 head.script 引入外部资源。
+
+```js
+export default {
+  head: {
+    script: [
+      {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
+      }
+    ],
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+      }
+    ]
+  }
+}
+```
+
+## 配置
+
+### css
+
+nuxt 中允许通过配置文件配置全局 css。
+
+```js
+export default {
+  css: [
+    // Load a Node.js module directly (here it's a Sass file)
+    'bulma',
+    // CSS file in the project
+    '~/assets/css/main.css',
+    // SCSS file in the project
+    '~/assets/css/main.scss'
+  ]
+}
+```
+
+并且，nuxt 支持你忽略文件后缀名。但存在优先级：['css', 'pcss', 'postcss', 'styl', 'stylus', 'scss', 'sass', 'less']
+
+> 同名文件，将按照该顺序解析。
+
+### 外部资源
+
+主要通过 head 中的 script 以及 link 实现。
+
+```js
+export default {
+  head: {
+    script: [
+      {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
+      }
+    ],
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+      }
+    ]
+  }
+}
+```
+
+### PostCSS
+
+nuxt 配置可替代 postcss.config.js。
+
+```js
+export default {
+  build: {
+    postcss: {
+      // Add plugin names as key and arguments as value
+      // Install them before as dependencies with npm or yarn
+      plugins: {
+        // Disable a plugin by passing false as value
+        'postcss-url': false,
+        'postcss-nested': {},
+        'postcss-responsive-type': {},
+        'postcss-hexrgba': {}
+      },
+      preset: {
+        // Change the postcss-preset-env settings
+        autoprefixer: {
+          grid: true
+        }
+      }
+    }
+  }
+}
+```
+
+### JSX
+
+nuxt 通过 [@nuxt/babel-preset-app](https://github.com/nuxt/nuxt/tree/2.x-dev/packages/babel-preset-app)，实现 JSX 的编译渲染。
+
+```js
+export default {
+  data () {
+    return { name: 'World' }
+  },
+  render (h) {
+    return <h1 class="red">{this.name}</h1>
+  }
+}
+```
+
+### Ignore files
+
+**.nuxtignore**
+
+您可以使用 .nuxtignore 文件来让 Nuxt 在构建阶段忽略项目根目录中的布局、页面、存储和中间件文件。
+
+.nuxtignore 文件遵循与 .gitignore 和 .eslintignore 文件相同的规范，其中每行都是一个 glob 模式，指示应忽略哪些文件。
+
+```markdown
+# ignore layout foo.vue
+
+layouts/foo.vue
+
+# ignore layout files whose name ends with -ignore.vue
+
+layouts/*-ignore.vue
+
+# ignore page bar.vue
+
+pages/bar.vue
+
+# ignore page inside ignore folder
+
+pages/ignore/*.vue
+
+# ignore store baz.js
+
+store/baz.js
+
+# ignore store files match _.test._
+
+store/ignore/_.test._
+
+# ignore middleware files under foo folder except foo/bar.js
+
+middleware/foo/*.js !middleware/foo/bar.js
+```
+
+同样，你也可以通过特殊的命名方式来实现忽略文件：`-xxx.xxx`
+
+在配置文件中也可以通过 ignore 模块配置忽略文件。
+
+### webpack 配置
+
+nuxt 通过配置文件下 build 模块进 行配置 webpack，build 是一个对象，对象中包含一个 extend 函数。
+
+该函数接收两个参数，第一个参数是从 nuxt 的 webpack 配置中导出的 webpack 配置对象。第二个参数是一个带有以下布尔属性的上下文对象：`{ isDev, isClient, isServer, loaders }`。
+
+```js
+export default {
+  build: {
+    extend(config, { isClient }) {
+      // Extend only webpack config for client-bundle
+      if (isClient) {
+        config.devtool = 'source-map'
+      }
+    }
+  }
+}
+```
+
+#### 自定义 chunks
+
+```js
+export default {
+  build: {
+    extend(config, { isClient }) {
+      if (isClient) {
+        config.optimization.splitChunks.maxSize = 200000
+      }
+    }
+  }
+}
+```
+
+#### 查看webpack配置
+
+通过 `nuxt webpack` 命令查看最终的 webpack 配置。
+
+#### 添加webpack plugins
+
+nuxt 通过 build 模块下 `plugins: Object` 进行添加。
+
+```js
+import webpack from 'webpack'
+
+export default {
+  build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        // global modules
+        $: 'jquery',
+        _: 'lodash'
+      })
+    ]
+  }
+}
+```
+
+#### 处理音频文件
+
+音频文件应该由 `file-loader` 进行处理，但默认并没有进行配置。
+
+```js
+export default {
+  build: {
+    extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
+      })
+    }
+  }
+}
+```
+
+这里配置完之后，就可以直接通过 require 直接引入音频文件提供给 audio 标签使用：`<audio :src="require('@/assets/water.mp3')" controls></audio>` 
+
+若不想使用 require 可通过配置 `vue-loader` 自动加载。
+
+```js
+export default {
+  build: {
+    loaders: {
+      vue: {
+        transformAssetUrls: {
+          audio: 'src'
+        }
+      }
+    },
+
+    extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
+      })
+    }
+  }
+}
+```
+
+### 修改主机和端口号
+
+在配置文件下的 server 模块可进行修改 host 和 port。
+
+```js
+export default {
+  server: {
+    host: '0' // default: localhost
+    port: 8000 // default: 3000
+  }
+}
+```
+
+但不建议这样做，因为可能在网站托管时引起问题。最好直接在 dev 命令中修改主机和端口号。
+
+```json
+"scripts": {
+  "dev:host": "nuxt --hostname '0' --port 8000"
+}
+```
+
+### 异步配置
+
+nuxt 可将通过异步函数返回值的形式进行配置。
+
+```js
+import axios from 'axios'
+
+export default async () => {
+  const data = await axios.get('https://api.nuxtjs.dev/posts')
+  return {
+    head: {
+      title: data.title
+      //... rest of config
+    }
+  }
+}
+```
+
+## 加载条
+
+### 自定义进度条
+
+nuxt 配置文件的 loading 模块下进行配置。
+
+| Key         | Type    | Default | Description                                                  |      |
+| ----------- | ------- | ------- | ------------------------------------------------------------ | ---- |
+| color       | String  | 'black' | CSS color of the progress bar                                |      |
+| failedColor | String  | 'red'   | CSS color of the progress bar when an error appended while rendering the route (if data or fetch sent back an error, for example). |      |
+| height      | String  | '2px'   | Height of the progress bar (used in the style property of the progress bar) |      |
+| throttle    | Number  | 200     | In ms, wait for the specified time before displaying the progress bar. Useful for preventing the bar from flashing. |      |
+| duration    | Number  | 5000    | In ms, the maximum duration of the progress bar, Nuxt assumes that the route will be rendered before 5 seconds. |      |
+| continuous  | Boolean | false   | Keep animating progress bar when loading takes longer than duration. |      |
+| css         | Boolean | true    | Set to false to remove default progress bar styles (and add your own). |      |
+| rtl         | Boolean | false   | Set the direction of the progress bar from right to left.    |      |
+
+### 禁用进度条
+
+通过 `loading: false` 禁用进度条，无论是全局配置还是局部配置均可。
+
+### 编程式调用
+
+nuxt 提供 `$loading` 进行直接控制进度条。
+
+```js
+export default {
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    })
+  }
+}
+```
+
+## 内置组件
+
+### Nuxt
+
+用于显示路由组件，只能用于布局文件(layouts)中使用。
+
+```html
+/** layouts/default.vue */
+<template>
+  <div>
+    <div>My nav bar</div>
+    <Nuxt :nuxt-child-key="somekey"/>
+    <div>My footer</div>
+  </div>
+</template>
+```
+
+`:nuxt-child-key` 将传递给 `<RouterView>`，以便在动态页面正确处理过渡效果。
+
+### NuxtChild
+
+用于显示子路由(嵌套路由)。
+
+```text
+-| pages/
+---| parent/
+------| child.vue
+---| parent.vue
+```
+
+```html
+<template>
+  <div>
+    <h1>I am the parent view</h1>
+    <NuxtChild :foobar="123" />
+  </div>
+</template>
+```
+
+### keep-alive
+
+作用于 `<NuxtChild>` 和 `<Nuxt>`，进行组件缓存。
+
+```html
+<template>
+  <div>
+    <Nuxt keep-alive :keep-alive-props="{ exclude: ['modal'] }" />
+  </div>
+</template>
+
+<!-- will be converted into something like this -->
+<div>
+  <KeepAlive :exclude="['modal']">
+    <RouterView />
+  </KeepAlive>
+</div>
+```
+
+`keep-alive-props` 是原 keep-alive 上的一些属性，包括：exclude、include等。
+
+### NuxtLink
+
+路由跳转。
+
+```html
+<template>
+  <NuxtLink to="/">Home page</NuxtLink>
+</template>
+```
+
+在 nuxt 中 NuxtLink 是默认**预取**的，也就是说在浏览器空闲的时候，将会预取并加载资源，以便用户点击链接时他们已经准备好。
+
+当然你也可以关闭 prefetch。
+
+局部关闭：
+
+```html
+<NuxtLink to="/about" no-prefetch>About page not pre-fetched</NuxtLink>
+<NuxtLink to="/about" :prefetch="false">About page not pre-fetched</NuxtLink>
+```
+
+全局关闭：
+
+```js
+export default {
+  router: {
+    prefetchLinks: false
+  }
+}
+```
+
+局部开启：
+
+> Nuxt v2.10.0 之后
+
+```html
+<NuxtLink to="/about" prefetch>About page pre-fetched</NuxtLink>
+```
+
+### linkActiveClass
+
+nuxt 默认链接激活类名是：`nuxt-link-active`
+
+当然你也可以自定义：
+
+```js
+export default {
+  router: {
+    linkActiveClass: 'my-custom-active-link'
+  }
+}
+```
+
+### client-only
+
+显示仅在客户端渲染的组件。
+
+```html
+<template>
+  <div>
+    <sidebar />
+    <client-only placeholder="Loading...">
+      <!-- this component will only be rendered on client-side -->
+      <comments />
+    </client-only>
+  </div>
+</template>
+```
+
+使用插槽：
+
+```html
+<template>
+  <div>
+    <sidebar />
+    <client-only>
+      <!-- this component will only be rendered on client-side -->
+      <comments />
+
+      <!-- loading indicator, rendered on server-side -->
+      <template #placeholder>
+        <comments-placeholder />        
+      </template>
+    </client-only>
+  </div>
+</template>
+```
+
+> 有时在服务器渲染的页面中，即使使用 $nextTick，`<client-only>` 中的 $refs 也可能还没有准备好。技巧可能是多次调用 $nextTick：
+>
+> ```js
+> mounted(){
+>   this.initClientOnlyComp()
+> },
+> methods: {
+>   initClientOnlyComp(count = 10) {
+>     this.$nextTick(() => {
+>       if (this.$refs.myComp) {
+>         //...
+>       } else if (count > 0) {
+>         this.initClientOnlyComp(count - 1);
+>       }
+>     });
+>   },
+> }
+> ```
+
+> 在 Nuxt < v2.9.0 中可以使用 `<no-ssr>` 替代 `<client-only>`
+
+## 非路由组件
+
+### 自动导入
+
+nuxt 中支持自动引入，在全局配置的 component 属性进行配置。
+
+```js
+export default {
+  components: true
+}
+```
+
+### 组件命名
+
+非路由组件的命名是基于文件夹名和文件名生成的。
+
+```bash
+| components/
+--| base/
+----| foo/
+------| Button.vue
+
+/** 最终的组件名 */
+<BaseFooButton />
+```
+
+> 建议还是将最终的组件名提前根据文件夹命名一致。
+
+忽略某个文件夹对命名的影响，可通过 component 下的 dirs 进行配置：
+
+```bash
+components: {
+  dirs: [
+    '~/components',
+    '~/components/base'
+  ]
+}
+```
+
+### 懒加载
+
+nuxt 中懒加载直接在组件前面加上 Lazy 即可。
+
+懒加载的组件在打包的过程中将会被单独分块儿打包，这将优化打包的大小。
+
+```html
+<template>
+  <div>
+    <h1>Mountains</h1>
+    <LazyMountainsList v-if="show" />
+    <button v-if="!show" @click="show = true">Show List</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      show: false
+    }
+  }
+}
+</script>
+```
+
+## 过渡
+
+作用于路由，过渡动效。
+
+有三种写法：string、object、function。
+
+默认的全局 transition-name 为 page。
+
+### string
+
+string 类型主要配置 transition 的 name，后续根据 .name-enter-active 等类名编写 css 动效。
+
+```vue
+<script>
+export default {
+  transition: 'home'
+}
+</script>
+
+<transition name="home"></transition>
+
+<style>
+  .home-enter-active, .home-leave-active { transition: opacity .5s; }
+  .home-enter, .home-leave-active { opacity: 0; }
+</style>
+```
+
+### object
+
+对象配置的属性相对 string 就多了一些，比如：name、mode、duration等等，以及可以调用一些[钩子函数](https://v2.vuejs.org/v2/guide/transitions.html#JavaScript-Hooks)。
+
+```js
+export default {
+  transition: {
+    name: 'home',
+    mode: 'out-in'
+  }
+}
+
+export default {
+  transition: {
+    afterLeave(el) {
+      console.log('afterLeave', el)
+    }
+  }
+}
+```
+
+### function
+
+能够获取到路由信息：to、from。
+
+```js
+export default {
+  transition(to, from) {
+    if (!from) {
+      return 'slide-left'
+    }
+    return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+  }
+}
+```
+
+### 全局配置
+
+nuxt.config.js 的全局过渡配置主要有俩：layoutTransition、pageTransition。
+
+写法和上述一致。
+
+```js
+export default {
+  layoutTransition: 'my-layouts'
+  // or
+  layoutTransition: {
+    name: 'my-layouts',
+    mode: 'out-in'
+  }
+}
+
+export default {
+  pageTransition: 'my-page'
+  // or
+  pageTransition: {
+    name: 'my-page',
+    mode: 'out-in',
+    beforeEnter (el) {
+      console.log('Before enter...');
+    }
+  }
+}
+```
