@@ -22,6 +22,10 @@ tags:
 
 约定俗成的目录结构 -> 良好的起点
 
+### .nuxt
+
+生产目录，由 nuxt 自动生成的一些文件。
+
 ### pages
 
 nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由组件的位置。
@@ -332,6 +336,14 @@ nuxt 的配置文件。
 11. `watchQuery: Boolean | Array`
 
     监听属性变化，执行所有组件方法(asyncData, fetch, validate, layout,...)
+
+#### 动态页面
+
+通过 _name.vue 来实现动态参数的页面，name 将整合到路由的 params 参数中。
+
+#### 忽略页面
+
+通过 -name.vue 来实现。
 
 ### 布局
 
@@ -1718,3 +1730,63 @@ export default {
   }
 }
 ```
+
+## 中间件
+
+nuxt 中可定义一些自定义函数作为中间件，在（一组）页面渲染前执行。
+
+共享的中间件应当放置在 `/middleware` 下，文件名则是中间件的名称。
+
+每一个中间件函数可接收一个 context 参数。
+
+通常情况下，中间件将在首次服务端渲染（第一次请求 nuxt app 或者 刷新页面）时以及客户端路由跳转时执行。
+
+多个中间件的执行顺序：
+
+1. nuxt.config.js 中的全局中间件
+2. layouts 中的中间件
+3. pages 中的中间件
+
+### Router Middleware
+
+类似路由守卫，需要在 nuxt.config.js 中 router 模块下配置。
+
+```js
+/** middleware/stats.js */
+import http from 'http'
+
+export default function ({ route }) {
+  return http.post('http://my-stats-api.com', {
+    url: route.fullPath
+  })
+}
+
+/** nuxt.config.js */
+export default {
+  router: {
+    middleware: 'stats' // middleware: ["stats"],
+  }
+}
+```
+
+### 匿名中间件
+
+局部中间件，直接在特殊的页面中直接通过 middleware 配置当前页面的中间件。
+
+```html
+<template>
+  <h1>Secret page</h1>
+</template>
+
+<script>
+  export default {
+    middleware({ store, redirect }) {
+      // If the user is not authenticated
+      if (!store.state.authenticated) {
+        return redirect('/login')
+      }
+    }
+  }
+</script>
+```
+
