@@ -1790,3 +1790,106 @@ export default {
 </script>
 ```
 
+## 插件
+
+nuxt 中的插件系统主要功能涵盖：全局注入、Vue 插件、外部包（模块），在 `/plugins` 中进行管理。
+
+![img](https://v2.nuxt.com/_nuxt/image/5d7783.svg)
+
+### inject
+
+nuxt 允许通过 `inject(key, value)` 实现将一些函数或变量注入贯穿整个应用中，注入到 $root 以及 context 当中。
+
+> 重要的是 Vue 的生命周期中只有 beforeCreate 和 created 钩子能在客户端以及服务端中被调用，其他的都只能在客户端中调用。
+
+```js
+/** plugins/hello.js */
+export default ({ app }, inject) => {
+  // Inject $hello(msg) in Vue, context and store.
+  inject('hello', msg => console.log(`Hello ${msg}!`))
+}
+
+/** nuxt.config.js */
+export default {
+  plugins: ['~/plugins/hello.js']
+}
+
+/** example-component.vue */
+export default {
+  mounted() {
+    this.$hello('mounted')
+    // will console.log 'Hello mounted!'
+  },
+  asyncData({ app, $hello }) {
+    $hello('asyncData')
+    // If using Nuxt <= 2.12, use 👇
+    app.$hello('asyncData')
+  }
+}
+```
+
+### Vue Plugins
+
+与原生的 Vue 插件安装一样，通过 `Vue.use()` 进行安装。
+
+```js
+/** plugins/vue-tooltip.js */
+import Vue from 'vue'
+import VTooltip from 'v-tooltip'
+
+Vue.use(VTooltip)
+
+/** nuxt.config.js */
+export default {
+  plugins: ['~/plugins/vue-tooltip.js']
+}
+```
+
+对于 ES6 的模块，可以通过配置文件下 build.transpile 进行 babel 转义为 ES5。 
+
+```js
+module.exports = {
+  build: {
+    transpile: ['vue-tooltip']
+  }
+}
+```
+
+### Client or Server side only
+
+1. 通过特殊命名后缀
+
+   `xxx.client.js` 或 `xxx.server.js` 可限制插件的执行区域。
+
+2. 配置下 plugins 模块每个插件通过对象的形式配置，并配置 mode。
+
+   ```js
+   export default {
+     plugins: [
+       { src: '~/plugins/both-sides.js' },
+       { src: '~/plugins/client-only.js', mode: 'client' }, // only on client side
+       { src: '~/plugins/server-only.js', mode: 'server' } // only on server side
+     ]
+   }
+   ```
+
+### extendPlugins
+
+配置文件中 extendPlugins 模块可进行对当前 plugins 配置进行编程式处理（排序、删除）。
+
+```js
+/** nuxt.config.js */
+export default {
+  extendPlugins(plugins) {
+    const pluginIndex = plugins.findIndex(
+      ({ src }) => src === '~/plugins/shouldBeFirst.js'
+    )
+    const shouldBeFirstPlugin = plugins[pluginIndex]
+
+    plugins.splice(pluginIndex, 1)
+    plugins.unshift(shouldBeFirstPlugin)
+
+    return plugins
+  }
+}
+```
