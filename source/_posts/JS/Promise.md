@@ -1,5 +1,6 @@
 ---
 title: Promise
+
 categories:
   - [JavaScript]
 tags: 
@@ -177,9 +178,6 @@ async function light() {
 
 light();
 ```
-
-
-
 
 - promise.all 结果收集不考虑其是否成功或失败
 

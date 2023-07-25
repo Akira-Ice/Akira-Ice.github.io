@@ -1,5 +1,6 @@
 ---
 title: call-apply-bind
+
 categories:
   - [JavaScript]
 tags: 

@@ -1,9 +1,10 @@
 ---
 title: React 笔记
+date: 2023/7/25
+updated: 
 categories: 
   - React
 tags: 
-  - React
 ---
 
 # 基础知识
@@ -11,15 +12,15 @@ tags:
 ## 关于 React
 
 1. 什么是 React？
-
+   
    **React** 是一个用于构建用户界面的 JavaScript 库。
-
+   
    - 是一个将数据渲染为 HTML 视图的开源 JS 库。
    - 它遵循基于组件的方法，有助于构建可重用的 UI 组件。
    - 它用于开发复杂的交互式的 web 和移动 UI。
 
 2. React 有什么特点？
-
+   
    - 使用虚拟 DOM 而不是真正的 DOM。
    - 它可以用服务器渲染。
    - 它遵循单向数据流或数据绑定。
@@ -27,13 +28,13 @@ tags:
    - 声明式编码，组件化编码。
 
 3. React 的一些主要优点？
-
+   
    - 它提高了应用的性能。
-
+   
    - 可以方便在客户端和服务器端使用。
-
+   
    - 由于使用 JSX，代码的可读性更好。
-
+   
    - 使用React，编写 UI 测试用例变得非常容易。
 
 ## JSX 语法
@@ -94,9 +95,9 @@ ReactDOM.render(<MyComponent/>,document.querySelector('.test'))
 1. 组件中的 render 方法中的 this 为组件实例对象。
 
 2. 组件自定义方法中由于开启了严格模式，this 指向 `undefined` 如何解决。
-
+   
    - 通过 bind 改变 this 指向。
-
+   
    - 推荐采用箭头函数，箭头函数的 `this` 指向。
 
 3. state 数据不能直接修改或者更新。
@@ -106,7 +107,7 @@ ReactDOM.render(<MyComponent/>,document.querySelector('.test'))
 ### state
 
 > React 把组件看成是一个状态机（State Machines）。通过与用户的交互，实现不同状态，然后渲染 UI，让用户界面和数据保持一致。
->
+> 
 > React 里，只需更新组件的 state，然后根据新的 state 重新渲染用户界面（不要操作 DOM）。
 
 简单的说就是组件的状态，也就是该组件所存储的数据。
@@ -117,11 +118,11 @@ class Weather extends React.Component {
     super(props);
     // this.state = { weather: '凉爽' };
   }
-  
+
   state = {
     weather: '炎热',
   }
-  
+
   render() {
     return <h1>{ this.state.weather }</h1>
   }
@@ -149,7 +150,7 @@ state 即当前组件的实例属性。
 2. 回调形式：`this.setState(state => ({ count: state.count+1 }));`
 
 > `setState` 是一种合并操作，并不是替换操作。
->
+> 
 > 每一次调用 `setState` 将会触发 `render` 进行页面渲染，因此 `react` 内部会将本次更新所涉及到的所有 `setState` 进行收集合并，避免重复渲染。
 
 - 在执行 `setState`操作后，React 会自动调用一次 `render()`
@@ -166,8 +167,8 @@ class Person extends React.Component {
   render() {
     return (
       <ul>
-      	<li> { this.props.name } </li>
-      	<li> { this.props.age } </li>
+          <li> { this.props.name } </li>
+          <li> { this.props.age } </li>
       </ul>
     )
   }
@@ -186,17 +187,17 @@ class Person extends React.Component {
   render() {
     return (
       <ul>
-      	<li> { this.props.name } </li>
-      	<li> { this.props.age } </li>
+          <li> { this.props.name } </li>
+          <li> { this.props.age } </li>
       </ul>
     )
   }
-  
+
   static propTypes = {
     name: PropTypes.string.isRequired,
     age: propTypes.string,
   }
-  
+
   static defaultPorps = {
     name: "Akira",
     age: 21
@@ -214,8 +215,8 @@ ReactDom.render(<Person { ...p } />, document.getElementById("div"));
 function Person(props) {
   return (
     <ul>
-    	<li>{ props.name }</li>
-    	<li>{ props.age }</li>
+        <li>{ props.name }</li>
+        <li>{ props.age }</li>
     </ul>
   )
 }
@@ -234,15 +235,16 @@ function Person(props) {
 有三种操作`refs`的方法，分别为：
 
 - 字符串形式
+
 - 回调形式
+
 - `createRef`形式
-
 1. 字符串形式
-
+   
    ```jsx
    class Component extends React.Component {
      inputHanddle = () => {
-     	const { input } = this.refs;
+         const { input } = this.refs;
        console.log(input.value);
      }
      render() {
@@ -256,15 +258,15 @@ function Person(props) {
    ```
 
 2. 回调形式
-
+   
    ref 的回调函数将自动接收当前 DOM 节点。
-
+   
    ```jsx
    <input ref={ c => this.input1 = c } />
    ```
 
 3. createRef 形式
-
+   
    ```jsx
    class Component extends React.Component {
      MyRef = React.createRef();
@@ -286,13 +288,13 @@ function Person(props) {
    ```
 
 4. 点击事件
-
+   
    React 使用的是自定义事件，而不是原生的 DOM 事件
-
+   
    React 的事件是通过事件委托方式处理的（为了更加的高效）
-
+   
    可以通过事件的 `event.target`获取发生的 DOM 元素对象，可以尽量减少 `refs`的使用
-
+   
    ```jsx
    class Component extends React.Component {
      clickHanddle = (event) => {
@@ -300,12 +302,11 @@ function Person(props) {
      }
      render() {
        return (
-      		<div onClick={ this.clickHanddle }>
-   		)
+              <div onClick={ this.clickHanddle }>
+           )
      }
    }
    ```
-
 
 # 生命周期
 
@@ -341,14 +342,14 @@ class Component extends React.Component {
   state = {
     count: 1,
   }
-  
+
   static getDerivedFromProps(props) {
     return {count: props.count};
   }
-  
+
   render() {
     return (
-    	<h1>{ this.count }</h1>
+        <h1>{ this.count }</h1>
     )
   }
 }
@@ -430,6 +431,3 @@ class Component extends React.Component {
 **销毁**
 
 - componentWillUnmount()
-
-
-

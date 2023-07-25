@@ -1,5 +1,6 @@
 ---
 title: Es6
+
 categories:
   - [JavaScript,核心]
 tags: 
@@ -163,7 +164,9 @@ console.log(add(1, 23, 1, 2, 3, 4, 5)) // 39
 #### 对象字面量
 
 - 属性值同名省略
+
 - 对象中的属性可以采用`[params]`，实现**变量**属性名
+  
   - 在ant-design的源码实现中，就大量使用了这种方式来拼接当前元素的className，例如:
     
     ```javascript
@@ -202,7 +205,6 @@ class Person {
     return this.name
   }
 }
-
 ```
 
 > babel 会将ES6的写法编译成为利用`object.defineProperty`方式实现
@@ -228,7 +230,6 @@ class Person {
   getAge = () => this.age   //方法添加到构造函数，等同this.getAge = function() {}
 
 }
-
 ```
 
 箭头函数还是要注意**this**指向问题

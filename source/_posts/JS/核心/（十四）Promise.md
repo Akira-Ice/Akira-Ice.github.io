@@ -1,5 +1,6 @@
 ---
 title: Promise
+
 categories:
   - [JavaScript,核心]
 tags: 

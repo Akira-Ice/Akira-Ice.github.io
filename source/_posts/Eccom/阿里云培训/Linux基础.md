@@ -1,5 +1,6 @@
 ---
 title: 阿里云培训 - Linux基础
+
 categories:
   - [work,Eccom]
 tags: 
@@ -281,19 +282,19 @@ tags:
 #### 常用命令
 
 - 查看可用包版本
-
+  
   `yum list packname`
 
 - 安装
-
+  
   `yum install packname`
 
 - 搜索
-
+  
   `yum search xx`
 
 - 删除
-
+  
   `yum remove packname`
 
 ### 源码编译安装
@@ -327,15 +328,15 @@ tags:
 ### DNS问题排查思路
 
 - 用户不能访问，运维可访问
-
+  
   - 用户DNS设置问题
 
 - 用户与运维都不能访问
-
+  
   - 检查DNS服务是否能 ping 通
-
+  
   - 查看DNS服务器的53端口是否可用
-
+    
     `telnet <IP> 53`
 
 ## 网络配置
@@ -385,7 +386,7 @@ tags:
 
 命令记录：`history`
 
-###  常用日志文件
+### 常用日志文件
 
 系统启动后的信息和错误日志：`/var/log/message`
 
@@ -396,4 +397,3 @@ tags:
 守护进程启动和停止相关的日志：`/var/log/boot.log`
 
 用户登录、注销及系统启动、停机的事件日志：`/var/log/wtmp`
-

@@ -1,5 +1,6 @@
 ---
 title: Nuxt.js
+
 categories: 
   - Nuxt
 tags: 
@@ -11,11 +12,11 @@ tags:
 ## 安装
 
 1. 使用 npx
-
+   
    `npx create-nuxt-app <项目名>`
 
 2. 使用 yarn
-
+   
    `yarn create-nuxt-app <项目名>`
 
 ## 目录结构
@@ -60,9 +61,9 @@ nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由
 **额外的配置**
 
 1. asyncData: Function
-
+   
    组件加载前调用，可接受一个 context 函数参数，即当前页面上下文，返回值将被 nuxt 混入到 data 中去。
-
+   
    ```js
    export default {
      asyncData(context) {
@@ -72,9 +73,9 @@ nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由
    ```
 
 2. fetch: Function
-
+   
    用于获取异步数据，和 asyncData 类似，但只能在服务端路由渲染时调用，且只在首次加载页面时触发。
-
+   
    ```vue
    <script>
      export default {
@@ -93,33 +94,33 @@ nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由
    ```
 
 3. head: Function
-
+   
    设置当前页面的一些 head 信息，nuxt 通过 `vue-meta` 进行更新。
 
 4. layout: String
-
+   
    配置当前页面的布局。
 
 5. loading: Boolean
-
+   
    配置当前是否使用顶部加载样式。
-
+   
    若设为 false，可手动通过 `this.$nuxt.$loading.finish()` 和 `this.$nuxt.$loading.start()`。
 
 6. transition: Object
-
+   
    配置页面动效。
 
 7. scrollToTop: Boolean
-
+   
    配置当前页面是否回调顶部。
 
 8. middleware: String | Array
-
+   
    配置当前页面中间件，将在页面渲染前调用。
 
 9. key: String
-
+   
    类似 Vue 组件上的 key，只不过这里是作用在 router-link 上。
 
 ### components
@@ -205,51 +206,51 @@ static 下的文件可通过 `/` 直接访问。
 nuxt 的配置文件。
 
 1. [alias](https://v2.nuxt.com/docs/configuration-glossary/configuration-alias/)
-
+   
    配置目录别名。
 
 2. [build](https://v2.nuxt.com/docs/configuration-glossary/configuration-build/)
-
+   
    配置 webpack，包括 loader、filenames、transpilation。
 
 3. [css](https://v2.nuxt.com/docs/configuration-glossary/configuration-css/)
-
+   
    配置全局 css 文件。
 
 4. [generate](https://v2.nuxt.com/docs/configuration-glossary/configuration-generate/)
-
+   
    命令 `nuxt g` 相关配置。
 
 5. [head](https://v2.nuxt.com/docs/configuration-glossary/configuration-head/)
-
+   
    配置 web head。
 
 6. [loading](https://v2.nuxt.com/docs/configuration-glossary/configuration-loading/)
-
+   
    配置页面加载。
 
 7. [modules](https://v2.nuxt.com/docs/configuration-glossary/configuration-modules/)
-
+   
    加载第三方库。
 
 8. [plugins](https://v2.nuxt.com/docs/configuration-glossary/configuration-plugins/)
-
+   
    加载插件。
 
 9. [router](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/)
-
+   
    配置 nuxt 路由。
 
 10. [server](https://v2.nuxt.com/docs/configuration-glossary/configuration-server/)
-
+    
     配置服务相关属性。
 
 11. srcDir
-
+    
     配置当前 nuxt 应用的源目录。
 
 12. .gitignore
-
+    
     配置忽略文件。
 
 ## 视图
@@ -294,47 +295,47 @@ nuxt 的配置文件。
 > 只要是函数式写法，第一个参数都可以接收到当前页面的上下文(context)。
 
 1. `asyncData: Function`
-
+   
    服务端获取并渲染数据，asyncData 在组件**初始化之前**执行。
 
 2. `fetch: Function`
-
+   
    用于渲染前处理状态机(store)中的数据，与 `asyncData` 方法类似，但他不会设置组件的数据。
 
 3. `head: Object | Function`
-
+   
    配置head、html。
 
 4. `key: String | Function`
-
+   
    配置 `<router-view>` 组件的 `key` 属性。
 
 5. `layout: String | Function`
-
+   
    配置页面布局文件。
 
 6. `loading: Boolean`
-
+   
    配置是否加载进度条选项。
 
 7. `middleware: String | Array`
-
+   
    配置中间件文件。
 
 8. `scrollToTop: Boolean`
-
+   
    控制页面渲染前是否滚动至页面顶部。
 
 9. `transition: String | Object | Function`
-
+   
    配置过渡动效。
 
 10. `validate: (context: any) => Boolean`
-
+    
     配置路由参数校验。
 
 11. `watchQuery: Boolean | Array`
-
+    
     监听属性变化，执行所有组件方法(asyncData, fetch, validate, layout,...)
 
 #### 动态页面
@@ -612,23 +613,23 @@ export default {
 ssr的步骤：
 
 1. 客户端 -> 服务端
-
+   
    浏览器给 nodejs 服务端发出初始化请求。Nuxt 将生成 html 并返回给浏览器，并且会执行 asyncData、nuxtServerInit、Fetch。
 
 2. 服务端 -> 浏览器
-
+   
    浏览器接收到 html 进行渲染页面，然后 Vue.js 的 hydration 机制开始运作，使页面响应式，进而实现页面交互。
 
 3. 浏览器 -> 浏览器
-
+   
    页面之间的跳转通过 `<NuxtLink>` 来完成，除非你刷新页面，整个 ssr 流程将重新进行。
 
 注意事项：
 
 1. window or document is undefined
-
+   
    这基本是由于在服务端执行的缘故，建议使用 `process.cilent` 判断之后执行。
-
+   
    ```js
    if (process.client) {
      require('external_library')
@@ -642,35 +643,35 @@ ssr的步骤：
 下面是常用的生命周期：
 
 1. `nuxtServerInit`
-
+   
    在服务器渲染间执行的方法，初始化 Vuex 的状态或从 API 中获取数据等操作。
 
 2. `middleware`
-
+   
    执行相关的中间件，顺序是：Global middleware -> Layout middleware -> Route middleware。
 
 3. `asyncData`
-
+   
    在组件渲染前运行，在客户端和服务端都可以执行。用于异步获取数据在渲染，通常和服务端配合使用。
 
 4. `fetch`
-
+   
    组件实例化之后，在页面加载前执行。主要用于客户端获取数据，不支持服务端渲染。
 
 5. `created`
-
+   
    在组件实例化后立即被调用，在服务器端和客户端均可用。常用于初始化数据请求和事件监听器等任务。
 
 6. `mounted`
-
+   
    在组件挂载到页面上后调用，只能在客户端中使用。适合进行 DOM 操作和使用第三方库初始化页面。
 
 7. `updated`
-
+   
    在组件更新时被调用，只能在客户端中使用。常用于更新数据和操作 DOM。
 
 8. `beforeDestory`
-
+   
    在组件被销毁之前调用，适合做一些清理工作或者事件解绑定等任务。
 
 ## 路由
@@ -854,23 +855,23 @@ export default {
 路由配置在 nuxt.config.js 中的 router 模块。
 
 1. [base: string](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#base)
-
+   
    路由根路径。
 
 2. [extendRoutes: function](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#extendroutes)
-
+   
    路由拓展。
 
 3. [fallback: boolean](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#fallback)
-
+   
    当浏览器不支持 history 模式时，是否回退使用 hash 模式。
 
 4. [mode: 'hash' | 'history'](https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#mode)
-
+   
    配置路由模式，但不建议修改，因为会影响到服务端渲染。
 
 5. [scrollBehavior](https://v3.router.vuejs.org/guide/advanced/scroll-behavior.html#async-scrolling)
-
+   
    路由跳转后配置滚动条行为。
 
 ## 数据获取
@@ -1375,16 +1376,16 @@ export default async () => {
 
 nuxt 配置文件的 loading 模块下进行配置。
 
-| Key         | Type    | Default | Description                                                  |      |
-| ----------- | ------- | ------- | ------------------------------------------------------------ | ---- |
-| color       | String  | 'black' | CSS color of the progress bar                                |      |
-| failedColor | String  | 'red'   | CSS color of the progress bar when an error appended while rendering the route (if data or fetch sent back an error, for example). |      |
-| height      | String  | '2px'   | Height of the progress bar (used in the style property of the progress bar) |      |
-| throttle    | Number  | 200     | In ms, wait for the specified time before displaying the progress bar. Useful for preventing the bar from flashing. |      |
-| duration    | Number  | 5000    | In ms, the maximum duration of the progress bar, Nuxt assumes that the route will be rendered before 5 seconds. |      |
-| continuous  | Boolean | false   | Keep animating progress bar when loading takes longer than duration. |      |
-| css         | Boolean | true    | Set to false to remove default progress bar styles (and add your own). |      |
-| rtl         | Boolean | false   | Set the direction of the progress bar from right to left.    |      |
+| Key         | Type    | Default | Description                                                                                                                        |     |
+| ----------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- | --- |
+| color       | String  | 'black' | CSS color of the progress bar                                                                                                      |     |
+| failedColor | String  | 'red'   | CSS color of the progress bar when an error appended while rendering the route (if data or fetch sent back an error, for example). |     |
+| height      | String  | '2px'   | Height of the progress bar (used in the style property of the progress bar)                                                        |     |
+| throttle    | Number  | 200     | In ms, wait for the specified time before displaying the progress bar. Useful for preventing the bar from flashing.                |     |
+| duration    | Number  | 5000    | In ms, the maximum duration of the progress bar, Nuxt assumes that the route will be rendered before 5 seconds.                    |     |
+| continuous  | Boolean | false   | Keep animating progress bar when loading takes longer than duration.                                                               |     |
+| css         | Boolean | true    | Set to false to remove default progress bar styles (and add your own).                                                             |     |
+| rtl         | Boolean | false   | Set the direction of the progress bar from right to left.                                                                          |     |
 
 ### 禁用进度条
 
@@ -1554,7 +1555,7 @@ export default {
 ```
 
 > 有时在服务器渲染的页面中，即使使用 $nextTick，`<client-only>` 中的 $refs 也可能还没有准备好。技巧可能是多次调用 $nextTick：
->
+> 
 > ```js
 > mounted(){
 >   this.initClientOnlyComp()
@@ -1858,11 +1859,11 @@ module.exports = {
 ### Client or Server side only
 
 1. 通过特殊命名后缀
-
+   
    `xxx.client.js` 或 `xxx.server.js` 可限制插件的执行区域。
 
 2. 配置下 plugins 模块每个插件通过对象的形式配置，并配置 mode。
-
+   
    ```js
    export default {
      plugins: [
