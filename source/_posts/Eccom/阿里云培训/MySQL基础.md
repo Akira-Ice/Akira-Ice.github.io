@@ -1,6 +1,6 @@
 ---
 title: 阿里云培训 - MySQL基础
-
+date: 2023/02/23
 categories:
   - [work,Eccom]
 tags: 

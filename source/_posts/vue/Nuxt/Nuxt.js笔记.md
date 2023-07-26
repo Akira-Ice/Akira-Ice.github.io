@@ -1,6 +1,7 @@
 ---
 title: Nuxt.js
-
+date: 2023/03/05
+updated: 2023/04/13
 categories: 
   - Nuxt
 tags: 

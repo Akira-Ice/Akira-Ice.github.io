@@ -1,5 +1,5 @@
 ---
-title: React 笔记
+title: React Note
 date: 2023/7/20
 updated: 2023/7/25
 categories: 

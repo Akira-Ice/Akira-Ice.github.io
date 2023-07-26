@@ -1,6 +1,6 @@
 ---
 title: Promise
-
+date: 2021/10/27
 categories:
   - [JavaScript]
 tags: 

@@ -1,6 +1,6 @@
 ---
 title: Es6
-
+date: 2021/10/25
 categories:
   - [JavaScript,核心]
 tags: 

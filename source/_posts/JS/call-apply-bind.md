@@ -1,6 +1,6 @@
 ---
 title: call-apply-bind
-
+date: 2021/10/26
 categories:
   - [JavaScript]
 tags: 

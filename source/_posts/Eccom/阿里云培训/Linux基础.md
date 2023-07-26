@@ -1,6 +1,6 @@
 ---
 title: 阿里云培训 - Linux基础
-
+date: 2023/02/22
 categories:
   - [work,Eccom]
 tags: 
