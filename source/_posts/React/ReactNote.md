@@ -282,6 +282,19 @@ updatePerson(draft => {
 
 > 由 Immer 提供的 `draft` 是一种特殊类型的对象，被称为 [Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)，它会记录你用它所进行的操作。这就是你能够随心所欲地直接修改对象的原因所在！从原理上说，Immer 会弄清楚 `draft` 对象的哪些部分被改变了，并会依照你的修改创建出一个全新的对象。
 
+### flushSync
+
+同步更新 state，将直接更新 DOM。
+
+```js
+import { flushSync } from 'react-dom';
+
+flushSync(() => {
+  setTodos([ ...todos, newTodo]);
+});
+listRef.current.lastChild.scrollIntoView();
+```
+
 ## render
 
 `createRoot -> render`
@@ -535,6 +548,15 @@ export default function Form() {
 }
 ```
 
+**React 内部：**
+
+```js
+function useRef(initialValue) {
+  const [ref, unused] = useState({ current: initialValue });
+  return ref;
+}
+```
+
 **多 ref 管理：**
 
 1. ref 绑到父层，通过 [querySelectorAll](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/querySelectorAll) 获取，但 DOM 结构发生变化，可能会失效。
@@ -644,3 +666,85 @@ export default function Form() {
 }
 
 ```
+
+## Effect
+
+**渲染引起的副作用，渲染（包括初次）之后执行**。
+
+每一个 Effect 都是一个独立的同步过程，多个之间互不影响。
+
+基础用法：
+
+1. 声明 Effect
+
+2. 指定 Effect 依赖。
+
+3. 必要时添加 cleanup 清理函数。
+
+React 使用 [`Object.is`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 比较依赖项的值。
+
+```js
+useEffect(() => {
+  // 这里的代码会在每次渲染后执行
+});
+
+useEffect(() => {
+  // 这里的代码只会在组件挂载后执行
+}, []);
+
+useEffect(() => {
+  // 这里的代码只会在每次渲染后，并且 a 或 b 的值与上次渲染不一致时执行
+  // cleanup
+  return () => {}
+}, [a, b]);
+```
+
+在依赖数组中可以省略 **ref**，React 保证每次渲染过程中调用 **useRef** 产生的引用对象时，获取的对象引用始终不变，但若 ref 由父层传递过来时需要添加到依赖数组中的。
+
+> 在开发环境中，React 会在初始挂载组件后，立即再挂载一次（压力测试）。
+
+因此开发环境下 Effect 会执行两次，此时就需要设置 cleanup 清理函数，来避免一些额外的副作用的出现。
+
+**cleanup 执行时机：**
+
+1. 组件卸载
+
+2. 执行下一轮渲染的 Effect 之前
+
+**工作原理**：`depArr -> compare -> isShouldSyncEffect`
+
+**生命周期：**
+
+1. 开始同步
+
+2. 停止同步
+
+**useEffectEvent**
+
+将 Effect 中一些响应式数据包装起来，不作为依赖项，但 EffectEvent 中的函数仍是响应式的。
+
+```js
+function ChatRoom({ roomId, theme }) {
+  const onConnected = useEffectEvent(() => {
+    showNotification('Connected!', theme);
+  });
+
+  useEffect(() => {
+    const connection = createConnection(serverUrl, roomId);
+    connection.on('connected', () => {
+      onConnected();
+    });
+    connection.connect();
+    return () => connection.disconnect();
+  }, [roomId]);
+
+  return <h1>Welcome to the {roomId} room!</h1>
+}
+```
+
+**Effect & 事件处理：**
+
+| Effect     | 事件处理          |
+|:----------:|:-------------:|
+| 需要同步的时候运行  | 响应特定交互时运行     |
+| 内部的逻辑是响应式的 | 函数内部的逻辑是非响应式的 |
