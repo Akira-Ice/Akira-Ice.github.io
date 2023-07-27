@@ -1,15 +1,15 @@
 ---
 title: Es6
 date: 2021/10/25
+updated: 2021/10/25
 categories:
-  - [JavaScript,核心]
-tags: 
-  - JavaScript
+  - [JavaScript, 核心]
+tags:
 ---
 
 # ES6
 
-[babel在线编译工具](http://babeljs.io/repl/)
+[babel 在线编译工具](http://babeljs.io/repl/)
 
 ### let/const
 
@@ -17,7 +17,7 @@ tags:
 - 不具备变量提升
   - 可以说成是声明式提升，赋值并没有提升，因此存在暂时性死区
   - 因为赋值的提升并没有完成，所以即使声明提升了也不能够去使用
-- const变量定义的引用类型，如对象，对象的引用不可修改，但对象中的属性可以修改
+- const 变量定义的引用类型，如对象，对象的引用不可修改，但对象中的属性可以修改
 
 ### 箭头函数
 
@@ -25,26 +25,26 @@ tags:
 
 > 箭头函数可以替换函数表达式，但是不能替换函数声明
 
-**箭头函数没有this，**，如果你在箭头函数中使用this，那么this一定是外层的this
+**箭头函数没有 this，**，如果你在箭头函数中使用 this，那么 this 一定是外层的 this
 
 ```javascript
 const person = {
-    name: 'tom',
-    getName: () => this.name
-}
+  name: "tom",
+  getName: () => this.name,
+};
 
-person.getName();  // Cannot read properties of undefined (reading 'name')
+person.getName(); // Cannot read properties of undefined (reading 'name')
 
 const person = {
-    name: 'tom',
-    getName: function() {
-      return () => this.name
-    }
-}
+  name: "tom",
+  getName: function () {
+    return () => this.name;
+  },
+};
 person.getName()(); // tom
 ```
 
-> 在ES6中，会默认采用严格模式，因此this也不会自动指向window对象了，而箭头函数本身并没有this，因此this就只能是undefined，这一点，在使用的时候，一定要慎重慎重再慎重，不然踩了坑你都不知道自己错在哪！这种情况，如果你还想用this，就不要用使用箭头函数的写法。
+> 在 ES6 中，会默认采用严格模式，因此 this 也不会自动指向 window 对象了，而箭头函数本身并没有 this，因此 this 就只能是 undefined，这一点，在使用的时候，一定要慎重慎重再慎重，不然踩了坑你都不知道自己错在哪！这种情况，如果你还想用 this，就不要用使用箭头函数的写法。
 
 **箭头函数中无法访问`arguments`**
 
@@ -54,7 +54,7 @@ person.getName()(); // tom
 // es6
 const a = 20;
 const b = 30;
-const string = `${a}+${b}=${a+b}`;
+const string = `${a}+${b}=${a + b}`;
 ```
 
 ### 解析结构
@@ -62,11 +62,11 @@ const string = `${a}+${b}=${a+b}`;
 ```javascript
 // 首先有这么一个对象
 const props = {
-    className: 'tiger-button',
-    loading: false,
-    clicked: true,
-    disabled: 'disabled'
-}
+  className: "tiger-button",
+  loading: false,
+  clicked: true,
+  disabled: "disabled",
+};
 ```
 
 ```javascript
@@ -97,7 +97,7 @@ const [a, b, c] = arr;
 
 ```javascript
 function add(x = 20, y = 30) {
-    return x + y;
+  return x + y;
 }
 
 console.log(add());
@@ -105,7 +105,7 @@ console.log(add());
 
 ### 展开运算符
 
-在ES6中用`...`来表示展开运算符，它可以将数组方法或者对象进行展开
+在 ES6 中用`...`来表示展开运算符，它可以将数组方法或者对象进行展开
 
 ```javascript
 const arr1 = [1, 2, 3];
@@ -116,15 +116,15 @@ const arr2 = [...arr1, 10, 20, 30]; // [1, 2, 3, 10, 20, 30];
 const obj1 = {
   a: 1,
   b: 2,
-  c: 3
-}
+  c: 3,
+};
 
 const obj2 = {
   ...obj1,
   d: 4,
   e: 5,
-  f: 6
-}
+  f: 6,
+};
 
 // { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 }
 ```
@@ -153,30 +153,34 @@ console.log(others) // { src: 'xxxx', mode: 'si' }
 ```javascript
 // 所有参数之和
 const add = (a, b, ...more) => {
-    return more.reduce((m, n) => m + n, a + b)
-}
+  return more.reduce((m, n) => m + n, a + b);
+};
 
-console.log(add(1, 23, 1, 2, 3, 4, 5)) // 39
+console.log(add(1, 23, 1, 2, 3, 4, 5)); // 39
 ```
 
-### 对象字面量和class
+### 对象字面量和 class
 
 #### 对象字面量
 
 - 属性值同名省略
 
 - 对象中的属性可以采用`[params]`，实现**变量**属性名
-  
-  - 在ant-design的源码实现中，就大量使用了这种方式来拼接当前元素的className，例如:
-    
+
+  - 在 ant-design 的源码实现中，就大量使用了这种方式来拼接当前元素的 className，例如:
+
     ```javascript
-    let alertCls = classNames(prefixCls, {
-          [`${prefixCls}-${type}`]: true,
-          [`${prefixCls}-close`]: !this.state.closing,
-          [`${prefixCls}-with-description`]: !!description,
-          [`${prefixCls}-no-icon`]: !showIcon,
-          [`${prefixCls}-banner`]: !!banner,
-     }, className);
+    let alertCls = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-${type}`]: true,
+        [`${prefixCls}-close`]: !this.state.closing,
+        [`${prefixCls}-with-description`]: !!description,
+        [`${prefixCls}-no-icon`]: !showIcon,
+        [`${prefixCls}-banner`]: !!banner,
+      },
+      className
+    );
     ```
 
 #### class
@@ -190,51 +194,54 @@ function Person(name, age) {
 }
 
 // 原型方法
-Person.prototype.getName = function() {
-  return this.name
-}
+Person.prototype.getName = function () {
+  return this.name;
+};
 
 // ES6
 class Person {
-  constructor(name, age) {  // 构造函数
+  constructor(name, age) {
+    // 构造函数
     this.name = name;
     this.age = age;
   }
 
-  getName() {  // 原型方法
-    return this.name
+  getName() {
+    // 原型方法
+    return this.name;
   }
 }
 ```
 
-> babel 会将ES6的写法编译成为利用`object.defineProperty`方式实现
+> babel 会将 ES6 的写法编译成为利用`object.defineProperty`方式实现
 > `Object.defineProperty()` 方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
 
 实际开发中还有几种写法方式不同
 
 ```javascript
 class Person {
-  constructor(name, age) {  // 构造函数
+  constructor(name, age) {
+    // 构造函数
     this.name = name;
     this.age = age;
   }
 
-  getName() {   // 方法添加到原型中
-    return this.name
+  getName() {
+    // 方法添加到原型中
+    return this.name;
   }
 
-  static a = 20;  // 相当于类的私有属性
+  static a = 20; // 相当于类的私有属性
 
-  c = 20;   // 属性添加到构造函数中，相当于 this.c = 20
+  c = 20; // 属性添加到构造函数中，相当于 this.c = 20
 
-  getAge = () => this.age   //方法添加到构造函数，等同this.getAge = function() {}
-
+  getAge = () => this.age; //方法添加到构造函数，等同this.getAge = function() {}
 }
 ```
 
 箭头函数还是要注意**this**指向问题
 
-**继承extends**
+**继承 extends**
 
 ```javascript
 class Person {
@@ -244,7 +251,7 @@ class Person {
   }
 
   getName() {
-    return this.name
+    return this.name;
   }
 }
 
@@ -263,5 +270,5 @@ class Student extends Person {
 ```
 
 > `super(name, age) === Person.call(this)`
-> 
-> super还可以直接调用父级的原型方法，`super.getName()`
+>
+> super 还可以直接调用父级的原型方法，`super.getName()`

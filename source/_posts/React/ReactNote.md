@@ -1,10 +1,10 @@
 ---
 title: React Note
 date: 2023/7/20
-updated: 2023/7/25
-categories: 
+updated: 2023/7/26
+categories:
   - React
-tags: 
+tags:
 ---
 
 # ReactNote
@@ -50,7 +50,7 @@ export function getFinalState(baseState, queue) {
   let finalState = baseState;
 
   for (let update of queue) {
-    if (typeof update === 'function') {
+    if (typeof update === "function") {
       // 调用更新函数
       finalState = update(finalState);
     } else {
@@ -64,7 +64,7 @@ export function getFinalState(baseState, queue) {
 ```
 
 ```js
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Counter() {
   const [number, setNumber] = useState(0);
@@ -72,17 +72,24 @@ export default function Counter() {
   return (
     <>
       <h1>{number}</h1>
-      <button onClick={() => {
-      let k=0;
-        setNumber(number + 5);
-        setNumber(n => {alert(k++);return n+1});// 这里的alert会执行两次
-      }}>增加数字</button>
+      <button
+        onClick={() => {
+          let k = 0;
+          setNumber(number + 5);
+          setNumber((n) => {
+            alert(k++);
+            return n + 1;
+          }); // 这里的alert会执行两次
+        }}
+      >
+        增加数字
+      </button>
     </>
-  )
+  );
 }
 ```
 
-alert 执行两次原因：**浏览器严格模式导致的**。（只会在DEV环境下）
+alert 执行两次原因：**浏览器严格模式导致的**。（只会在 DEV 环境下）
 
 ![](https://s2.loli.net/2023/07/25/TfFjse3wzObItoh.png)
 
@@ -148,10 +155,10 @@ function Gallery() {
     onMoreClick: handleMoreClick,
     header: `${sculpture.name} by ${sculpture.artist}`,
     counter: `${index + 1} of ${sculptureList.length}`,
-    more: `${showMore ? 'Hide' : 'Show'} details`,
+    more: `${showMore ? "Hide" : "Show"} details`,
     description: showMore ? sculpture.description : null,
     imageSrc: sculpture.url,
-    imageAlt: sculpture.alt
+    imageAlt: sculpture.alt,
   };
 }
 
@@ -171,30 +178,35 @@ function updateDOM() {
   image.alt = output.imageAlt;
   if (output.description !== null) {
     description.textContent = output.description;
-    description.style.display = '';
+    description.style.display = "";
   } else {
-    description.style.display = 'none';
+    description.style.display = "none";
   }
 }
 
-let nextButton = document.getElementById('nextButton');
-let header = document.getElementById('header');
-let moreButton = document.getElementById('moreButton');
-let description = document.getElementById('description');
-let image = document.getElementById('image');
-let sculptureList = [{
-  name: 'Homenaje a la Neurocirugía',
-  artist: 'Marta Colvin Andrade',
-  description: 'Although Colvin is predominantly known for abstract themes that allude to pre-Hispanic symbols, this gigantic sculpture, an homage to neurosurgery, is one of her most recognizable public art pieces.',
-  url: 'https://i.imgur.com/Mx7dA2Y.jpg',
-  alt: 'A bronze statue of two crossed hands delicately holding a human brain in their fingertips.'  
-}, {
-  name: 'Floralis Genérica',
-  artist: 'Eduardo Catalano',
-  description: 'This enormous (75 ft. or 23m) silver flower is located in Buenos Aires. It is designed to move, closing its petals in the evening or when strong winds blow and opening them in the morning.',
-  url: 'https://i.imgur.com/ZF6s192m.jpg',
-  alt: 'A gigantic metallic flower sculpture with reflective mirror-like petals and strong stamens.'
-}];
+let nextButton = document.getElementById("nextButton");
+let header = document.getElementById("header");
+let moreButton = document.getElementById("moreButton");
+let description = document.getElementById("description");
+let image = document.getElementById("image");
+let sculptureList = [
+  {
+    name: "Homenaje a la Neurocirugía",
+    artist: "Marta Colvin Andrade",
+    description:
+      "Although Colvin is predominantly known for abstract themes that allude to pre-Hispanic symbols, this gigantic sculpture, an homage to neurosurgery, is one of her most recognizable public art pieces.",
+    url: "https://i.imgur.com/Mx7dA2Y.jpg",
+    alt: "A bronze statue of two crossed hands delicately holding a human brain in their fingertips.",
+  },
+  {
+    name: "Floralis Genérica",
+    artist: "Eduardo Catalano",
+    description:
+      "This enormous (75 ft. or 23m) silver flower is located in Buenos Aires. It is designed to move, closing its petals in the evening or when strong winds blow and opening them in the morning.",
+    url: "https://i.imgur.com/ZF6s192m.jpg",
+    alt: "A gigantic metallic flower sculpture with reflective mirror-like petals and strong stamens.",
+  },
+];
 
 // 使 UI 匹配当前 state
 updateDOM();
@@ -217,7 +229,7 @@ updateDOM();
 ```js
 setPerson({
   ...person, // 复制上一个 person 中的所有字段
-  firstName: e.target.value // 但是覆盖 firstName 字段 
+  firstName: e.target.value, // 但是覆盖 firstName 字段
 });
 ```
 
@@ -226,46 +238,49 @@ setPerson({
 更新嵌套对象，需要多次展开。
 
 ```js
-const nextArtwork = { ...person.artwork, city: 'New Delhi' };
+const nextArtwork = { ...person.artwork, city: "New Delhi" };
 const nextPerson = { ...person, artwork: nextArtwork };
 setPerson(nextPerson);
 
 /** or */
 
 setPerson({
-  ...person, // 复制其它字段的数据 
-  artwork: { // 替换 artwork 字段 
+  ...person, // 复制其它字段的数据
+  artwork: {
+    // 替换 artwork 字段
     ...person.artwork, // 复制之前 person.artwork 中的数据
-    city: 'New Delhi' // 但是将 city 的值替换为 New Delhi！
-  }
+    city: "New Delhi", // 但是将 city 的值替换为 New Delhi！
+  },
 });
 ```
 
 ### array update
 
-|     | change arr         | return new arr  |
-| --- | ------------------ | --------------- |
+|     | change arr          | return new arr   |
+| --- | ------------------- | ---------------- |
 | add | push、unshift       | concat、[...arr] |
-| del | pop、shift、splice   | filter、slice    |
-| rep | splice、arr[i] = xx | map             |
-| sor | reverse、sort       | clone and sort  |
+| del | pop、shift、splice  | filter、slice    |
+| rep | splice、arr[i] = xx | map              |
+| sor | reverse、sort       | clone and sort   |
 
 同对象一样，也要看做不可变数据。
 
 数组中的对象，实际上存储的也是对象的地址，所以直接修改也是不可以的，可以使用 map 生成新的数组进行更新。
 
 ```js
-setMyList(myList.map(artwork => {
-  if (artwork.id === artworkId) {
-    // 创建包含变更的*新*对象
-    return { ...artwork, seen: nextSeen };
-  } else {
-    // 没有变更
-    return artwork; 
- }
-}));
-updateMyTodos(draft => {
-  const artwork = draft.find(a => a.id === artworkId);
+setMyList(
+  myList.map((artwork) => {
+    if (artwork.id === artworkId) {
+      // 创建包含变更的*新*对象
+      return { ...artwork, seen: nextSeen };
+    } else {
+      // 没有变更
+      return artwork;
+    }
+  })
+);
+updateMyTodos((draft) => {
+  const artwork = draft.find((a) => a.id === artworkId);
   artwork.seen = nextSeen;
 });
 ```
@@ -275,8 +290,8 @@ updateMyTodos(draft => {
 **Immer 简化更新**：
 
 ```js
-updatePerson(draft => {
-  draft.artwork.city = 'Lagos';
+updatePerson((draft) => {
+  draft.artwork.city = "Lagos";
 });
 ```
 
@@ -287,10 +302,10 @@ updatePerson(draft => {
 同步更新 state，将直接更新 DOM。
 
 ```js
-import { flushSync } from 'react-dom';
+import { flushSync } from "react-dom";
 
 flushSync(() => {
-  setTodos([ ...todos, newTodo]);
+  setTodos([...todos, newTodo]);
 });
 listRef.current.lastChild.scrollIntoView();
 ```
@@ -307,7 +322,7 @@ listRef.current.lastChild.scrollIntoView();
 
 **避免冗余、矛盾、重复、深度嵌套的 state**。
 
-**UI树：**
+**UI 树：**
 
 <img src="https://react.docschina.org/_next/image?url=%2Fimages%2Fdocs%2Fdiagrams%2Fpreserving_state_dom_tree.png&w=1920&q=75" title="" alt="Diagram with three sections arranged horizontally. In the first section, there are three rectangles stacked vertically, with labels 'Component A', 'Component B', and 'Component C'. Transitioning to the next pane is an arrow with the React logo on top labeled 'React'. The middle section contains a tree of components, with the root labeled 'A' and two children labeled 'B' and 'C'. The next section is again transitioned using an arrow with the React logo on top labeled 'React'. The third and final section is a wireframe of a browser, containing a tree of 8 nodes, which has only a subset highlighted (indicating the subtree from the middle section)." data-align="inline">
 
@@ -321,16 +336,22 @@ listRef.current.lastChild.scrollIntoView();
 
 纯函数
 
-`useReducer(callback: (state: any, action: any) => void, initState: any): [state: any, dispatch: () => void];`
+```ts
+type ReducerAction<T> = { type: string } | T;
+declare function useReducer<T>(
+  callback: (state: T, action: ReducerAction<T>) => void,
+  initState: T
+): [state: T, dispatch: (action: ReducerAction<T>) => void];
+```
 
 ### useImmerReducer
 
 ```js
-import { useImmerReducer } from 'use-immer';
+import { useImmerReducer } from "use-immer";
 
 function tasksReducer(draft, action) {
   switch (action.type) {
-    case 'added': {
+    case "added": {
       draft.push({
         id: action.id,
         text: action.text,
@@ -338,16 +359,16 @@ function tasksReducer(draft, action) {
       });
       break;
     }
-    case 'changed': {
+    case "changed": {
       const index = draft.findIndex((t) => t.id === action.task.id);
       draft[index] = action.task;
       break;
     }
-    case 'deleted': {
+    case "deleted": {
       return draft.filter((t) => t.id !== action.id);
     }
     default: {
-      throw Error('未知 action：' + action.type);
+      throw Error("未知 action：" + action.type);
     }
   }
 }
@@ -357,7 +378,7 @@ function tasksReducer(draft, action) {
 
 类似 Vue 中的 provide/injext，主要用来解决 props 逐级透传问题。
 
-react 作为单向数据流，数据来自上层，但如果**状态提升**到太高的层级就会导致“逐层透传props”的情况。
+react 作为单向数据流，数据来自上层，但如果**状态提升**到太高的层级就会导致“逐层透传 props”的情况。
 
 ![image.png](https://s2.loli.net/2023/07/25/23Tdlw8hItBMJAV.png)
 
@@ -420,9 +441,9 @@ Context 不局限于静态值。如果你在下一次渲染时传递不同的值
 
 ```js
 /** App.js */
-import AddTask from './AddTask.js';
-import TaskList from './TaskList.js';
-import { TasksProvider } from './TasksContext.js';
+import AddTask from "./AddTask.js";
+import TaskList from "./TaskList.js";
+import { TasksProvider } from "./TasksContext.js";
 
 export default function TaskApp() {
   return (
@@ -435,22 +456,17 @@ export default function TaskApp() {
 }
 
 /** TaskContext.js */
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer } from "react";
 
 const TasksContext = createContext(null);
 const TasksDispatchContext = createContext(null);
 
 export function TasksProvider({ children }) {
-  const [tasks, dispatch] = useReducer(
-    tasksReducer,
-    initialTasks
-  );
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
 
   return (
     <TasksContext.Provider value={tasks}>
-      <TasksDispatchContext.Provider value={dispatch}>
-        {children}
-      </TasksDispatchContext.Provider>
+      <TasksDispatchContext.Provider value={dispatch}>{children}</TasksDispatchContext.Provider>
     </TasksContext.Provider>
   );
 }
@@ -466,15 +482,18 @@ export function useTasksDispatch() {
 
 function tasksReducer(tasks, action) {
   switch (action.type) {
-    case 'added': {
-      return [...tasks, {
-        id: action.id,
-        text: action.text,
-        done: false
-      }];
+    case "added": {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
     }
-    case 'changed': {
-      return tasks.map(t => {
+    case "changed": {
+      return tasks.map((t) => {
         if (t.id === action.task.id) {
           return action.task;
         } else {
@@ -482,21 +501,20 @@ function tasksReducer(tasks, action) {
         }
       });
     }
-    case 'deleted': {
-      return tasks.filter(t => t.id !== action.id);
+    case "deleted": {
+      return tasks.filter((t) => t.id !== action.id);
     }
     default: {
-      throw Error('Unknown action: ' + action.type);
+      throw Error("Unknown action: " + action.type);
     }
   }
 }
 
 const initialTasks = [
-  { id: 0, text: 'Philosopher’s Path', done: true },
-  { id: 1, text: 'Visit the temple', done: false },
-  { id: 2, text: 'Drink matcha', done: false }
+  { id: 0, text: "Philosopher’s Path", done: true },
+  { id: 1, text: "Visit the temple", done: false },
+  { id: 2, text: "Drink matcha", done: false },
 ];
-
 ```
 
 ## Ref
@@ -505,12 +523,12 @@ const initialTasks = [
 
 数据由 React 保存，与 state 不同的是，ref 更变不触发 render 。
 
-| ref                                         | state                                                                 |
-|:-------------------------------------------:|:---------------------------------------------------------------------:|
-| `useRef<T>(initialValue: T): { current: T}` | `useState<T>(initState: T): [state: T, setState: (state: T) => void]` |
-| 更改时不会触发重新渲染                                 | 更改时触发重新渲染。                                                            |
-| 可变 —— 你可以在渲染过程之外修改和更新 current 的值。           | “不可变” —— 你必须使用 state 设置函数来修改 state 变量，从而排队重新渲染。                       |
-| 你不应在渲染期间读取（或写入） current 值。                  | 你不应在渲染期间读取（或写入） current 值。                                            |
+|                          ref                          |                                   state                                    |
+| :---------------------------------------------------: | :------------------------------------------------------------------------: |
+|      `useRef<T>(initialValue: T): { current: T}`      |   `useState<T>(initState: T): [state: T, setState: (state: T) => void]`    |
+|                更改时不会触发重新渲染                 |                            更改时触发重新渲染。                            |
+| 可变 —— 你可以在渲染过程之外修改和更新 current 的值。 | “不可变” —— 你必须使用 state 设置函数来修改 state 变量，从而排队重新渲染。 |
+|      你不应在渲染期间读取（或写入） current 值。      |                你不应在渲染期间读取（或写入） current 值。                 |
 
 **使用场景：**
 
@@ -527,7 +545,7 @@ const initialTasks = [
 2. 回调函数形式
 
 ```js
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export default function Form() {
   const inputRef = useRef(null);
@@ -540,7 +558,7 @@ export default function Form() {
   return (
     <>
       <input ref={inputRef} />
-      <button onClick={handleClick} ref={c => buttonRef.current = c}>
+      <button onClick={handleClick} ref={(c) => (buttonRef.current = c)}>
         聚焦输入框
       </button>
     </>
@@ -597,7 +615,7 @@ export default function Component() {
 **仅原生 DOM，自定义组件不生效且报错**，但可以通过 `forwardRef` 将 `ref` 进行**透传**到内部 **DOM** 上，并返回给上层 ref 回调中。
 
 ```js
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useRef } from "react";
 
 const MyInput = forwardRef((props, ref) => {
   return <input {...props} ref={ref} />;
@@ -613,13 +631,10 @@ export default function Form() {
   return (
     <>
       <MyInput ref={inputRef} />
-      <button onClick={handleClick}>
-        聚焦输入框
-      </button>
+      <button onClick={handleClick}>聚焦输入框</button>
     </>
   );
 }
-
 ```
 
 ### useImperativeHandle
@@ -629,11 +644,7 @@ export default function Form() {
 通过 useImperativeHandle 返回一个对象给上层 ref 回调中。
 
 ```js
-import {
-  forwardRef, 
-  useRef, 
-  useImperativeHandle
-} from 'react';
+import { forwardRef, useRef, useImperativeHandle } from "react";
 
 const MyInput = forwardRef((props, ref) => {
   const realInputRef = useRef(null);
@@ -651,20 +662,19 @@ export default function Form() {
 
   function handleClick() {
     inputRef.current.focus();
-    console.log(inputRef.current)
+    console.log(inputRef.current);
   }
 
   return (
     <>
-      //<MyInput ref={c => inputRef.current = c} />
-      <MyInput ref={inputRef} />
-      <button onClick={handleClick}>
-        聚焦输入框
-      </button>
+      //
+      <MyInput ref={(c) => (inputRef.current = c)} />
+            
+      <MyInput ref={inputRef} />
+      <button onClick={handleClick}>聚焦输入框</button>
     </>
   );
 }
-
 ```
 
 ## Effect
@@ -672,6 +682,8 @@ export default function Form() {
 **渲染引起的副作用，渲染（包括初次）之后执行**。
 
 每一个 Effect 都是一个独立的同步过程，多个之间互不影响。
+
+### useEffect
 
 基础用法：
 
@@ -695,7 +707,7 @@ useEffect(() => {
 useEffect(() => {
   // 这里的代码只会在每次渲染后，并且 a 或 b 的值与上次渲染不一致时执行
   // cleanup
-  return () => {}
+  return () => {};
 }, [a, b]);
 ```
 
@@ -705,13 +717,15 @@ useEffect(() => {
 
 因此开发环境下 Effect 会执行两次，此时就需要设置 cleanup 清理函数，来避免一些额外的副作用的出现。
 
-**cleanup 执行时机：**
+### cleanup
+
+**执行时机：**
 
 1. 组件卸载
 
 2. 执行下一轮渲染的 Effect 之前
 
-**工作原理**：`depArr -> compare -> isShouldSyncEffect`
+**工作原理：**`depArr -> compare -> isShouldSyncEffect`
 
 **生命周期：**
 
@@ -719,32 +733,38 @@ useEffect(() => {
 
 2. 停止同步
 
-**useEffectEvent**
+### useEffectEvent
 
 将 Effect 中一些响应式数据包装起来，不作为依赖项，但 EffectEvent 中的函数仍是响应式的。
 
 ```js
 function ChatRoom({ roomId, theme }) {
   const onConnected = useEffectEvent(() => {
-    showNotification('Connected!', theme);
+    showNotification("Connected!", theme);
   });
 
   useEffect(() => {
     const connection = createConnection(serverUrl, roomId);
-    connection.on('connected', () => {
+    connection.on("connected", () => {
       onConnected();
     });
     connection.connect();
     return () => connection.disconnect();
   }, [roomId]);
 
-  return <h1>Welcome to the {roomId} room!</h1>
+  return <h1>Welcome to the {roomId} room!</h1>;
 }
 ```
 
 **Effect & 事件处理：**
 
-| Effect     | 事件处理          |
-|:----------:|:-------------:|
-| 需要同步的时候运行  | 响应特定交互时运行     |
+|        Effect        |          事件处理          |
+| :------------------: | :------------------------: |
+|  需要同步的时候运行  |     响应特定交互时运行     |
 | 内部的逻辑是响应式的 | 函数内部的逻辑是非响应式的 |
+
+## Custom Hooks
+
+状态逻辑共享，而不是状态本身。
+
+`effect -> hooks`

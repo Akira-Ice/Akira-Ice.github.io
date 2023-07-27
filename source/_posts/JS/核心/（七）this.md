@@ -1,25 +1,25 @@
 ---
 title: this
 date: 2021/10/17
+updated: 2021/10/17
 categories:
-  - [JavaScript,核心]
-tags: 
-  - JavaScript
+  - [JavaScript, 核心]
+tags:
 ---
 
 # this
 
 ![](https://s2.loli.net/2023/03/05/gAQwalibW9X1nK3.webp)
 
-**this的指向，是在函数被调用的时候被确定的，也就是执行上下文被创建时确定的**
+**this 的指向，是在函数被调用的时候被确定的，也就是执行上下文被创建时确定的**
 
-同一个函数，调用方式不同，this指向也不同
+同一个函数，调用方式不同，this 指向也不同
 
 ```javascript
 var a = 10;
 var obj = {
-  a: 20
-}
+  a: 20,
+};
 
 function fn() {
   console.log(this.a);
@@ -29,7 +29,7 @@ fn(); // 10 window调用
 fn.call(obj); // 20 call指定this为obj
 ```
 
-**在函数执行过程中，this一旦被确定，就不可更改了**
+**在函数执行过程中，this 一旦被确定，就不可更改了**
 
 ```javascript
 var a = 10;
@@ -45,9 +45,9 @@ function fn() {
 fn();
 ```
 
-### 全局对象中的this
+### 全局对象中的 this
 
-全局环境中的this。指向它本身
+全局环境中的 this。指向它本身
 
 ```javascript
 // 通过this绑定到全局对象
@@ -73,21 +73,21 @@ var obj = {
   c: this.a + 20,
   fn: function () {
     return this.a;
-  }
-}
+  },
+};
 
-console.log(obj.c);  // 40 
-console.log(obj.fn());  // 10
+console.log(obj.c); // 40
+console.log(obj.fn()); // 10
 ```
 
-在函数上下文中，this由调用者提供，由调用函数的方式来决定。**严格模式下，如果调用者函数，被一个对象所拥有，那么该函数在调用时，内部的this指向该对象。如果函数独立调用，那么该函数内部的this指向undefined。但在非严格模式，当this指向undefined时，this会指向全局对象**
+在函数上下文中，this 由调用者提供，由调用函数的方式来决定。**严格模式下，如果调用者函数，被一个对象所拥有，那么该函数在调用时，内部的 this 指向该对象。如果函数独立调用，那么该函数内部的 this 指向 undefined。但在非严格模式，当 this 指向 undefined 时，this 会指向全局对象**
 
 demo03
 
-单独的`{}`不会形成新的作用域，因此这里的`this.a`，由于并没有作用域的限制，它仍然处于全局作用域之中。所以这里的this其实是指向的window对象。
+单独的`{}`不会形成新的作用域，因此这里的`this.a`，由于并没有作用域的限制，它仍然处于全局作用域之中。所以这里的 this 其实是指向的 window 对象。
 
 ```javascript
-'use strict';
+"use strict";
 var a = 20;
 function foo() {
   var a = 1;
@@ -96,17 +96,17 @@ function foo() {
     c: this.a + 20,
     fn: function () {
       return this.a;
-    }
-  }
+    },
+  };
   return obj.c;
 }
-console.log(foo());    // TypeError: Cannot read properties of undefined (reading 'a')
-console.log(window.foo());  // 40
+console.log(foo()); // TypeError: Cannot read properties of undefined (reading 'a')
+console.log(window.foo()); // 40
 ```
 
-严格模式this指向undefined
+严格模式 this 指向 undefined
 
-**注意，无论是否严格模式，全局声明的变量都会变成window对象上的属性**
+**注意，无论是否严格模式，全局声明的变量都会变成 window 对象上的属性**
 
 ```javascript
 var a = 20;
@@ -114,12 +114,12 @@ var foo = {
   a: 10,
   getA: function () {
     return this.a;
-  }
-}
+  },
+};
 console.log(foo.getA()); // 10
 
 var test = foo.getA;
-console.log(test());  // 20
+console.log(test()); // 20
 ```
 
 ```javascript
@@ -129,12 +129,12 @@ function getA() {
 }
 var foo = {
   a: 10,
-  getA: getA
-}
-console.log(foo.getA());  // 10
+  getA: getA,
+};
+console.log(foo.getA()); // 10
 ```
 
-### 使用call、apply显示指定this
+### 使用 call、apply 显示指定 this
 
 `function.call(object, params, params, ...)`
 
@@ -145,8 +145,8 @@ function fn(num1, num2) {
   console.log(this.a + num1 + num2);
 }
 var obj = {
-  a: 20
-}
+  a: 20,
+};
 
 fn.call(obj, 100, 10); // 130
 fn.apply(obj, [20, 10]); // 50
@@ -166,18 +166,18 @@ exam(2, 8, 9, 10, 3);
 // [ 2, 8, 9, 10, 3 ]
 ```
 
-#### 根据自己的需要灵活修改this指向
+#### 根据自己的需要灵活修改 this 指向
 
 ```javascript
 var foo = {
-  name: 'joker',
+  name: "joker",
   showName: function () {
     console.log(this.name);
-  }
-}
+  },
+};
 var bar = {
-  name: 'rose'
-}
+  name: "rose",
+};
 foo.showName.call(bar);
 ```
 
@@ -188,52 +188,52 @@ foo.showName.call(bar);
 var Person = function (name, age) {
   this.name = name;
   this.age = age;
-  this.gender = ['man', 'woman'];
-}
+  this.gender = ["man", "woman"];
+};
 
 // 定义子类的构造函数
 var Student = function (name, age, high) {
   Person.call(this, name, age);
   this.high = high;
-}
+};
 Student.prototype.message = function () {
-  console.log('name:' + this.name + ', age:' + this.age + ', high:' + this.high + ', gender:' + this.gender[0] + ';');
-}
+  console.log("name:" + this.name + ", age:" + this.age + ", high:" + this.high + ", gender:" + this.gender[0] + ";");
+};
 
-new Student('xiaom', 12, '150cm').message();
+new Student("xiaom", 12, "150cm").message();
 
 // result
 // name:xiaom, age:12, high:150cm, gender:man;
 ```
 
-在Student的构造函数中，借助call方法，将父级的构造函数执行了一次，相当于将Person中的代码，在Sudent中复制了一份，其中的this指向为从Student中new出来的实例对象。call方法保证了this的指向正确，因此就相当于实现了继承。Student的构造函数等同于下。
+在 Student 的构造函数中，借助 call 方法，将父级的构造函数执行了一次，相当于将 Person 中的代码，在 Sudent 中复制了一份，其中的 this 指向为从 Student 中 new 出来的实例对象。call 方法保证了 this 的指向正确，因此就相当于实现了继承。Student 的构造函数等同于下。
 
 ```javascript
 var Student = function (name, age, high) {
   this.name = name;
   this.age = age;
-  this.gender = ['man', 'woman'];
+  this.gender = ["man", "woman"];
   // Person.call(this, name, age); 这一句话，相当于上面三句话，因此实现了继承
   this.high = high;
-}
+};
 ```
 
-#### 在向其他执行上下文的传递中，确保this的指向保持不变
+#### 在向其他执行上下文的传递中，确保 this 的指向保持不变
 
 ```javascript
 var obj = {
   a: 20,
   getA: function () {
     setTimeout(function () {
-      console.log(this.a)
-    }, 1000)
-  }
-}
+      console.log(this.a);
+    }, 1000);
+  },
+};
 
 obj.getA();
 ```
 
-闭包与apply方法，封装一个bind方法
+闭包与 apply 方法，封装一个 bind 方法
 
 ```javascript
 function bind(fn, obj) {
@@ -254,46 +254,47 @@ var obj = {
 obj.getA();
 ```
 
-同ES5中的bind方法
+同 ES5 中的 bind 方法
 
 ```javascript
 var obj = {
   a: 20,
   getA: function () {
-    setTimeout(function () {
-      console.log(this.a)
-    }.bind(this), 1000)
-  }
-}
+    setTimeout(
+      function () {
+        console.log(this.a);
+      }.bind(this),
+      1000
+    );
+  },
+};
 ```
 
-**ES6中也常常使用箭头函数的方式来替代这种方案**
+**ES6 中也常常使用箭头函数的方式来替代这种方案**
 
-### 构造函数与原型方法上的this
+### 构造函数与原型方法上的 this
 
 ```javascript
 function Person(name, age) {
-
-    // 这里的this指向了谁?
-    this.name = name;
-    this.age = age;   
+  // 这里的this指向了谁?
+  this.name = name;
+  this.age = age;
 }
 
-Person.prototype.getName = function() {
-
-    // 这里的this又指向了谁？
-    return this.name;
-}
+Person.prototype.getName = function () {
+  // 这里的this又指向了谁？
+  return this.name;
+};
 
 // 上面的2个this，是同一个吗，他们是否指向了原型对象？
 
-var p1 = new Person('Nick', 20);
+var p1 = new Person("Nick", 20);
 p1.getName();
 ```
 
-通过new操作符调用构造函数，会经历以下4个阶段。
+通过 new 操作符调用构造函数，会经历以下 4 个阶段。
 
 - 创建一个新的对象；
-- 将构造函数的this指向这个新对象；
+- 将构造函数的 this 指向这个新对象；
 - 指向构造函数的代码，为这个对象添加属性，方法等；
 - 返回新对象。

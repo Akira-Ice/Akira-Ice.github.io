@@ -1,10 +1,11 @@
 ---
 title: reactive 二次赋值导致响应式丢失
-date: 2023/7/25
+date: 2022/10/12
+updated: 2022/10/12
 categories:
-  - [BugRoad]
-tags: 
-  - BugRoad
+  - [BugRoad, Vue3]
+tags:
+  - reactive
 ---
 
 # reactive 二次赋值导致响应式丢失
@@ -12,8 +13,8 @@ tags:
 ## 场景一
 
 ```js
-let h = reactive({ m: 1 })
-h = { m: 2 } // 响应式丢失
+let h = reactive({ m: 1 });
+h = { m: 2 }; // 响应式丢失
 ```
 
 `javascript` 中所有数据类型都是通过 `值传递` 的。
@@ -25,12 +26,12 @@ h = { m: 2 } // 响应式丢失
 ## 场景二
 
 ```js
-let h = reactive({ a: 1, m: { n: 1 } })
-const h2 = reactive({ ...h })
-h2.a = 2
-h2.m.n = 2
-console.log(h.a, h2.a) // 1 2
-console.log(h.m.n, h2.m.n) // 2 2
+let h = reactive({ a: 1, m: { n: 1 } });
+const h2 = reactive({ ...h });
+h2.a = 2;
+h2.m.n = 2;
+console.log(h.a, h2.a); // 1 2
+console.log(h.m.n, h2.m.n); // 2 2
 ```
 
 > 通常存在的误区：通过解构对象得到的数据，可以作为深拷贝的一种形式？！

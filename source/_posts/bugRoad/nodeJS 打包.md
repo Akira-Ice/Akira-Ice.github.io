@@ -1,10 +1,11 @@
 ---
 title: nodeJS 打包
-date: 2023/7/25
+date: 2022/6/2
+updated: 2022/6/2
 categories:
-  - [BugRoad]
-tags: 
-  - BugRoad
+  - [BugRoad, NodeJS]
+tags:
+  - pkg
 ---
 
 # nodeJS 打包
@@ -41,12 +42,12 @@ tags:
 
 ![](https://s2.loli.net/2023/04/01/odRy1kBJiPm4zGZ.png)
 
-## node环境下载慢
+## node 环境下载慢
 
 pkg 打包需要特殊的 node 环境，会去 node pkg 缓存中去找，找不到就去 github 下载。
 
 每次打包的时候会显示下载的版本，可以去 github 先下载好，然后放到缓存去，缓存大致位置在：`C:\Users\lenovo\.pkg-cache`，可以用 `everything` 搜 `.pkg-cache`。
 
-[pkg资源下载](https://github.com/vercel/pkg-fetch/releases)
+[pkg 资源下载](https://github.com/vercel/pkg-fetch/releases)
 
 下载版本的名字可能会有不同，下载的是 `node-v8.17.0-win-x64`，但是需要的可能是`fetch-v8.17.0-win-x64`,修改一下名字即可。

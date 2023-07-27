@@ -26,7 +26,7 @@ favicon:
 
 # 用户头像与昵称
 avatar:
-  author_photo: /images/gilberto.png
+  author_photo: /images/AkiraIce.png
   author_nickname: Akira Ice
   path: /
 
@@ -91,7 +91,7 @@ navbar:
     key: archives
   -
     name: Categories
-    enable: false
+    enable: true
     path: /categories/
     key: categories
   -

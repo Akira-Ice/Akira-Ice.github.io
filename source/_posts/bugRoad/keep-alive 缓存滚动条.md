@@ -1,10 +1,12 @@
 ---
 title: keep-alive 缓存滚动条
-date: 2023/7/25
+date: 2022/6/2
+updated: 2022/6/2
 categories:
-  - [BugRoad]
-tags: 
-  - BugRoad
+  - [BugRoad, Vue3]
+tags:
+  - keep-alive
+  - scroll
 ---
 
 # keep-alive 缓存滚动条
@@ -54,8 +56,8 @@ export default {
   activated() {
     // 记录滚动条位置
     this.$scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
-  }
-}
+  },
+};
 ```
 
 在这个示例中，`activated` 钩子函数中记录了滚动条位置，将其保存在组件的 `$scrollPosition` 属性中。
@@ -67,8 +69,8 @@ export default {
   deactivated() {
     // 恢复滚动条位置
     document.documentElement.scrollTop = document.body.scrollTop = this.$scrollPosition || 0;
-  }
-}
+  },
+};
 ```
 
 在这个示例中，`deactivated` 钩子函数中恢复了滚动条位置，将滚动条位置设置为组件的 `$scrollPosition` 属性保存的值。

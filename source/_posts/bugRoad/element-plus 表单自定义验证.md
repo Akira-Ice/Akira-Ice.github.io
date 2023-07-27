@@ -1,10 +1,11 @@
 ---
 title: element-plus 表单自定义验证
-date: 2023/7/25
+date: 2022/11/16
+updated: 2022/11/16
 categories:
-  - [BugRoad]
-tags: 
-  - BugRoad
+  - [BugRoad, element-plus]
+tags:
+  - FormValidator
 ---
 
 # element-plus 表单自定义验证
@@ -30,43 +31,43 @@ tags:
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      form: {
-        alphanumeric: ''
-      },
-      rules: {
-        alphanumeric: [
-          { required: true, message: '请输入英文和数字的组合类型', trigger: 'blur' },
-          { validator: this.validateAlphanumeric, message: '请输入英文和数字的组合类型', trigger: 'blur' }
-        ]
-      }
-    };
-  },
-  methods: {
-    validateAlphanumeric(rule, value, callback) {
-      const alphanumericRegex = /^[a-zA-Z0-9]+$/;
-      if (value && !alphanumericRegex.test(value)) {
-        callback(new Error('请输入英文和数字的组合类型'));
-      } else {
-        callback();
-      }
+  export default {
+    data() {
+      return {
+        form: {
+          alphanumeric: "",
+        },
+        rules: {
+          alphanumeric: [
+            { required: true, message: "请输入英文和数字的组合类型", trigger: "blur" },
+            { validator: this.validateAlphanumeric, message: "请输入英文和数字的组合类型", trigger: "blur" },
+          ],
+        },
+      };
     },
-    submitForm() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          // 表单验证通过
-          console.log('验证通过');
+    methods: {
+      validateAlphanumeric(rule, value, callback) {
+        const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+        if (value && !alphanumericRegex.test(value)) {
+          callback(new Error("请输入英文和数字的组合类型"));
         } else {
-          // 表单验证失败
-          console.log('验证失败');
-          return false;
+          callback();
         }
-      });
-    }
-  }
-};
+      },
+      submitForm() {
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            // 表单验证通过
+            console.log("验证通过");
+          } else {
+            // 表单验证失败
+            console.log("验证失败");
+            return false;
+          }
+        });
+      },
+    },
+  };
 </script>
 ```
 
@@ -95,35 +96,35 @@ export default {
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      form: {
-        alphanumeric: ''
+  export default {
+    data() {
+      return {
+        form: {
+          alphanumeric: "",
+        },
+        rules: {
+          alphanumeric: [
+            { required: true, message: "请输入英文和数字的组合类型", trigger: "blur" },
+            { pattern: /^[a-zA-Z0-9]+$/, message: "请输入英文和数字的组合类型", trigger: "blur" },
+          ],
+        },
+      };
+    },
+    methods: {
+      submitForm() {
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            // 表单验证通过
+            console.log("验证通过");
+          } else {
+            // 表单验证失败
+            console.log("验证失败");
+            return false;
+          }
+        });
       },
-      rules: {
-        alphanumeric: [
-          { required: true, message: '请输入英文和数字的组合类型', trigger: 'blur' },
-          { pattern: /^[a-zA-Z0-9]+$/, message: '请输入英文和数字的组合类型', trigger: 'blur' }
-        ]
-      }
-    };
-  },
-  methods: {
-    submitForm() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          // 表单验证通过
-          console.log('验证通过');
-        } else {
-          // 表单验证失败
-          console.log('验证失败');
-          return false;
-        }
-      });
-    }
-  }
-};
+    },
+  };
 </script>
 ```
 

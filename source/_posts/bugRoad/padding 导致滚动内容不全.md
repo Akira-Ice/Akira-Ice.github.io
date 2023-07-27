@@ -1,10 +1,11 @@
 ---
 title: padding 导致滚动内容不全
-date: 2023/7/25
+date: 2023/3/14
+updated: 2023/3/14
 categories:
-  - [BugRoad]
-tags: 
-  - BugRoad
+  - [BugRoad, CSS]
+tags:
+  - scroll
 ---
 
 # padding 导致滚动内容不全
@@ -35,13 +36,13 @@ tags:
 </div>
 
 <style>
-.element {
-  /* 其他样式 */
-}
-.inner-element {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
+  .element {
+    /* 其他样式 */
+  }
+  .inner-element {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 </style>
 ```
 

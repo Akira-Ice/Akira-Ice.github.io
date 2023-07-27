@@ -1,10 +1,11 @@
 ---
 title: VueRouter 传递 state 参数无效
-date: 2023/7/25
+date: 2022/9/20
+updated: 2022/9/20
 categories:
-  - [BugRoad]
+  - [BugRoad, Vue3]
 tags: 
-  - BugRoad
+  - VueRouter
 ---
 
 # VueRouter 传递 state 参数无效

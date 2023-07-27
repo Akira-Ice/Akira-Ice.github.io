@@ -1,10 +1,10 @@
 ---
 title: call-apply-bind
 date: 2021/10/26
+updated: 2021/10/26
 categories:
   - [JavaScript]
 tags: 
-  - JavaScript
 ---
 
 ### call-apply-bind

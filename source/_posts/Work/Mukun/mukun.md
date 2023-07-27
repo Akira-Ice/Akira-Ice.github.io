@@ -1,9 +1,9 @@
 ---
 title: MuKun 总结
 date: 2022/08/20
-updated: 
+updated: 2022/08/20
 categories:
-  - [work, Mukun]
+  - [Work, Mukun]
 tags:
 hidden: true
 ---

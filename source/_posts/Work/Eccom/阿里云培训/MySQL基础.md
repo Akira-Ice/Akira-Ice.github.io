@@ -1,113 +1,114 @@
 ---
 title: 阿里云培训 - MySQL基础
 date: 2023/02/23
+updated: 2023/02/23
 categories:
-  - [work,Eccom]
-tags: 
+  - [Work, Eccom]
+tags:
   - 阿里云培训
   - MySQL
 ---
 
-# MySQL基础
+# MySQL 基础
 
-## MySQL介绍
+## MySQL 介绍
 
 **关系型数据库**管理系统
 
 体积小、速度快、总体拥有成本低
 
-## MySQL存储引擎
+## MySQL 存储引擎
 
 1. MyISAM
-   
+
    MySQL 5.0 以前默认的数据库引擎，最常用，拥有较高的插入、查询速度，蛋不支持事务。
 
 2. InnoDB
-   
-   事务型数据库的首选引擎，支持ACID事务，支持行级锁定，MySQL 5.5 起成为默认数据库引擎。
+
+   事务型数据库的首选引擎，支持 ACID 事务，支持行级锁定，MySQL 5.5 起成为默认数据库引擎。
 
 3. MEMORY
-   
-   MEMORY存储引擎提供 “内存表”，也不支持事务、外键。
+
+   MEMORY 存储引擎提供 “内存表”，也不支持事务、外键。
 
 4. ARCHIVE
-   
-   ARCHIVE存储引擎是被设计用来存储企业中的大量流水数据的存储引擎。
 
-## MySQL系统命令
+   ARCHIVE 存储引擎是被设计用来存储企业中的大量流水数据的存储引擎。
 
-### MySQL服务管理
+## MySQL 系统命令
+
+### MySQL 服务管理
 
 1. 服务状态查询
-   
+
    `service mysqld status`
 
 2. 启动服务
-   
+
    `service mysqld start`
 
 3. 停止服务
-   
+
    `service mysqld stop`
 
-4. 检查MySQL端口
-   
+4. 检查 MySQL 端口
+
    `netstat -antulp | grep mysqld`
 
 ### 常用指令
 
 1. 获取帮助
-   
+
    `help(\?)`
 
 2. 选择数据库
-   
+
    `use(\u)`
 
 3. 执行 SQL 文件
-   
+
    `source(\.)`
 
 4. 清空当前的输入语句
-   
+
    `clear(\c)`
 
 ### 元数据查询
 
 1. 服务器版本信息
-   
+
    `SELECT VERSION()`
 
 2. 当前数据库名
-   
+
    `SELECT DATABASE()`
 
 3. 当前用户名
-   
+
    `SELECT USER()`
 
 4. 服务器配置变量
-   
+
    `SHOW VARIABLES`
 
 5. 服务器状态
-   
+
    `SHOW STATUS`
 
-### MySQL配置文件
+### MySQL 配置文件
 
-1. MySQL配置文件默认路径
-   
+1. MySQL 配置文件默认路径
+
    `/etc/my.cnf`
 
 2. 常用配置参数
-   
-   `basedir` —— MySQL根目录
-   
+
+   `basedir` —— MySQL 根目录
+
    `datadir` —— 数据库文件目录
-   
+
    `socket` —— 为 MySQL 客户端与服务器之间本地通信指定的一个套接字文件
-   
+
    `character-set-server` —— 新数据库或数据库的默认字符集
 
 ## SQL
@@ -117,73 +118,73 @@ tags:
 ### 语法组成
 
 1. DML
-   
+
    查询、插入、删除和修改数据库中的数据。
-   
+
    SELECT、INSERT、UPDATE、DELETE 等。
 
 2. DCL
-   
+
    用来控制存取许可、存取权限等。
-   
+
    GRANT、REVOKE 等。
 
 3. DDL
-   
+
    用来建立数据库、数据库对象和定义其列。
-   
+
    CREATE TABLE、DROP TABLE、ALTER TABLE 等。
 
 4. 功能函数
-   
+
    日期函数、数据函数、字符函数、系统函数等。
 
 ### 数据库操作
 
 1. 显示数据库
-   
+
    `show databases;`
 
 2. 选择操作数据库
-   
+
    `use <dbname>;`
 
 3. 创建数据库
-   
+
    `create database <dbname> [charset=utf8];`
 
 4. 显示数据库创建语句
-   
+
    `show create database <dbname>;`
 
 5. 删除数据库
-   
+
    `drop <dbname>;`
 
 6. 显示数据库中创建的所有表
-   
+
    `show tables;`
 
 7. 显示表结构
-   
+
    `desc[rive] <tbname>;`
-   
+
    `show colums from <tbname>;`
 
 8. 现实数据表创建语句
-   
+
    `show create table <tbname>;`
 
-### MySQL数据类型
+### MySQL 数据类型
 
 #### 数值类型
 
 #### 自增类型 - auto_increment
 
-1. 字段值每次自动增长1。
+1. 字段值每次自动增长 1。
 
 2. 自增型的整数字段
-   
+
    只适用于整数，在数据类型后加 auto_increment 关键字表示。如：`smallint unsigned auto_increment;`
 
 注意：
@@ -238,7 +239,7 @@ create table tbname (
 特性：
 
 1. 临时表只在**当前**连接可见
-2. 当关闭连接时，MySQL会**自动删除**表并释放所有空间。
+2. 当关闭连接时，MySQL 会**自动删除**表并释放所有空间。
 
 ### 数据操作
 
@@ -262,7 +263,7 @@ SELECT [DISTINCET | DISTINCTROW | ALL] select_expression [
 ]
 ```
 
-##### SQL集函数
+##### SQL 集函数
 
 主要集函数：
 
@@ -286,13 +287,13 @@ SELECT [DISTINCET | DISTINCTROW | ALL] select_expression [
 #### 多表查询
 
 1. 连接查询
-   
+
    同时涉及多个表的查询称为连接查询
-   
+
    用来连接两个表的条件称为连接条件
 
 2. 连接查询的方式
-   
+
    1. 内连接
    2. 外连接
       1. 左外连接
@@ -303,12 +304,12 @@ SELECT [DISTINCET | DISTINCTROW | ALL] select_expression [
 ##### 内连接（INER JOIN）
 
 ```sql
-SELECT S.SName,C.score 
-From Score AS C 
-INNER JOIN Students AS S 
+SELECT S.SName,C.score
+From Score AS C
+INNER JOIN Students AS S
 ON C.Student_id = S.student_id
 ## or
-SELECT S.SName,C.score 
+SELECT S.SName,C.score
 From Score AS C, Students AS S
 Where c.Student_id = S.Student_id;
 ```
@@ -320,7 +321,7 @@ Where c.Student_id = S.Student_id;
 做外连以前面的表作为主表，返回所有主表中的所有行。
 
 ```sql
-SELECT sname,number 
+SELECT sname,number
 FROM student AS S
 LEFT JOIN score AS C
 ON S.sid = C.student_id;
@@ -329,7 +330,7 @@ ON S.sid = C.student_id;
 ##### 外连接 - 右连接
 
 ```sql
-SELECT sname,number 
+SELECT sname,number
 FROM student AS S
 RIGHT JOIN score AS C
 ON S.sid = C.student_id;
@@ -365,19 +366,19 @@ WHERE age > (SELECT age FROM student WHERE sname='赵六');
 ## 日志查看
 
 1. 错误日志
-   
+
    记录 MySQL 服务器启动、关闭和运行时出错等信息。
 
 2. 查询日志
-   
+
    记录 MySQL 服务器的启动和关闭信息、客户端的连接信息、更新数据库记录 SQL 语句和查询数据库记录 SQL 语句。
 
 3. 慢查询日志
-   
+
    记录执行时间超过指定时间的查询语句，通过工具分析慢查询日志开一定位 MySQL 服务器性能瓶颈所在。
 
 4. 二进制日志
-   
+
    以二进制形式记录数据库的各种操作，但不记录查询语句。
 
 ### 错误日志
@@ -407,9 +408,9 @@ WHERE age > (SELECT age FROM student WHERE sname='赵六');
 ### 数据还原
 
 1. mysql 命令导入
-   
+
    `mysql -u root -p password < sql文件`
 
 2. source
-   
+
    `source sql文件`

@@ -1,21 +1,21 @@
 ---
 title: map 转换成对象数组
-date: 2023/7/25
+date: 2022/10/2
+updated: 2022/10/2
 categories:
-  - [BugRoad]
-tags: 
-  - BugRoad
+  - [BugRoad, JS]
+tags:
 ---
 
 # map 转换成对象数组
 
-## 🤔发现问题
+## 🤔 发现问题
 
 `map => key-value`
 
 通常使用到的 `Array.from` 转换，会得到`[[key, value],....]`
 
-## 🙅‍♂️拒绝妥协，坚持解决
+## 🙅‍♂️ 拒绝妥协，坚持解决
 
 > `Array.from` 有一个回调函数，可以进一步把控数据的流向以及类型。
 

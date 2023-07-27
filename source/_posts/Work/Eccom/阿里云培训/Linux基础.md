@@ -1,14 +1,15 @@
 ---
 title: 阿里云培训 - Linux基础
 date: 2023/02/22
+updated: 2023/02/22
 categories:
-  - [work,Eccom]
-tags: 
+  - [Work, Eccom]
+tags:
   - 阿里云培训
   - Linux
 ---
 
-# Linux基础
+# Linux 基础
 
 ## 常见命令
 
@@ -44,7 +45,7 @@ tags:
 
 `tail-n 20 /etc/fstab`
 
-### vim文本编辑器
+### vim 文本编辑器
 
 ![image-20230518145505809](https://s2.loli.net/2023/05/18/PGNk7BQWReILlZr.png)
 
@@ -52,7 +53,7 @@ tags:
 
 - 命令模式
 - 插入模式
-- ex模式
+- ex 模式
 - 可视模式
 
 ### 文本统计
@@ -87,9 +88,9 @@ tags:
 
 查看个挂载点的可用空间：`df -h | awk 'print 1234'`
 
-查看每个用户的shell：` awk -F ':' '{print $1, $7}' /etc/pawword`
+查看每个用户的 shell：` awk -F ':' '{print $1, $7}' /etc/pawword`
 
-查看长度大于80字节的日志信息：`awk 'length > 80' /var/log/messages`
+查看长度大于 80 字节的日志信息：`awk 'length > 80' /var/log/messages`
 
 ### 文件查找
 
@@ -121,7 +122,7 @@ tags:
 
 ### mount
 
-挂在Linux系统外的文件。
+挂在 Linux 系统外的文件。
 
 `mount` 查看当前所有的挂载
 
@@ -208,7 +209,7 @@ tags:
 
 `tsar --io`
 
-监控io
+监控 io
 
 `tsar --traffic`
 
@@ -222,28 +223,28 @@ tags:
 
 网络时间协议
 
-### NTPServer的时间来源
+### NTPServer 的时间来源
 
 1. GPS、北斗等卫星系统
 2. 原子钟
 3. 移动基站
 4. 恒温晶振
 
-### 安装NTP
+### 安装 NTP
 
 #### 检查是否安装
 
 `rpm -q ntp`
 
-#### 安装NTP
+#### 安装 NTP
 
 `yum install ntp`
 
-### 配置NTP客户端
+### 配置 NTP 客户端
 
- 配置文件：`/etc/ntp.conf`
+配置文件：`/etc/ntp.conf`
 
-### NTP服务管理
+### NTP 服务管理
 
 服务状态查看：`service ntpd status`
 
@@ -253,13 +254,13 @@ tags:
 
 服务开启启动：`service ntpd on`
 
-### NTP常用命令
+### NTP 常用命令
 
-#### 查询NTP服务器时间
+#### 查询 NTP 服务器时间
 
 `ntpdate -q ntp1.aliyun.com`
 
-#### 检查NTP时间同步情况
+#### 检查 NTP 时间同步情况
 
 `ntpq -p`
 
@@ -273,28 +274,28 @@ tags:
 
 `/etc/yum.repos.d/*.repo`
 
-- [名称] - yum源名称
-- name - yum源的描述信息
-- baseurl - yum源地址
-- gpgcheck - 是否检查GPGKEy
+- [名称] - yum 源名称
+- name - yum 源的描述信息
+- baseurl - yum 源地址
+- gpgcheck - 是否检查 GPGKEy
 - enable - 是否可用
 
 #### 常用命令
 
 - 查看可用包版本
-  
+
   `yum list packname`
 
 - 安装
-  
+
   `yum install packname`
 
 - 搜索
-  
+
   `yum search xx`
 
 - 删除
-  
+
   `yum remove packname`
 
 ### 源码编译安装
@@ -325,18 +326,18 @@ tags:
 
 `nslookup ip`
 
-### DNS问题排查思路
+### DNS 问题排查思路
 
 - 用户不能访问，运维可访问
-  
-  - 用户DNS设置问题
+
+  - 用户 DNS 设置问题
 
 - 用户与运维都不能访问
-  
-  - 检查DNS服务是否能 ping 通
-  
-  - 查看DNS服务器的53端口是否可用
-    
+
+  - 检查 DNS 服务是否能 ping 通
+
+  - 查看 DNS 服务器的 53 端口是否可用
+
     `telnet <IP> 53`
 
 ## 网络配置
@@ -365,7 +366,7 @@ tags:
 
 文件目录：`/etc/sysconfig/network-scripts/ifcfg-*`
 
-- IPADDR —— IP地址
+- IPADDR —— IP 地址
 - NETMASK —— 子网掩码
 - GATEWAY —— 网关
 
