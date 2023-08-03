@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="keywords" content="前端,Vue,React,JavaScript,NodeJS">
+  
+  <meta name="author" content="AKira" />
+  <meta name="description" content="Akira_Blog" />
+  
+  
+  <title>
+    
+      React Note 
+      
+      
+      |
+    
+     Akira_Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/avatar.png">
+    <link rel="icon" href="/images/avatar.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img no-lazy src="/images/AkiraIce.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Akira Ice</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">React Note</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-07-26 00:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/React/" title="React">
+                    <b>#</b> React
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="ReactNote"><a href="#ReactNote" class="headerlink" title="ReactNote"></a>ReactNote</h1><h2 id="handleEvent"><a href="#handleEvent" class="headerlink" title="handleEvent"></a>handleEvent</h2><p>副作用函数</p>
+<p><strong>stopEvent</strong></p>
+<p>react 更贴近原生 JS。</p>
+<p>阻止事件传播：</p>
+<ol>
+<li><p>阻止事件冒泡：<code>e.stopPropagation()</code></p>
+</li>
+<li><p>阻止原生事件：<code>e.preventDefault()</code></p>
+</li>
+</ol>
+<h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><p><strong>特性</strong>：异步更新、合并（<strong>批处理</strong>）、顶层调用。</p>
+<p><strong>异步更新</strong>：无论是否调用更新函数，当前作用域拿到的 state 值永远是当前的快照值。</p>
+<p><strong>React 会使 state 的值始终”固定“在一次渲染的各个事件处理函数内部。</strong></p>
+<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><p><code>useState&lt;T&gt;(initState: T): [state: T, setState: (state: T) =&gt; void]</code></p>
+<p><strong>setState(callback) 更新函数</strong>：当传递的是函数时，React 会将此函数加入队列。</p>
+<p><strong>setState(n+1) 值覆盖</strong>：拿到 n 的值始终是当前组件的快照值。</p>
+<blockquote>
+<p>注意：状态值在调用更新函数时始终变化，而当前组件快照值始终不变。</p>
+</blockquote>
+<h3 id="update-queue"><a href="#update-queue" class="headerlink" title="update queue"></a>update queue</h3><p><strong>更新队列：</strong> 状态值、更新函数，最终更新结果从 useState 中返回出去。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getFinalState</span>(<span class="params">baseState, queue</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> finalState = baseState;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> update <span class="keyword">of</span> queue) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> update === <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">      <span class="comment">// 调用更新函数</span></span><br><span class="line">      finalState = <span class="title function_">update</span>(finalState);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 替换下一个 state</span></span><br><span class="line">      finalState = update;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> finalState;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Counter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [number, setNumber] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;number&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">          let k = 0;</span></span><br><span class="line"><span class="language-xml">          setNumber(number + 5);</span></span><br><span class="line"><span class="language-xml">          setNumber((n) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">            alert(k++);</span></span><br><span class="line"><span class="language-xml">            return n + 1;</span></span><br><span class="line"><span class="language-xml">          &#125;); // 这里的alert会执行两次</span></span><br><span class="line"><span class="language-xml">        &#125;&#125;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        增加数字</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>alert 执行两次原因：<strong>浏览器严格模式导致的</strong>。（只会在 DEV 环境下）</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://s2.loli.net/2023/07/25/TfFjse3wzObItoh.png"></p>
+<p><strong>React 会等到事件处理函数中的</strong> 所有 <strong>代码都运行完毕再处理你的 state 更新。</strong></p>
+<p>内部会有一个数组存储组件的所有 state 数据 以及 setState 更新函数。</p>
+<h3 id="useState-simulation"><a href="#useState-simulation" class="headerlink" title="useState simulation"></a>useState simulation</h3><p><strong><code>useState </code>模拟</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> componentHooks = [];</span><br><span class="line"><span class="keyword">let</span> currentHookIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// useState 在 React 中是如何工作的（简化版）</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">useState</span>(<span class="params">initialState</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> pair = componentHooks[currentHookIndex];</span><br><span class="line">  <span class="keyword">if</span> (pair) &#123;</span><br><span class="line">    <span class="comment">// 这不是第一次渲染</span></span><br><span class="line">    <span class="comment">// 所以 state pair 已经存在</span></span><br><span class="line">    <span class="comment">// 将其返回并为下一次 hook 的调用做准备</span></span><br><span class="line">    currentHookIndex++;</span><br><span class="line">    <span class="keyword">return</span> pair;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这是我们第一次进行渲染</span></span><br><span class="line">  <span class="comment">// 所以新建一个 state pair 然后存储它</span></span><br><span class="line">  pair = [initialState, setState];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">setState</span>(<span class="params">nextState</span>) &#123;</span><br><span class="line">    <span class="comment">// 当用户发起 state 的变更，</span></span><br><span class="line">    <span class="comment">// 把新的值放入 pair 中</span></span><br><span class="line">    pair[<span class="number">0</span>] = nextState;</span><br><span class="line">    <span class="title function_">updateDOM</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 存储这个 pair 用于将来的渲染</span></span><br><span class="line">  <span class="comment">// 并且为下一次 hook 的调用做准备</span></span><br><span class="line">  componentHooks[currentHookIndex] = pair;</span><br><span class="line">  currentHookIndex++;</span><br><span class="line">  <span class="keyword">return</span> pair;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Gallery</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 每次调用 useState() 都会得到新的 pair</span></span><br><span class="line">  <span class="keyword">const</span> [index, setIndex] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> [showMore, setShowMore] = <span class="title function_">useState</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleNextClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">setIndex</span>(index + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleMoreClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">setShowMore</span>(!showMore);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> sculpture = sculptureList[index];</span><br><span class="line">  <span class="comment">// 这个例子没有使用 React，所以</span></span><br><span class="line">  <span class="comment">// 返回一个对象而不是 JSX</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">onNextClick</span>: handleNextClick,</span><br><span class="line">    <span class="attr">onMoreClick</span>: handleMoreClick,</span><br><span class="line">    <span class="attr">header</span>: <span class="string">`<span class="subst">$&#123;sculpture.name&#125;</span> by <span class="subst">$&#123;sculpture.artist&#125;</span>`</span>,</span><br><span class="line">    <span class="attr">counter</span>: <span class="string">`<span class="subst">$&#123;index + <span class="number">1</span>&#125;</span> of <span class="subst">$&#123;sculptureList.length&#125;</span>`</span>,</span><br><span class="line">    <span class="attr">more</span>: <span class="string">`<span class="subst">$&#123;showMore ? <span class="string">&quot;Hide&quot;</span> : <span class="string">&quot;Show&quot;</span>&#125;</span> details`</span>,</span><br><span class="line">    <span class="attr">description</span>: showMore ? sculpture.<span class="property">description</span> : <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">imageSrc</span>: sculpture.<span class="property">url</span>,</span><br><span class="line">    <span class="attr">imageAlt</span>: sculpture.<span class="property">alt</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">updateDOM</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 在渲染组件之前</span></span><br><span class="line">  <span class="comment">// 重置当前 Hook 的下标</span></span><br><span class="line">  currentHookIndex = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">let</span> output = <span class="title class_">Gallery</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新 DOM 以匹配输出结果</span></span><br><span class="line">  <span class="comment">// 这部分工作由 React 为你完成</span></span><br><span class="line">  nextButton.<span class="property">onclick</span> = output.<span class="property">onNextClick</span>;</span><br><span class="line">  header.<span class="property">textContent</span> = output.<span class="property">header</span>;</span><br><span class="line">  moreButton.<span class="property">onclick</span> = output.<span class="property">onMoreClick</span>;</span><br><span class="line">  moreButton.<span class="property">textContent</span> = output.<span class="property">more</span>;</span><br><span class="line">  image.<span class="property">src</span> = output.<span class="property">imageSrc</span>;</span><br><span class="line">  image.<span class="property">alt</span> = output.<span class="property">imageAlt</span>;</span><br><span class="line">  <span class="keyword">if</span> (output.<span class="property">description</span> !== <span class="literal">null</span>) &#123;</span><br><span class="line">    description.<span class="property">textContent</span> = output.<span class="property">description</span>;</span><br><span class="line">    description.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    description.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&quot;none&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> nextButton = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;nextButton&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> header = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;header&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> moreButton = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;moreButton&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> description = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;description&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> image = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;image&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> sculptureList = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;Homenaje a la Neurocirugía&quot;</span>,</span><br><span class="line">    <span class="attr">artist</span>: <span class="string">&quot;Marta Colvin Andrade&quot;</span>,</span><br><span class="line">    <span class="attr">description</span>:</span><br><span class="line">      <span class="string">&quot;Although Colvin is predominantly known for abstract themes that allude to pre-Hispanic symbols, this gigantic sculpture, an homage to neurosurgery, is one of her most recognizable public art pieces.&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;https://i.imgur.com/Mx7dA2Y.jpg&quot;</span>,</span><br><span class="line">    <span class="attr">alt</span>: <span class="string">&quot;A bronze statue of two crossed hands delicately holding a human brain in their fingertips.&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;Floralis Genérica&quot;</span>,</span><br><span class="line">    <span class="attr">artist</span>: <span class="string">&quot;Eduardo Catalano&quot;</span>,</span><br><span class="line">    <span class="attr">description</span>:</span><br><span class="line">      <span class="string">&quot;This enormous (75 ft. or 23m) silver flower is located in Buenos Aires. It is designed to move, closing its petals in the evening or when strong winds blow and opening them in the morning.&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;https://i.imgur.com/ZF6s192m.jpg&quot;</span>,</span><br><span class="line">    <span class="attr">alt</span>: <span class="string">&quot;A gigantic metallic flower sculpture with reflective mirror-like petals and strong stamens.&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使 UI 匹配当前 state</span></span><br><span class="line"><span class="title function_">updateDOM</span>();</span><br></pre></td></tr></table></figure>
+
+<p><code>setState -&gt; updateDOM -&gt; render</code></p>
+<p><code>snapshop -&gt; setState -&gt; render -&gt; new snapshop</code></p>
+<p><code>reRender: reCall the Function -&gt; return new JSX -&gt; diff -&gt; patch -&gt; react update UI</code></p>
+<h3 id="object-update"><a href="#object-update" class="headerlink" title="object update"></a>object update</h3><p><strong>在 React 中将所有的数据视为 不可变数据 或 只读 。</strong></p>
+<p>尤其是<strong>引用类型</strong>。</p>
+<p><strong>对象展开 &amp; 覆盖</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">setPerson</span>(&#123;</span><br><span class="line">  ...person, <span class="comment">// 复制上一个 person 中的所有字段</span></span><br><span class="line">  <span class="attr">firstName</span>: e.<span class="property">target</span>.<span class="property">value</span>, <span class="comment">// 但是覆盖 firstName 字段</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>嵌套对象</strong>：</p>
+<p>更新嵌套对象，需要多次展开。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> nextArtwork = &#123; ...person.<span class="property">artwork</span>, <span class="attr">city</span>: <span class="string">&quot;New Delhi&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> nextPerson = &#123; ...person, <span class="attr">artwork</span>: nextArtwork &#125;;</span><br><span class="line"><span class="title function_">setPerson</span>(nextPerson);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** or */</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">setPerson</span>(&#123;</span><br><span class="line">  ...person, <span class="comment">// 复制其它字段的数据</span></span><br><span class="line">  <span class="attr">artwork</span>: &#123;</span><br><span class="line">    <span class="comment">// 替换 artwork 字段</span></span><br><span class="line">    ...person.<span class="property">artwork</span>, <span class="comment">// 复制之前 person.artwork 中的数据</span></span><br><span class="line">    <span class="attr">city</span>: <span class="string">&quot;New Delhi&quot;</span>, <span class="comment">// 但是将 city 的值替换为 New Delhi！</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="array-update"><a href="#array-update" class="headerlink" title="array update"></a>array update</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>change arr</th>
+<th>return new arr</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add</td>
+<td>push、unshift</td>
+<td>concat、[…arr]</td>
+</tr>
+<tr>
+<td>del</td>
+<td>pop、shift、splice</td>
+<td>filter、slice</td>
+</tr>
+<tr>
+<td>rep</td>
+<td>splice、arr[i] &#x3D; xx</td>
+<td>map</td>
+</tr>
+<tr>
+<td>sor</td>
+<td>reverse、sort</td>
+<td>clone and sort</td>
+</tr>
+</tbody></table>
+<p>同对象一样，也要看做不可变数据。</p>
+<p>数组中的对象，实际上存储的也是对象的地址，所以直接修改也是不可以的，可以使用 map 生成新的数组进行更新。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">setMyList</span>(</span><br><span class="line">  myList.<span class="title function_">map</span>(<span class="function">(<span class="params">artwork</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (artwork.<span class="property">id</span> === artworkId) &#123;</span><br><span class="line">      <span class="comment">// 创建包含变更的*新*对象</span></span><br><span class="line">      <span class="keyword">return</span> &#123; ...artwork, <span class="attr">seen</span>: nextSeen &#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 没有变更</span></span><br><span class="line">      <span class="keyword">return</span> artwork;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"><span class="title function_">updateMyTodos</span>(<span class="function">(<span class="params">draft</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> artwork = draft.<span class="title function_">find</span>(<span class="function">(<span class="params">a</span>) =&gt;</span> a.<span class="property">id</span> === artworkId);</span><br><span class="line">  artwork.<span class="property">seen</span> = nextSeen;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Immer"><a href="#Immer" class="headerlink" title="Immer"></a>Immer</h3><p><strong>Immer 简化更新</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">updatePerson</span>(<span class="function">(<span class="params">draft</span>) =&gt;</span> &#123;</span><br><span class="line">  draft.<span class="property">artwork</span>.<span class="property">city</span> = <span class="string">&quot;Lagos&quot;</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由 Immer 提供的 <code>draft</code> 是一种特殊类型的对象，被称为 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a>，它会记录你用它所进行的操作。这就是你能够随心所欲地直接修改对象的原因所在！从原理上说，Immer 会弄清楚 <code>draft</code> 对象的哪些部分被改变了，并会依照你的修改创建出一个全新的对象。</p>
+</blockquote>
+<h3 id="flushSync"><a href="#flushSync" class="headerlink" title="flushSync"></a>flushSync</h3><p>同步更新 state，将直接更新 DOM。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushSync &#125; <span class="keyword">from</span> <span class="string">&quot;react-dom&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">flushSync</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">setTodos</span>([...todos, newTodo]);</span><br><span class="line">&#125;);</span><br><span class="line">listRef.<span class="property">current</span>.<span class="property">lastChild</span>.<span class="title function_">scrollIntoView</span>();</span><br></pre></td></tr></table></figure>
+
+<h2 id="render"><a href="#render" class="headerlink" title="render"></a>render</h2><p><code>createRoot -&gt; render</code></p>
+<p><strong>React 仅在渲染之间存在差异时才会更改 DOM 节点。</strong></p>
+<h2 id="stateManage"><a href="#stateManage" class="headerlink" title="stateManage"></a>stateManage</h2><p><strong>核心</strong>：<code>UI = fn(state)</code></p>
+<p><strong>避免冗余、矛盾、重复、深度嵌套的 state</strong>。</p>
+<p><strong>UI 树：</strong></p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://react.docschina.org/_next/image?url=%2Fimages%2Fdocs%2Fdiagrams%2Fpreserving_state_dom_tree.png&w=1920&q=75" title="" alt="Diagram with three sections arranged horizontally. In the first section, there are three rectangles stacked vertically, with labels 'Component A', 'Component B', and 'Component C'. Transitioning to the next pane is an arrow with the React logo on top labeled 'React'. The middle section contains a tree of components, with the root labeled 'A' and two children labeled 'B' and 'C'. The next section is again transitioned using an arrow with the React logo on top labeled 'React'. The third and final section is a wireframe of a browser, containing a tree of 8 nodes, which has only a subset highlighted (indicating the subtree from the middle section)." data-align="inline">
+
+<blockquote>
+<p><strong>对 React 来说重要的是组件在 UI 树中的位置,而不是在 JSX 中的位置！</strong></p>
+</blockquote>
+<p><strong>所以如果希望在重新渲染的时候保留 state 需要保证几次渲染的树结构中应该互相“匹配”</strong></p>
+<p>基本上一些 ui 上的 bug 都是渲染出错导致，主要检查 key 值的设置。</p>
+<h3 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h3><p>纯函数</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">ReducerAction</span>&lt;T&gt; = &#123; <span class="attr">type</span>: <span class="built_in">string</span> &#125; | T;</span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> useReducer&lt;T&gt;(</span><br><span class="line">  <span class="attr">callback</span>: <span class="function">(<span class="params">state: T, action: ReducerAction&lt;T&gt;</span>) =&gt;</span> <span class="built_in">void</span>,</span><br><span class="line">  <span class="attr">initState</span>: T</span><br><span class="line">): [<span class="attr">state</span>: T, <span class="attr">dispatch</span>: <span class="function">(<span class="params">action: ReducerAction&lt;T&gt;</span>) =&gt;</span> <span class="built_in">void</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="useImmerReducer"><a href="#useImmerReducer" class="headerlink" title="useImmerReducer"></a>useImmerReducer</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useImmerReducer &#125; <span class="keyword">from</span> <span class="string">&quot;use-immer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tasksReducer</span>(<span class="params">draft, action</span>) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;added&quot;</span>: &#123;</span><br><span class="line">      draft.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">id</span>: action.<span class="property">id</span>,</span><br><span class="line">        <span class="attr">text</span>: action.<span class="property">text</span>,</span><br><span class="line">        <span class="attr">done</span>: <span class="literal">false</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;changed&quot;</span>: &#123;</span><br><span class="line">      <span class="keyword">const</span> index = draft.<span class="title function_">findIndex</span>(<span class="function">(<span class="params">t</span>) =&gt;</span> t.<span class="property">id</span> === action.<span class="property">task</span>.<span class="property">id</span>);</span><br><span class="line">      draft[index] = action.<span class="property">task</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;deleted&quot;</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> draft.<span class="title function_">filter</span>(<span class="function">(<span class="params">t</span>) =&gt;</span> t.<span class="property">id</span> !== action.<span class="property">id</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attr">default</span>: &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="title class_">Error</span>(<span class="string">&quot;未知 action：&quot;</span> + action.<span class="property">type</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>类似 Vue 中的 provide&#x2F;injext，主要用来解决 props 逐级透传问题。</p>
+<p>react 作为单向数据流，数据来自上层，但如果<strong>状态提升</strong>到太高的层级就会导致“逐层透传 props”的情况。</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://s2.loli.net/2023/07/25/23Tdlw8hItBMJAV.png" alt="image.png"></p>
+<p>context 则是先下注入数据，不论深度，但存在<strong>就近原则</strong>：</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://s2.loli.net/2023/07/25/a8Vk2WGdfAgQTem.png" alt="image.png"></p>
+<p><code>createContext(value) -&gt; &lt;XxxContext.Provider&gt; -&gt; useContext(XxxContext)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** createContext */</span></span><br><span class="line"><span class="keyword">import</span> &#123; createContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">LevelContext</span> = <span class="title function_">createContext</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** XxxContext.Provider */</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LevelContext</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./LevelContext.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Section</span>(<span class="params">&#123; level, children &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">section</span> <span class="attr">className</span>=<span class="string">&quot;section&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">LevelContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;level&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">LevelContext.Provider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** useContext */</span></span><br><span class="line"><span class="keyword">import</span> &#123; useContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LevelContext</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./LevelContext.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Heading</span>(<span class="params">&#123; children &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> level = <span class="title function_">useContext</span>(<span class="title class_">LevelContext</span>);</span><br><span class="line">  <span class="keyword">switch</span> (level) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span>;</span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="title class_">Error</span>(<span class="string">&#x27;未知的 level：&#x27;</span> + level);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>应用场景：颜色主题、全局数据共享、局部数据向下透传。</p>
+<p>Context 不局限于静态值。如果你在下一次渲染时传递不同的值，React 将会更新读取它的所有下层组件！这就是 context 经常和 state 结合使用的原因。</p>
+<p><strong>技巧：</strong></p>
+<ol>
+<li><p>当文件中存在多个 context 时，可进行整合并声明新的组件（<strong>注意预留 children</strong>）。</p>
+</li>
+<li><p>将相关逻辑迁移到一个文件当中，生产自定义 Hook：<code>createContext -&gt; useContext -&gt; useHook</code></p>
+</li>
+</ol>
+<h3 id="Reduce-amp-Context"><a href="#Reduce-amp-Context" class="headerlink" title="Reduce &amp; Context"></a>Reduce &amp; Context</h3><p>通过 Context 将 Reduce 的 state 以及 dispatch 分发到子孙组件中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** App.js */</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">AddTask</span> <span class="keyword">from</span> <span class="string">&quot;./AddTask.js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">TaskList</span> <span class="keyword">from</span> <span class="string">&quot;./TaskList.js&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TasksProvider</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./TasksContext.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">TaskApp</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">TasksProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Day off in Kyoto<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">AddTask</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">TaskList</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">TasksProvider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** TaskContext.js */</span></span><br><span class="line"><span class="keyword">import</span> &#123; createContext, useContext, useReducer &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">TasksContext</span> = <span class="title function_">createContext</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">TasksDispatchContext</span> = <span class="title function_">createContext</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">TasksProvider</span>(<span class="params">&#123; children &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [tasks, dispatch] = <span class="title function_">useReducer</span>(tasksReducer, initialTasks);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">TasksContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;tasks&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">TasksDispatchContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;dispatch&#125;</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">TasksDispatchContext.Provider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">TasksContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// useHooks</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useTasks</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">useContext</span>(<span class="title class_">TasksContext</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useTasksDispatch</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">useContext</span>(<span class="title class_">TasksDispatchContext</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tasksReducer</span>(<span class="params">tasks, action</span>) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;added&quot;</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> [</span><br><span class="line">        ...tasks,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">id</span>: action.<span class="property">id</span>,</span><br><span class="line">          <span class="attr">text</span>: action.<span class="property">text</span>,</span><br><span class="line">          <span class="attr">done</span>: <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      ];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;changed&quot;</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> tasks.<span class="title function_">map</span>(<span class="function">(<span class="params">t</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (t.<span class="property">id</span> === action.<span class="property">task</span>.<span class="property">id</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> action.<span class="property">task</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> t;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;deleted&quot;</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> tasks.<span class="title function_">filter</span>(<span class="function">(<span class="params">t</span>) =&gt;</span> t.<span class="property">id</span> !== action.<span class="property">id</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attr">default</span>: &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="title class_">Error</span>(<span class="string">&quot;Unknown action: &quot;</span> + action.<span class="property">type</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialTasks = [</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">0</span>, <span class="attr">text</span>: <span class="string">&quot;Philosopher’s Path&quot;</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">text</span>: <span class="string">&quot;Visit the temple&quot;</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">text</span>: <span class="string">&quot;Drink matcha&quot;</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><code>useRef&lt;T&gt;(initState: T): &#123; curretn: T&#125;</code></p>
+<p>数据由 React 保存，与 state 不同的是，ref 更变不触发 render 。</p>
+<table>
+<thead>
+<tr>
+<th align="center">ref</th>
+<th align="center">state</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>useRef&lt;T&gt;(initialValue: T): &#123; current: T&#125;</code></td>
+<td align="center"><code>useState&lt;T&gt;(initState: T): [state: T, setState: (state: T) =&gt; void]</code></td>
+</tr>
+<tr>
+<td align="center">更改时不会触发重新渲染</td>
+<td align="center">更改时触发重新渲染。</td>
+</tr>
+<tr>
+<td align="center">可变 —— 你可以在渲染过程之外修改和更新 current 的值。</td>
+<td align="center">“不可变” —— 你必须使用 state 设置函数来修改 state 变量，从而排队重新渲染。</td>
+</tr>
+<tr>
+<td align="center">你不应在渲染期间读取（或写入） current 值。</td>
+<td align="center">你不应在渲染期间读取（或写入） current 值。</td>
+</tr>
+</tbody></table>
+<p><strong>使用场景：</strong></p>
+<ol>
+<li><p>timeoutID</p>
+</li>
+<li><p>DOM</p>
+</li>
+<li><p>JSX</p>
+</li>
+</ol>
+<h3 id="get-DOM"><a href="#get-DOM" class="headerlink" title="get DOM"></a>get DOM</h3><ol>
+<li><p>字符串形式（回调形式简写，接收 DOM 赋值给 ref.current）</p>
+</li>
+<li><p>回调函数形式</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Form</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">const</span> buttonRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    inputRef.<span class="property">current</span>.<span class="title function_">focus</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span> <span class="attr">ref</span>=<span class="string">&#123;(c)</span> =&gt;</span> (buttonRef.current = c)&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        聚焦输入框</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>React 内部：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">useRef</span>(<span class="params">initialValue</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [ref, unused] = <span class="title function_">useState</span>(&#123; <span class="attr">current</span>: initialValue &#125;);</span><br><span class="line">  <span class="keyword">return</span> ref;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>多 ref 管理：</strong></p>
+<ol>
+<li><p>ref 绑到父层，通过 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document/querySelectorAll">querySelectorAll</a> 获取，但 DOM 结构发生变化，可能会失效。</p>
+</li>
+<li><p>通过 ref 回调的形式存储多个 DOM 至 map 中，map 也是需要通过 ref 保存。</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> list = [];</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Component</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> refs = <span class="title function_">useref</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Singal model</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">getRefs</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!refs.<span class="property">current</span>) refs.<span class="property">current</span> = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="keyword">return</span> refs.<span class="property">current</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;list.map((item) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">ref</span>=<span class="string">&#123;(node)</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">            const refs = getRefs();</span></span><br><span class="line"><span class="language-xml">            if (node) refs.set(item.id, node);</span></span><br><span class="line"><span class="language-xml">            else refs.delete(item.id);</span></span><br><span class="line"><span class="language-xml">          &#125;&#125;</span></span><br><span class="line"><span class="language-xml">        &gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span>;</span></span><br><span class="line"><span class="language-xml">      &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="forwardRef"><a href="#forwardRef" class="headerlink" title="forwardRef"></a>forwardRef</h3><p><strong>仅原生 DOM，自定义组件不生效且报错</strong>，但可以通过 <code>forwardRef</code> 将 <code>ref</code> 进行<strong>透传</strong>到内部 <strong>DOM</strong> 上，并返回给上层 ref 回调中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; forwardRef, useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">MyInput</span> = <span class="title function_">forwardRef</span>(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> &#123;<span class="attr">...props</span>&#125; <span class="attr">ref</span>=<span class="string">&#123;ref&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Form</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    inputRef.<span class="property">current</span>.<span class="title function_">focus</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">MyInput</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>聚焦输入框<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="useImperativeHandle"><a href="#useImperativeHandle" class="headerlink" title="useImperativeHandle"></a>useImperativeHandle</h3><p>主动返回 DOM 节点。</p>
+<p>通过 useImperativeHandle 返回一个对象给上层 ref 回调中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; forwardRef, useRef, useImperativeHandle &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">MyInput</span> = <span class="title function_">forwardRef</span>(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> realInputRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="title function_">useImperativeHandle</span>(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="comment">// 只暴露 focus，没有别的</span></span><br><span class="line">    <span class="title function_">focus</span>(<span class="params"></span>) &#123;</span><br><span class="line">      realInputRef.<span class="property">current</span>.<span class="title function_">focus</span>();</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;));</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> &#123;<span class="attr">...props</span>&#125; <span class="attr">ref</span>=<span class="string">&#123;realInputRef&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Form</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    inputRef.<span class="property">current</span>.<span class="title function_">focus</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(inputRef.<span class="property">current</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      //</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">MyInput</span> <span class="attr">ref</span>=<span class="string">&#123;(c)</span> =&gt;</span> (inputRef.current = c)&#125; /&gt;</span></span><br><span class="line"><span class="language-xml">            </span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">MyInput</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>聚焦输入框<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h2><p><strong>渲染引起的副作用，渲染（包括初次）之后执行</strong>。</p>
+<p>每一个 Effect 都是一个独立的同步过程，多个之间互不影响。</p>
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h3><p>基础用法：</p>
+<ol>
+<li><p>声明 Effect</p>
+</li>
+<li><p>指定 Effect 依赖。</p>
+</li>
+<li><p>必要时添加 cleanup 清理函数。</p>
+</li>
+</ol>
+<p>React 使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is"><code>Object.is</code></a> 比较依赖项的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 这里的代码会在每次渲染后执行</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 这里的代码只会在组件挂载后执行</span></span><br><span class="line">&#125;, []);</span><br><span class="line"></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 这里的代码只会在每次渲染后，并且 a 或 b 的值与上次渲染不一致时执行</span></span><br><span class="line">  <span class="comment">// cleanup</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;&#125;;</span><br><span class="line">&#125;, [a, b]);</span><br></pre></td></tr></table></figure>
+
+<p>在依赖数组中可以省略 <strong>ref</strong>，React 保证每次渲染过程中调用 <strong>useRef</strong> 产生的引用对象时，获取的对象引用始终不变，但若 ref 由父层传递过来时需要添加到依赖数组中的。</p>
+<blockquote>
+<p>在开发环境中，React 会在初始挂载组件后，立即再挂载一次（压力测试）。</p>
+</blockquote>
+<p>因此开发环境下 Effect 会执行两次，此时就需要设置 cleanup 清理函数，来避免一些额外的副作用的出现。</p>
+<h3 id="cleanup"><a href="#cleanup" class="headerlink" title="cleanup"></a>cleanup</h3><p><strong>执行时机：</strong></p>
+<ol>
+<li><p>组件卸载</p>
+</li>
+<li><p>执行下一轮渲染的 Effect 之前</p>
+</li>
+</ol>
+<p><strong>工作原理：</strong><code>depArr -&gt; compare -&gt; isShouldSyncEffect</code></p>
+<p><strong>生命周期：</strong></p>
+<ol>
+<li><p>开始同步</p>
+</li>
+<li><p>停止同步</p>
+</li>
+</ol>
+<h3 id="useEffectEvent"><a href="#useEffectEvent" class="headerlink" title="useEffectEvent"></a>useEffectEvent</h3><p>将 Effect 中一些响应式数据包装起来，不作为依赖项，但 EffectEvent 中的函数仍是响应式的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ChatRoom</span>(<span class="params">&#123; roomId, theme &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> onConnected = <span class="title function_">useEffectEvent</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">showNotification</span>(<span class="string">&quot;Connected!&quot;</span>, theme);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> connection = <span class="title function_">createConnection</span>(serverUrl, roomId);</span><br><span class="line">    connection.<span class="title function_">on</span>(<span class="string">&quot;connected&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">onConnected</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">    connection.<span class="title function_">connect</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> connection.<span class="title function_">disconnect</span>();</span><br><span class="line">  &#125;, [roomId]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to the &#123;roomId&#125; room!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Effect &amp; 事件处理：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Effect</th>
+<th align="center">事件处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">需要同步的时候运行</td>
+<td align="center">响应特定交互时运行</td>
+</tr>
+<tr>
+<td align="center">内部的逻辑是响应式的</td>
+<td align="center">函数内部的逻辑是非响应式的</td>
+</tr>
+</tbody></table>
+<h2 id="Custom-Hooks"><a href="#Custom-Hooks" class="headerlink" title="Custom Hooks"></a>Custom Hooks</h2><p>状态逻辑共享，而不是状态本身。</p>
+<p><code>effect -&gt; hooks</code></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/06/28/%E9%9A%8F%E7%AC%94/%E4%B8%80%E6%9C%AC%E6%91%84%E5%BD%B1%E4%B9%A6/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-07-26 00:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/React/" title="React">
+                        <b>#</b> React
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/07/28/React/Redux/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ReactNote"><span class="toc-text">ReactNote</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#handleEvent"><span class="toc-text">handleEvent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#state"><span class="toc-text">state</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useState"><span class="toc-text">useState</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update-queue"><span class="toc-text">update queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useState-simulation"><span class="toc-text">useState simulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#object-update"><span class="toc-text">object update</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-update"><span class="toc-text">array update</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immer"><span class="toc-text">Immer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flushSync"><span class="toc-text">flushSync</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#render"><span class="toc-text">render</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stateManage"><span class="toc-text">stateManage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useReducer"><span class="toc-text">useReducer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useImmerReducer"><span class="toc-text">useImmerReducer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Context"><span class="toc-text">Context</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reduce-amp-Context"><span class="toc-text">Reduce &amp; Context</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ref"><span class="toc-text">Ref</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#get-DOM"><span class="toc-text">get DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forwardRef"><span class="toc-text">forwardRef</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useImperativeHandle"><span class="toc-text">useImperativeHandle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Effect"><span class="toc-text">Effect</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useEffect"><span class="toc-text">useEffect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cleanup"><span class="toc-text">cleanup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useEffectEvent"><span class="toc-text">useEffectEvent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Custom-Hooks"><span class="toc-text">Custom Hooks</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + React%20Note + '&url=' + http%3A%2F%2Fexample.com%2F2023%2F07%2F20%2FReact%2FReactNote%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2023/07/20/React/ReactNote/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body>
+</html>

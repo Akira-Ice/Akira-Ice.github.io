@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="keywords" content="前端,Vue,React,JavaScript,NodeJS">
+  
+  <meta name="author" content="AKira" />
+  <meta name="description" content="Akira_Blog" />
+  
+  
+  <title>
+    
+      Promise 
+      
+      
+      |
+    
+     Akira_Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/avatar.png">
+    <link rel="icon" href="/images/avatar.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img no-lazy src="/images/AkiraIce.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Akira Ice</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Promise</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2021-10-27 00:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/JavaScript/" title="JavaScript">
+                    <b>#</b> JavaScript
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>处理异步请求</li>
+<li>单向状态更变</li>
+<li>回调地狱</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>Promise 来解决反馈结果需要等待的场景</p>
+<h2 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h2><h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>同步是指当发起一个请求时，如果未得到请求结果，代码逻辑将会等待，直到结果出来为止才会继续执行之后的代码。</p>
+<h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>异步是指当发起一个请求时，不会等待请求结果，直接继续执行后面的代码。请求结果的处理逻辑，会添加一个监听，等到反馈结果出来之后，在回调函数中处理对应的逻辑。</p>
+<h2 id="原生AJAX"><a href="#原生AJAX" class="headerlink" title="原生AJAX"></a>原生AJAX</h2><ul>
+<li>创建 xhr ( XML Http Requst )</li>
+<li>建立连接，xhr.open()</li>
+<li>发送请求，xhr.send()</li>
+<li>进行监听，xhr.onReadyStateChange()</li>
+</ul>
+<p>倘若我们在，需要在监听中，拿到数据，接着作为参数继续去请求，那么就开始出现，回调的嵌套，如若回调愈加愈多，就会形成可怕的回调地狱。</p>
+<p>promise 以及其 then 的出现就是来度化此劫的。</p>
+<h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><p>resolve、reject进行状态更新pedding – resolved &#x2F; reject</p>
+<p>resolve、reject 是 executor 函数（执行器）的两个参数。他们能够将请求结果的具体数据传递出去。</p>
+<ul>
+<li>then</li>
+</ul>
+<p>Promise实例拥有的 then 方法，用来处理当请求结果的状态变成 resolved 时的逻辑。</p>
+<p>then 的第一个参数也为一个回调函数，该函数的参数则是 resolve 传递出来的数据。</p>
+<p>then 的回调函数的返回值也会作为参数，向下传递。</p>
+<ul>
+<li>catch</li>
+</ul>
+<p>catch 方法，用来处理当请求结果的状态变成 rejected 时的逻辑。</p>
+<p>catch 的第一个参数也为一个回调函数，该函数的参数则是 reject 传递出来的数据。</p>
+<ul>
+<li>promise.all</li>
+</ul>
+<p>进行批处理异步请求，可以接受一个 promise 数组。</p>
+<p>当所有的 promise 全部为 resolved &#x2F; rejected 才返回 resolved &#x2F; rejected。</p>
+<ul>
+<li>promise.race</li>
+</ul>
+<p>进行批处理异步请求，可以接受一个 promise 数组。</p>
+<p>当有一个的 promise 为 resolved &#x2F; rejected 就返回 resolved &#x2F; rejected。</p>
+<h2 id="then的执行机制"><a href="#then的执行机制" class="headerlink" title="then的执行机制"></a>then的执行机制</h2><p>then 必须在 promise 的状态确定后才能被执行，并将其回调函数，放入微任务队列，等待执行。</p>
+<p>注意：当 then 返回 promise 时，会产生两个微任务。一次是因为返回的 promise 作为参数，需要直接调用 then 得到其 promise 状态，另一个是其内部自己产生的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>()</span><br><span class="line"> .<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>) &#125;)</span><br><span class="line"> .<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f2</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>) &#125;)</span><br><span class="line"> .<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f3</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>) &#125;)</span><br><span class="line"></span><br><span class="line">p1.<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f4</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>) &#125;)</span><br><span class="line">p1.<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f5</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">5</span>) &#125;)</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>()</span><br><span class="line"> .<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f11</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">11</span>) &#125;)</span><br><span class="line"> .<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f22</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">22</span>) &#125;)</span><br><span class="line"> .<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f33</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">33</span>) &#125;)</span><br><span class="line"></span><br><span class="line">p2.<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f44</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">44</span>) &#125;)</span><br><span class="line">p2.<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">f55</span>(<span class="params">v</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">55</span>) &#125;)</span><br><span class="line"><span class="comment">// 1 11 2 22 3 33 4 5 44 55</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>Promise的状态一经改变就不能再改变。</li>
+<li>.then和.catch都会返回一个新的Promise。</li>
+<li>catch不管被连接到哪里，都能捕获上层未捕捉过的错误。</li>
+<li>在Promise中，返回任意一个非 promise 的值都会被包裹成 promise 对象，例如return 2会被包装为return Promise.resolve(2)。</li>
+<li>Promise 的 .then 或者 .catch 可以被调用多次, 但如果Promise内部的状态一经改变，并且有了一个值，那么后续每次调用.then或者.catch的时候都会直接拿到该值。</li>
+<li>.then 或者 .catch 中 return 一个 error 对象并不会抛出错误，所以不会被后续的 .catch 捕获。</li>
+<li>.then 或 .catch 返回的值不能是 promise 本身，否则会造成死循环。</li>
+<li>.then 或者 .catch 的参数期望是函数，传入非函数则会发生值透传。</li>
+<li>.then方法是能接收两个参数的，第一个是处理成功的函数，第二个是处理失败的函数，再某些时候你可以认为catch是.then第二个参数的简便写法。</li>
+<li>.then 方法回调函数，返回 promise，会额外产生两次微任务。</li>
+<li>.finally方法也是返回一个Promise，他在Promise结束的时候，无论结果为resolved还是rejected，都会执行里面的回调函数。</li>
+<li>async 函数一定会返回一个 promise 对象。如果一个 async 函数的返回值看起来不是 promise，那么它将会被隐式地包装在一个 promise 中。</li>
+<li>在 async 函数中抛出了错误，则终止错误结果，不会继续向下执行，可以通过 try catch 或者 .catch 使得错误的地方不影响。</li>
+<li>await 后面的语句相当于放到了 new Promise 中，下一行之后的代码都放到 Promise.then 中，需要等待 await 后面 promise 的处理。</li>
+</ol>
+<h2 id="运用"><a href="#运用" class="headerlink" title="运用"></a>运用</h2><ul>
+<li><p>手写 promise</p>
+<ul>
+<li><p>executor</p>
+<ul>
+<li>绑定 resolve reject 中的 this</li>
+</ul>
+</li>
+<li><p>resolve 状态更变</p>
+</li>
+<li><p>reject 状态更变</p>
+</li>
+<li><p>then</p>
+<ul>
+<li><p>判断传入参数是不是函数</p>
+</li>
+<li><p>返回新的 promise</p>
+<ul>
+<li><p>创建成功、失败的回调，其中执行传入的函数，加入微任务队列中</p>
+</li>
+<li><p>根据 参数函数执行的返回值，进行最后的 resolve</p>
+<ul>
+<li><p>返回值是 promise 直接调用 then，得到 promise 的结果，继续向下传递</p>
+</li>
+<li><p>返回值不是 promise，直接 resolve</p>
+</li>
+</ul>
+</li>
+<li><p>判断当前状态，整合 map 进行对</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>catch</p>
+</li>
+</ul>
+</li>
+<li><p>promise 实现循环异步事件</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">index, timeout</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(index);</span><br><span class="line">      <span class="title function_">resolve</span>();</span><br><span class="line">    &#125;, timeout);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">light</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">fn</span>(<span class="number">1</span>, <span class="number">1000</span>);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">fn</span>(<span class="number">2</span>, <span class="number">2000</span>);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">fn</span>(<span class="number">3</span>, <span class="number">3000</span>);</span><br><span class="line">  <span class="title function_">light</span>();</span><br><span class="line">  <span class="comment">// const promise = Promise.resolve();</span></span><br><span class="line">  <span class="comment">// promise</span></span><br><span class="line">  <span class="comment">//   .then(() =&gt; &#123;</span></span><br><span class="line">  <span class="comment">//     return fn(1, 1000);</span></span><br><span class="line">  <span class="comment">//   &#125;)</span></span><br><span class="line">  <span class="comment">//   .then(() =&gt; &#123;</span></span><br><span class="line">  <span class="comment">//     return fn(2, 2000);</span></span><br><span class="line">  <span class="comment">//   &#125;)</span></span><br><span class="line">  <span class="comment">//   .then(() =&gt; &#123;</span></span><br><span class="line">  <span class="comment">//     return fn(3, 3000);</span></span><br><span class="line">  <span class="comment">//   &#125;)</span></span><br><span class="line">  <span class="comment">//   .then(() =&gt; &#123;</span></span><br><span class="line">  <span class="comment">//     return light();</span></span><br><span class="line">  <span class="comment">//   &#125;);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">light</span>();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>promise.all 结果收集不考虑其是否成功或失败</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mergePromise</span>(<span class="params">promiseArr</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> data = [];</span><br><span class="line">  <span class="keyword">let</span> promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  promiseArr.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    promise = promise.<span class="title function_">then</span>(item).<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">      data.<span class="title function_">push</span>(res);</span><br><span class="line">      <span class="keyword">return</span> data;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> promise;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件循环机制"><a href="#事件循环机制" class="headerlink" title="事件循环机制"></a>事件循环机制</h2><ul>
+<li><p>函数调用栈</p>
+</li>
+<li><p>任务队列</p>
+</li>
+<li><p>宏任务队列</p>
+<ul>
+<li><p>script</p>
+</li>
+<li><p>setTimeout</p>
+</li>
+<li><p>setInteval</p>
+</li>
+<li><p>IO</p>
+</li>
+<li><p>render</p>
+</li>
+</ul>
+</li>
+<li><p>微任务队列</p>
+<ul>
+<li><p>Promise.then</p>
+</li>
+<li><p>process.nextTick</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="循环机制"><a href="#循环机制" class="headerlink" title="循环机制"></a>循环机制</h3><p>宏任务 x 1 ➡️ 函数调用栈 ➡️ 微任务 x n ➡️ 宏任务 x 1 ➡️····</p>
+<p>也就是说，宏任务一个一个的出队列，进入函数调用栈执行，然后在执行期间产生的微任务，会在此次函数调用栈执行完毕后，去清空微任务队列，以此往复。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1623173">详解ES6中的async&#x2F;await - 腾讯云开发者社区-腾讯云</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904077537574919">【建议星星】要就来45道Promise面试题一次爽到底(1.1w字用心整理) - 掘金</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/10/26/JS/call-apply-bind/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2021-10-27 00:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/JavaScript/" title="JavaScript">
+                        <b>#</b> JavaScript
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/12/22/bugRoad/%E8%87%AA%E5%AE%9A%E4%B9%89%20Plugin%20%E6%8A%A5%E9%94%99%20%E6%89%93%E5%8C%85%E7%BB%88%E6%AD%A2/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="toc-text">同步与异步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5"><span class="toc-text">同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5"><span class="toc-text">异步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9FAJAX"><span class="toc-text">原生AJAX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83"><span class="toc-text">核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#then%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">then的执行机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%94%A8"><span class="toc-text">运用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="toc-text">事件循环机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="toc-text">循环机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Promise + '&url=' + http%3A%2F%2Fexample.com%2F2021%2F10%2F27%2FJS%2FPromise%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2021/10/27/JS/Promise/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body>
+</html>

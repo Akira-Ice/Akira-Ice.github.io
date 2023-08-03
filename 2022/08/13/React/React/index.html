@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="keywords" content="前端,Vue,React,JavaScript,NodeJS">
+  
+  <meta name="author" content="AKira" />
+  <meta name="description" content="Akira_Blog" />
+  
+  
+  <title>
+    
+      React 基础 
+      
+      
+      |
+    
+     Akira_Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/avatar.png">
+    <link rel="icon" href="/images/avatar.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img no-lazy src="/images/AkiraIce.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Akira Ice</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">React 基础</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2022-08-13 00:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/React/" title="React">
+                    <b>#</b> React
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h1><h2 id="重要的三个钩子"><a href="#重要的三个钩子" class="headerlink" title="重要的三个钩子"></a>重要的三个钩子</h2><h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>执行 1+n 次。</p>
+<p>每一次 setState 都会 render。</p>
+<p>无论是挂载还是更新阶段，在<code>render</code>之前的生命周期函数都不会更新<code>this.state</code>和<code>props</code>，直到<code>render</code>执行完成后，数据才会更新。</p>
+<p>render 之后是不能够再操作数据的，否则将进入死循环。</p>
+<h3 id="componentDidMount"><a href="#componentDidMount" class="headerlink" title="componentDidMount"></a>componentDidMount</h3><h3 id="componentWillUnmount"><a href="#componentWillUnmount" class="headerlink" title="componentWillUnmount"></a>componentWillUnmount</h3><p><code>ReactDOM.unmountComponentAtNode()</code></p>
+<h2 id="Mounting"><a href="#Mounting" class="headerlink" title="Mounting"></a>Mounting</h2><ul>
+<li><code>constructor()</code></li>
+<li><code>componentWillMount()</code></li>
+<li><code>render()</code></li>
+<li><code>componentDidMount()</code></li>
+</ul>
+<h2 id="Updating"><a href="#Updating" class="headerlink" title="Updating"></a>Updating</h2><ul>
+<li><code>componentWillReceiveProps()</code></li>
+<li><code>shouldComponentUpdate()</code></li>
+<li><code>componentWillUpdate()</code></li>
+<li><code>render()</code></li>
+<li><code>componentDidUpdate()</code></li>
+</ul>
+<h2 id="Unmounting"><a href="#Unmounting" class="headerlink" title="Unmounting"></a>Unmounting</h2><ul>
+<li><code>componentWillUnmount()</code></li>
+</ul>
+<h1 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h1><p>单向数据流</p>
+<p>state -&gt; setState -&gt; render -&gt; view</p>
+<h1 id="实例核心属性"><a href="#实例核心属性" class="headerlink" title="实例核心属性"></a>实例核心属性</h1><h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><p>state -&gt; setState()</p>
+<p>setState 是异步的。</p>
+<p>setState 是合并不是替换。可以通过定时器摆脱 react 的控制。</p>
+<p>setState 若要依赖当前数据，可以通过函数式进行操作。</p>
+<ul>
+<li>setState((state) &#x3D;&gt; {})</li>
+</ul>
+<p>setState 生命周期：</p>
+<ul>
+<li><p>getDerivedStateFromProps</p>
+</li>
+<li><p>shouldComponentUpdate，根据返回值判断是否要继续更新。</p>
+</li>
+<li><p>render，执行真正的更新。</p>
+</li>
+<li><p>getSnapshotBeforeUpdate</p>
+</li>
+<li><p>componentDidUpdate</p>
+</li>
+</ul>
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><p>function(props){}</p>
+<p>class cc extends React.Component {</p>
+<p>  this.props;</p>
+<p>  constructor(props){</p>
+<p>    this.props &#x3D; props;</p>
+<p>  }</p>
+<p>}</p>
+<h2 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h2><h3 id="字符串形式"><a href="#字符串形式" class="headerlink" title="字符串形式"></a>字符串形式</h3><p>class Demo extends React.Component {</p>
+<p>  const {input} &#x3D; this.refs;</p>
+<p>  render() {</p>
+<p>    return (</p>
+<p>      &lt;&gt;</p>
+<p>        &lt;input ref&#x3D;{input}&gt;</p>
+<p>      &lt;&#x2F;&gt;</p>
+<p>    )</p>
+<p>  }</p>
+<p>}</p>
+<h3 id="回调形式"><a href="#回调形式" class="headerlink" title="回调形式"></a>回调形式</h3><h4 id="内联形式"><a href="#内联形式" class="headerlink" title="内联形式"></a>内联形式</h4><p>内联形式，ref 回调回执行两次，第一次传递 null 第二次传递 DOM</p>
+<p>&lt;input ref&#x3D;{(c) &#x3D;&gt; {this.input &#x3D; c}&gt;</p>
+<h4 id="非内联形式"><a href="#非内联形式" class="headerlink" title="非内联形式"></a>非内联形式</h4><p>class demo extends React.Component {</p>
+<p>  handle(c){</p>
+<p>    this.input &#x3D; c;</p>
+<p>  }</p>
+<p>  return (</p>
+<p>    &lt;&gt;</p>
+<p>      &lt;input ref&#x3D;{this.handle}&gt;</p>
+<p>    &lt;&#x2F;&gt;</p>
+<p>  )</p>
+<p>}</p>
+<blockquote>
+<p>如果 <code>ref</code> 回调函数是以内联函数的方式定义的，在更新过程中它会被执行两次，第一次传入参数 <code>null</code>，然后第二次会传入参数 DOM 元素。这是因为在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 <code>ref</code> 并且设置新的。通过将 <code>ref</code> 的回调函数定义成 <code>class</code> 的绑定函数的方式可以避免上述问题，但是大多数情况下它是无关紧要的。</p>
+</blockquote>
+<h3 id="createRef"><a href="#createRef" class="headerlink" title="createRef"></a>createRef</h3><p>class demo extends React.Component {</p>
+<p>  input &#x3D; React.createRef();</p>
+<p>  return (</p>
+<p>    &lt;&gt;</p>
+<p>      &lt;input ref&#x3D;{this.input}&gt;</p>
+<p>    &lt;&#x2F;&gt;</p>
+<p>  )</p>
+<p>}</p>
+<h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><p>React.FC 适用</p>
+<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><p>const [color, setColor] &#x3D; useState(“”)</p>
+<p>触发 render</p>
+<p>异步</p>
+<p>useState -&gt; render -&gt; Effect</p>
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h3><p>副作用。</p>
+<p>useEffect(() &#x3D;&gt; {},[propsName])</p>
+<p>监听 数据变化之后 进行执行回调函数。</p>
+<p>不写参数，在每次 render 的时候执行回调。</p>
+<p>render之后执行。</p>
+<p>React采用异步调用的方式处理Effect，等主线程完成、DOM更新、js执行完成、试图绘制完成，才执行，所以effect回调函数不回阻塞浏览器绘制视图。</p>
+<h3 id="useLayoutEffect"><a href="#useLayoutEffect" class="headerlink" title="useLayoutEffect"></a>useLayoutEffect</h3><p>DOM更新之后，浏览器绘制视图之前，且比Effect执行更早。</p>
+<p>避免在Effect中操作DOM时导致二次绘制，出现闪现现象。</p>
+<p>其回调执行会阻塞浏览器绘制。</p>
+<h3 id="useInsertionEffect"><a href="#useInsertionEffect" class="headerlink" title="useInsertionEffect"></a>useInsertionEffect</h3><p>DOM更新之前，且比LayoutEffect执行更早。</p>
+<p>解决 CSS-in-JS 在渲染中注入样式的性能问题。</p>
+<h3 id="useContext"><a href="#useContext" class="headerlink" title="useContext"></a>useContext</h3><ol>
+<li>接收上下文。</li>
+</ol>
+<ul>
+<li>create</li>
+</ul>
+<p>const MyContext &#x3D; React.createContext(defaultValue);</p>
+<p>import {createContext} from “react”</p>
+<p>const MyContext &#x3D; createContext(defaultValue);</p>
+<ul>
+<li>Provider</li>
+</ul>
+<p>&lt;MyContext.Provider value&#x3D;{}&gt;</p>
+<ul>
+<li>use</li>
+</ul>
+<p>const value &#x3D; this.context;</p>
+<p>const value &#x3D; useContext(MyContext);</p>
+<p>&lt;MyContext.Consumer&gt;<br> {value &#x3D;&gt; { }}<br>&lt;&#x2F;MyContext.Consumer&gt;</p>
+<h3 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h3><ol>
+<li>获取元素、缓存状态。</li>
+</ol>
+<p>const count &#x3D; useRef(0)</p>
+<p>count.current &#x3D; count.current++;</p>
+<ol start="2">
+<li>不触发 render</li>
+</ol>
+<p>connect DOM</p>
+<p>const inputRef &#x3D; useRef(null);</p>
+<p>&lt;input ref&#x3D;{inputRef}&#x2F;&gt;</p>
+<p>inputRef.current.focus();</p>
+<h1 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>yarn add react-router-dom</code></p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>&lt;Route exact&#x2F;&gt; exact 严格匹配模式，可能导致二级路由无法匹配</p>
+<p>&lt;Link &#x2F;&gt;</p>
+<p>&lt;BrowserRouter&gt;</BrowserRouter></p>
+<p>&lt;NavLink&gt;</NavLink> 高亮</p>
+<p>&lt;Switch&gt;</Switch> 高效路由匹配</p>
+<p>&lt;Redirect to&#x3D;”&#x2F;about” &#x2F;&gt; 所有都无法匹配时重定向</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Link</span>, <span class="title class_">Route</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Home</span> <span class="keyword">from</span> <span class="string">&#x27;./components/Home&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">About</span> <span class="keyword">from</span> <span class="string">&#x27;./components/About&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Component</span> &#123;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;list-group&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Link</span> <span class="attr">className</span>=<span class="string">&quot;list-group-item&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            About</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Link</span> <span class="attr">className</span>=<span class="string">&quot;list-group-item&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/home&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            Home</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;panel-body&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/about&quot;</span> <span class="attr">component</span>=<span class="string">&#123;About&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/home&quot;</span> <span class="attr">component</span>=<span class="string">&#123;Home&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">history:</span><br><span class="line">  go: ƒ go(n)</span><br><span class="line">  goBack: ƒ goBack()</span><br><span class="line">  goForward: ƒ goForward()</span><br><span class="line">  push: ƒ push(path, state)</span><br><span class="line">  replace: ƒ replace(path, state)</span><br><span class="line"></span><br><span class="line">location:</span><br><span class="line">  pathname: &quot;/home/message/detail/2/hello&quot;</span><br><span class="line">  search: &quot;&quot;</span><br><span class="line">  state: undefined</span><br><span class="line"></span><br><span class="line">match:</span><br><span class="line">  params: &#123;&#125;</span><br><span class="line">  path: &quot;/home/message/detail/:id/:title&quot;</span><br><span class="line">  url: &quot;/home/message/detail/2/hello&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多级路径刷新页面样式丢失"><a href="#多级路径刷新页面样式丢失" class="headerlink" title="多级路径刷新页面样式丢失"></a>多级路径刷新页面样式丢失</h2><p>相对路径会对照当前路由地址，因而会丢失样式。</p>
+<ul>
+<li><p>取消使用相对路径，使用 <code>/</code> 或者 <code>%PUBLIC_URL%</code></p>
+</li>
+<li><p>使用 HashRouter</p>
+</li>
+</ul>
+<h2 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h2><p>子路由需要加上父路由的<code>path</code></p>
+<h2 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h2><ul>
+<li><p>params</p>
+<p><code>/home/message/detail/:age/:name</code></p>
+<p><code>/home/message/detail/21/amos</code></p>
+<p><code>useParams() -&gt; &#123;age: &#39;21&#39;, name: &#39;amos&#39;&#125;</code></p>
+<p>需要配置</p>
+</li>
+<li><p>search</p>
+<p><code>/home/message/detail?name=&quot;11&quot;</code></p>
+<p><code>useQuery().get(&#39;name&#39;)</code></p>
+</li>
+<li><p>state</p>
+<p><code>useHistory().push(&#39;/user/role/detail&#39;, &#123; id: item &#125;);</code></p>
+<p><code>useLocation().state;</code></p>
+</li>
+</ul>
+<h2 id="Hooks-1"><a href="#Hooks-1" class="headerlink" title="Hooks"></a>Hooks</h2><h3 id="useHistory"><a href="#useHistory" class="headerlink" title="useHistory"></a>useHistory</h3><ul>
+<li><p>push</p>
+</li>
+<li><p>replace</p>
+</li>
+<li><p>go</p>
+</li>
+<li><p>goForward</p>
+</li>
+<li><p>goBack</p>
+</li>
+</ul>
+<h3 id="useLocation"><a href="#useLocation" class="headerlink" title="useLocation"></a>useLocation</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">useLocation</span>(<span class="params"></span>): <span class="title class_">Location</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Location</span> <span class="keyword">extends</span> <span class="title class_">Path</span> &#123;</span><br><span class="line">  <span class="attr">state</span>: <span class="built_in">unknown</span>;</span><br><span class="line">  <span class="attr">key</span>: <span class="title class_">Key</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>state</p>
+</li>
+<li><p>key</p>
+</li>
+</ul>
+<h3 id="useParams"><a href="#useParams" class="headerlink" title="useParams"></a>useParams</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> useParams&lt;K <span class="keyword">extends</span> <span class="built_in">string</span> = <span class="built_in">string</span>&gt;(): <span class="title class_">Readonly</span>&lt;<span class="title class_">Params</span>&lt;K&gt;&gt;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>{}</li>
+</ul>
+<h3 id="useQuery"><a href="#useQuery" class="headerlink" title="useQuery"></a>useQuery</h3><ul>
+<li>get</li>
+</ul>
+<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://brucecai55520.gitee.io/my-notes/React/images/redux.png" alt="redux 工作流程图"></p>
+<p><strong>reducer -&gt; createStore -&gt; store -&gt; getState、dispath、subscribe</strong></p>
+<h2 id="createStore"><a href="#createStore" class="headerlink" title="createStore"></a>createStore</h2><ul>
+<li><code>createStore(reducer: (preState:any; action:&#123;type: &#39;string&#39;; data: any&#125;)=&gt;&#123;&#125;)</code></li>
+</ul>
+<h2 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h2><ul>
+<li><p><code>getState()</code></p>
+</li>
+<li><p><code>dispath(action: &#123;type: string; data: any;&#125;)</code></p>
+</li>
+<li><p><code>subscribe(func: function)</code></p>
+</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/06/02/bugRoad/keep-alive%20%E7%BC%93%E5%AD%98%E6%BB%9A%E5%8A%A8%E6%9D%A1/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2022-08-13 00:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/React/" title="React">
+                        <b>#</b> React
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/09/20/bugRoad/VueRouter%20%E4%BC%A0%E9%80%92%20state%20%E5%8F%82%E6%95%B0%E6%97%A0%E6%95%88/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9A"><span class="toc-text">生命周期：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%9A%84%E4%B8%89%E4%B8%AA%E9%92%A9%E5%AD%90"><span class="toc-text">重要的三个钩子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#render"><span class="toc-text">render</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#componentDidMount"><span class="toc-text">componentDidMount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#componentWillUnmount"><span class="toc-text">componentWillUnmount</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mounting"><span class="toc-text">Mounting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Updating"><span class="toc-text">Updating</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unmounting"><span class="toc-text">Unmounting</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8"><span class="toc-text">数据驱动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%A0%B8%E5%BF%83%E5%B1%9E%E6%80%A7"><span class="toc-text">实例核心属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#state"><span class="toc-text">state</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#props"><span class="toc-text">props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#refs"><span class="toc-text">refs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%A2%E5%BC%8F"><span class="toc-text">字符串形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83%E5%BD%A2%E5%BC%8F"><span class="toc-text">回调形式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%BD%A2%E5%BC%8F"><span class="toc-text">内联形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E5%86%85%E8%81%94%E5%BD%A2%E5%BC%8F"><span class="toc-text">非内联形式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#createRef"><span class="toc-text">createRef</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hooks"><span class="toc-text">Hooks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useState"><span class="toc-text">useState</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useEffect"><span class="toc-text">useEffect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useLayoutEffect"><span class="toc-text">useLayoutEffect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useInsertionEffect"><span class="toc-text">useInsertionEffect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useContext"><span class="toc-text">useContext</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useRef"><span class="toc-text">useRef</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Router"><span class="toc-text">Router</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E8%B7%AF%E5%BE%84%E5%88%B7%E6%96%B0%E9%A1%B5%E9%9D%A2%E6%A0%B7%E5%BC%8F%E4%B8%A2%E5%A4%B1"><span class="toc-text">多级路径刷新页面样式丢失</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1"><span class="toc-text">嵌套路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-text">参数传递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hooks-1"><span class="toc-text">Hooks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useHistory"><span class="toc-text">useHistory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useLocation"><span class="toc-text">useLocation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useParams"><span class="toc-text">useParams</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useQuery"><span class="toc-text">useQuery</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Redux"><span class="toc-text">Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#createStore"><span class="toc-text">createStore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Store"><span class="toc-text">Store</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + React%20%E5%9F%BA%E7%A1%80 + '&url=' + http%3A%2F%2Fexample.com%2F2022%2F08%2F13%2FReact%2FReact%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2022/08/13/React/React/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body>
+</html>

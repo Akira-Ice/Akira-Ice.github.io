@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="keywords" content="前端,Vue,React,JavaScript,NodeJS">
+  
+  <meta name="author" content="AKira" />
+  <meta name="description" content="Akira_Blog" />
+  
+  
+  <title>
+    
+      Nuxt.js 
+      
+      
+      |
+    
+     Akira_Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/avatar.png">
+    <link rel="icon" href="/images/avatar.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img no-lazy src="/images/AkiraIce.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Akira Ice</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Nuxt.js</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-04-13 00:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Vue/" title="Vue">
+                    <b>#</b> Vue
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Vue/Nuxt/" title="Nuxt">
+                    <b>#</b> Nuxt
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="Nuxt-js"><a href="#Nuxt-js" class="headerlink" title="Nuxt.js"></a>Nuxt.js</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li><p>使用 npx</p>
+<p><code>npx create-nuxt-app &lt;项目名&gt;</code></p>
+</li>
+<li><p>使用 yarn</p>
+<p><code>yarn create-nuxt-app &lt;项目名&gt;</code></p>
+</li>
+</ol>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>约定俗成的目录结构 -&gt; 良好的起点</p>
+<h3 id="nuxt"><a href="#nuxt" class="headerlink" title=".nuxt"></a>.nuxt</h3><p>生产目录，由 nuxt 自动生成的一些文件。</p>
+<h3 id="pages"><a href="#pages" class="headerlink" title="pages"></a>pages</h3><p>nuxt 根据该目录自动生成路由配置，也就是通常所熟知的路由组件的位置。</p>
+<p>不同的是，nuxt 在原有的基础上增加了一些特殊的属性。</p>
+<p><strong>动态路由</strong></p>
+<p>类似动态设置路由的 params 参数，通过  <code>_paramName.vue</code> 创建路由组件。</p>
+<p><strong>忽略路由</strong></p>
+<p>倘若需要忽略某些路由，通过 <code>-xxx.vue</code> 即可。</p>
+<p>当通过 <code>/paramValue</code> 访问时，可通过上下文(context.params)可接收 paramValue。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1&gt;&#123;&#123; slug &#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    async asyncData(&#123; params &#125;) &#123;</span><br><span class="line">      const slug = params.slug // When calling /abc the slug will be &quot;abc&quot;</span><br><span class="line">      return &#123; slug &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>额外的配置</strong></p>
+<ol>
+<li><p>asyncData: Function</p>
+<p>组件加载前调用，可接受一个 context 函数参数，即当前页面上下文，返回值将被 nuxt 混入到 data 中去。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">asyncData</span>(<span class="params">context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">name</span>: <span class="string">&#x27;World&#x27;</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fetch: Function</p>
+<p>用于获取异步数据，和 asyncData 类似，但只能在服务端路由渲染时调用，且只在首次加载页面时触发。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        posts: []</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    async fetch() &#123;</span><br><span class="line">      this.posts = await fetch(&#x27;https://api.nuxtjs.dev/posts&#x27;).then(res =&gt;</span><br><span class="line">        res.json()</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>head: Function</p>
+<p>设置当前页面的一些 head 信息，nuxt 通过 <code>vue-meta</code> 进行更新。</p>
+</li>
+<li><p>layout: String</p>
+<p>配置当前页面的布局。</p>
+</li>
+<li><p>loading: Boolean</p>
+<p>配置当前是否使用顶部加载样式。</p>
+<p>若设为 false，可手动通过 <code>this.$nuxt.$loading.finish()</code> 和 <code>this.$nuxt.$loading.start()</code>。</p>
+</li>
+<li><p>transition: Object</p>
+<p>配置页面动效。</p>
+</li>
+<li><p>scrollToTop: Boolean</p>
+<p>配置当前页面是否回调顶部。</p>
+</li>
+<li><p>middleware: String | Array</p>
+<p>配置当前页面中间件，将在页面渲染前调用。</p>
+</li>
+<li><p>key: String</p>
+<p>类似 Vue 组件上的 key，只不过这里是作用在 router-link 上。</p>
+</li>
+</ol>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><p>非路由组件。</p>
+<p>通过 nuxt.config.js 下的 components 配置是否自动扫描 components 下的所有组件。</p>
+<p><strong>懒加载</strong></p>
+<p>直接在组件前面加上 <code>Lazy</code> 即可，在一些事件之后加载渲染组件。</p>
+<p><strong>嵌套路由</strong></p>
+<p>例如以下目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">components/</span><br><span class="line">  base/</span><br><span class="line">      foo/</span><br><span class="line">         CustomButton.vue</span><br></pre></td></tr></table></figure>
+
+<p>得到的最终路由：<code>&lt;BaseFooCustomButton /&gt;</code></p>
+<h3 id="Assets"><a href="#Assets" class="headerlink" title="Assets"></a>Assets</h3><p>资源文件：Stylus、Sass、images、fonts。</p>
+<p><strong>Images</strong></p>
+<p>在 template 中，可通过 <code>~/assets/xxx.png</code> 访问。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~/assets/your_image.png&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>但在 css 文件中，则不需要斜杠。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&#x27;~assets/banner.svg&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>Styles</strong></p>
+<p>nuxt 允许通过 nuxt.config.js 配置全局样式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">css</span>: [</span><br><span class="line">    <span class="comment">// Load a Node.js module directly (here it&#x27;s a Sass file)</span></span><br><span class="line">    <span class="string">&#x27;bulma&#x27;</span>,</span><br><span class="line">    <span class="comment">// CSS file in the project</span></span><br><span class="line">    <span class="string">&#x27;~/assets/css/main.css&#x27;</span>,</span><br><span class="line">    <span class="comment">// SCSS file in the project</span></span><br><span class="line">    <span class="string">&#x27;~/assets/css/main.scss&#x27;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Static"><a href="#Static" class="headerlink" title="Static"></a>Static</h3><p>静态资源，改目录下一般包含一些永远不会改变的资源，且将会直接映射到服务器的根目录下。</p>
+<p>static 下的文件可通过 <code>/</code> 直接访问。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Static image from static directory --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/my-image.png&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- webpacked image from assets directory --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~/assets/my-image-2.png&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>若 nuxt.config.js 中配置了 router.base 属性，项目将在子目录下部署，届时就需要加上 base 才能访问到静态资源。</p>
+<p>当然也可以通过配置 static.prefix 为 false 来取消前缀。</p>
+<h3 id="nuxt-config-js"><a href="#nuxt-config-js" class="headerlink" title="nuxt.config.js"></a>nuxt.config.js</h3><p>nuxt 的配置文件。</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-alias/">alias</a></p>
+<p>配置目录别名。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-build/">build</a></p>
+<p>配置 webpack，包括 loader、filenames、transpilation。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-css/">css</a></p>
+<p>配置全局 css 文件。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-generate/">generate</a></p>
+<p>命令 <code>nuxt g</code> 相关配置。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-head/">head</a></p>
+<p>配置 web head。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-loading/">loading</a></p>
+<p>配置页面加载。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-modules/">modules</a></p>
+<p>加载第三方库。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-plugins/">plugins</a></p>
+<p>加载插件。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-router/">router</a></p>
+<p>配置 nuxt 路由。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-server/">server</a></p>
+<p>配置服务相关属性。</p>
+</li>
+<li><p>srcDir</p>
+<p>配置当前 nuxt 应用的源目录。</p>
+</li>
+<li><p>.gitignore</p>
+<p>配置忽略文件。</p>
+</li>
+</ol>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://www.nuxtjs.cn/nuxt-views-schema.svg" alt="nuxt-views-schema"></p>
+<h3 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h3><p>同 Vue 组件一致，只不过 nuxt 为每一个页面添加了一些特殊的属性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1 class=&quot;red&quot;&gt;Hello &#123;&#123; name &#125;&#125;!&lt;/h1&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    asyncData (context) &#123;</span><br><span class="line">      // called every time before loading the component</span><br><span class="line">      return &#123; name: &#x27;World&#x27; &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    fetch () &#123;</span><br><span class="line">      // The fetch method is used to fill the store before rendering the page</span><br><span class="line">    &#125;,</span><br><span class="line">    head () &#123;</span><br><span class="line">      // Set Meta Tags for this Page</span><br><span class="line">    &#125;,</span><br><span class="line">    // and more functionality to discover</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .red &#123;</span><br><span class="line">    color: red;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>配置项：</p>
+<blockquote>
+<p>只要是函数式写法，第一个参数都可以接收到当前页面的上下文(context)。</p>
+</blockquote>
+<ol>
+<li><p><code>asyncData: Function</code></p>
+<p>服务端获取并渲染数据，asyncData 在组件<strong>初始化之前</strong>执行。</p>
+</li>
+<li><p><code>fetch: Function</code></p>
+<p>用于渲染前处理状态机(store)中的数据，与 <code>asyncData</code> 方法类似，但他不会设置组件的数据。</p>
+</li>
+<li><p><code>head: Object | Function</code></p>
+<p>配置head、html。</p>
+</li>
+<li><p><code>key: String | Function</code></p>
+<p>配置 <code>&lt;router-view&gt;</code> 组件的 <code>key</code> 属性。</p>
+</li>
+<li><p><code>layout: String | Function</code></p>
+<p>配置页面布局文件。</p>
+</li>
+<li><p><code>loading: Boolean</code></p>
+<p>配置是否加载进度条选项。</p>
+</li>
+<li><p><code>middleware: String | Array</code></p>
+<p>配置中间件文件。</p>
+</li>
+<li><p><code>scrollToTop: Boolean</code></p>
+<p>控制页面渲染前是否滚动至页面顶部。</p>
+</li>
+<li><p><code>transition: String | Object | Function</code></p>
+<p>配置过渡动效。</p>
+</li>
+<li><p><code>validate: (context: any) =&gt; Boolean</code></p>
+<p>配置路由参数校验。</p>
+</li>
+<li><p><code>watchQuery: Boolean | Array</code></p>
+<p>监听属性变化，执行所有组件方法(asyncData, fetch, validate, layout,…)</p>
+</li>
+</ol>
+<h4 id="动态页面"><a href="#动态页面" class="headerlink" title="动态页面"></a>动态页面</h4><p>通过 _name.vue 来实现动态参数的页面，name 将整合到路由的 params 参数中。</p>
+<h4 id="忽略页面"><a href="#忽略页面" class="headerlink" title="忽略页面"></a>忽略页面</h4><p>通过 -name.vue 来实现。</p>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>layout 目录下创建自定义布局。</p>
+<h4 id="默认布局"><a href="#默认布局" class="headerlink" title="默认布局"></a>默认布局</h4><p>入口：<code>layouts/default.vue</code></p>
+<p><strong>注意</strong>：在布局文件中需要添加 <code>&lt;nuxt/&gt;</code> 组件用于显示页面的主体内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;nuxt /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义布局"><a href="#自定义布局" class="headerlink" title="自定义布局"></a>自定义布局</h4><p>每个页面可以配置独自的布局，自定义布局文件应在 <code>layouts</code> 目录下，且需要确保在布局文件中添加 <code>&lt;Nuxt/&gt;</code> 来显示页面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/** layouts/blob.vue */</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;div&gt;My blog navigation bar here&lt;/div&gt;</span><br><span class="line">    &lt;Nuxt /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">/** pages/posts.vue */</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!-- Your template --&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    layout: &#x27;blog&#x27;</span><br><span class="line">    // page component definitions</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="错误页面"><a href="#错误页面" class="headerlink" title="错误页面"></a>错误页面</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/** layouts/error.vue */</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1 v-if=&quot;error.statusCode === 404&quot;&gt;Page not found&lt;/h1&gt;</span><br><span class="line">    &lt;h1 v-else&gt;An error occurred&lt;/h1&gt;</span><br><span class="line">    &lt;NuxtLink to=&quot;/&quot;&gt;Home page&lt;/NuxtLink&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    props: [&#x27;error&#x27;],</span><br><span class="line">    layout: &#x27;error&#x27; // you can set a custom layout for the error page</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="app-html"><a href="#app-html" class="headerlink" title="app.html"></a>app.html</h3><p>可根据 nuxt.config.js 中的配置动态配置根入口文件的相关属性。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> &#123;&#123; <span class="attr">HTML_ATTRS</span> &#125;&#125;&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span> &#123;&#123; <span class="attr">HEAD_ATTRS</span> &#125;&#125;&gt;</span></span><br><span class="line">    &#123;&#123; HEAD &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span> &#123;&#123; <span class="attr">BODY_ATTRS</span> &#125;&#125;&gt;</span></span><br><span class="line">    &#123;&#123; APP &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="context"><a href="#context" class="headerlink" title="context"></a>context</h2><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://s2.loli.net/2023/05/31/6wLcWYTUzMymNOZ.png" alt="c12c33"></p>
+<p>context 在 nuxt 提供的一些函数中是可用的，比如：asyncData、plugins、middleware、nuxtServerInit，其属性如上图。</p>
+<blockquote>
+<p>不要与 action 中的 context 混淆！</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> (<span class="params">context</span>) &#123; <span class="comment">// Could be asyncData, nuxtServerInit, ...</span></span><br><span class="line">  <span class="comment">// Always available</span></span><br><span class="line">  <span class="keyword">const</span> &#123;</span><br><span class="line">    app,</span><br><span class="line">    store,</span><br><span class="line">    route,</span><br><span class="line">    params,</span><br><span class="line">    query,</span><br><span class="line">    env,</span><br><span class="line">    isDev,</span><br><span class="line">    isHMR,</span><br><span class="line">    redirect,</span><br><span class="line">    error,</span><br><span class="line">    $config</span><br><span class="line">  &#125; = context</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Only available on the Server-side</span></span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">server</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; req, res, beforeNuxtRender, beforeSerialize &#125; = context</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Only available on the Client-side</span></span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">client</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="keyword">from</span>, nuxtState &#125; = context</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取路由-params-参数"><a href="#获取路由-params-参数" class="headerlink" title="获取路由 params 参数"></a>获取路由 params 参数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">asyncData</span>(<span class="params">context</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> id = context.<span class="property">params</span>.<span class="property">id</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// Using the nuxtjs/http module here exposed via context.app</span></span><br><span class="line">      <span class="keyword">const</span> post = <span class="keyword">await</span> context.<span class="property">app</span>.<span class="property">$http</span>.$get(</span><br><span class="line">        <span class="string">`https://api.nuxtjs.dev/posts/<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">      )</span><br><span class="line">      <span class="keyword">return</span> &#123; post &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      context.<span class="title function_">error</span>(e) <span class="comment">// Show the nuxt error page with the thrown error</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="访问-store-并重定向（鉴权）"><a href="#访问-store-并重定向（鉴权）" class="headerlink" title="访问 store 并重定向（鉴权）"></a>访问 store 并重定向（鉴权）</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">middleware</span>(<span class="params">&#123; store, redirect &#125;</span>) &#123;</span><br><span class="line">    <span class="comment">// retrieving keys via object destructuring</span></span><br><span class="line">    <span class="keyword">const</span> isAuthenticated = store.<span class="property">state</span>.<span class="property">authenticated</span></span><br><span class="line">    <span class="keyword">if</span> (!isAuthenticated) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">redirect</span>(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Helper"><a href="#Helper" class="headerlink" title="Helper"></a>Helper</h2><p>nuxt 的辅助器。</p>
+<h3 id="nuxt-1"><a href="#nuxt-1" class="headerlink" title="$nuxt"></a>$nuxt</h3><p><code>$nuxt</code> 可以在 vue 组件中通过 <code>this.$nuxt</code> 访问，在客户端也可以通过 <code>window.$nuxt</code> 访问。</p>
+<h4 id="检查用户是否联网"><a href="#检查用户是否联网" class="headerlink" title="检查用户是否联网"></a>检查用户是否联网</h4><p><code>$nuxt.isOffline</code> 提供了快速查明用户是否连接互联网。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;$nuxt.isOffline&quot;</span>&gt;</span>You are offline<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Nuxt</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="刷新页面数据"><a href="#刷新页面数据" class="headerlink" title="刷新页面数据"></a>刷新页面数据</h4><p><code>$nuxt.refresh</code> 方法将重新调用 asyncData、fetch 重新获取数据。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; content &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;refresh&quot;</span>&gt;</span>Refresh<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">asyncData</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123; <span class="attr">content</span>: <span class="string">&#x27;Created at: &#x27;</span> + <span class="keyword">new</span> <span class="title class_">Date</span>() &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">refresh</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">this</span>.<span class="property">$nuxt</span>.<span class="title function_">refresh</span>()</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="控制加载条"><a href="#控制加载条" class="headerlink" title="控制加载条"></a>控制加载条</h4><p>可通过 <code>$nuxt.$loading</code> 实现对加载条的控制。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$nuxt</span>.<span class="property">$loading</span>.<span class="title function_">start</span>()</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="property">$nuxt</span>.<span class="property">$loading</span>.<span class="title function_">finish</span>(), <span class="number">500</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="window-onNuxtReady"><a href="#window-onNuxtReady" class="headerlink" title="window.onNuxtReady"></a>window.onNuxtReady</h3><p>在 nuxt 应用加载就绪之后执行一些回调。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">onNuxtReady</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Nuxt is ready and mounted&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h3><p>nuxt 集成了三个标志（client、server、static），用于判断当前应用程序在服务器、客户端或静态站点上呈现，通常在 asyncData 中使用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>I am rendered on the &#123;&#123; renderedOn &#125;&#125; side<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">asyncData</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123; <span class="attr">renderedOn</span>: process.<span class="property">client</span> ? <span class="string">&#x27;client&#x27;</span> : <span class="string">&#x27;server&#x27;</span> &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="SSR"><a href="#SSR" class="headerlink" title="SSR"></a>SSR</h2><p>服务端渲染，nuxt 亦为此而生，所谓服务端渲染，即在服务端进行页面编译解析成 html，再交给客户端渲染，至此不需要浏览器进行 js 的解析以及执行。</p>
+<p>Node.js server 是必要的：</p>
+<ol>
+<li>js 的执行需要 node 环境的。</li>
+<li>node 环境还需要做一些配置来实现编译执行 vue 应用。</li>
+</ol>
+<p>nuxt 也可以通过 serverMiddleware 来拓展和控制服务端：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** server-middleware/logger.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">url</span>)</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** nuxt.config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">serverMiddleware</span>: [<span class="string">&#x27;~/server-middleware/logger&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于是在服务端的原因，通常情况是不可以访问到浏览器独有的 <code>window</code> 对象的，只能在  <code>beforeMount</code> 和 <code>mounted</code> 中访问。</p>
+<p>ssr的步骤：</p>
+<ol>
+<li><p>客户端 -&gt; 服务端</p>
+<p>浏览器给 nodejs 服务端发出初始化请求。Nuxt 将生成 html 并返回给浏览器，并且会执行 asyncData、nuxtServerInit、Fetch。</p>
+</li>
+<li><p>服务端 -&gt; 浏览器</p>
+<p>浏览器接收到 html 进行渲染页面，然后 Vue.js 的 hydration 机制开始运作，使页面响应式，进而实现页面交互。</p>
+</li>
+<li><p>浏览器 -&gt; 浏览器</p>
+<p>页面之间的跳转通过 <code>&lt;NuxtLink&gt;</code> 来完成，除非你刷新页面，整个 ssr 流程将重新进行。</p>
+</li>
+</ol>
+<p>注意事项：</p>
+<ol>
+<li><p>window or document is undefined</p>
+<p>这基本是由于在服务端执行的缘故，建议使用 <code>process.cilent</code> 判断之后执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.<span class="property">client</span>) &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">&#x27;external_library&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Nuxt生命周期"><a href="#Nuxt生命周期" class="headerlink" title="Nuxt生命周期"></a>Nuxt生命周期</h2><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://s2.loli.net/2023/06/01/vpoL8D9CRBxzMae.png" alt="de48ca"></p>
+<p>下面是常用的生命周期：</p>
+<ol>
+<li><p><code>nuxtServerInit</code></p>
+<p>在服务器渲染间执行的方法，初始化 Vuex 的状态或从 API 中获取数据等操作。</p>
+</li>
+<li><p><code>middleware</code></p>
+<p>执行相关的中间件，顺序是：Global middleware -&gt; Layout middleware -&gt; Route middleware。</p>
+</li>
+<li><p><code>asyncData</code></p>
+<p>在组件渲染前运行，在客户端和服务端都可以执行。用于异步获取数据在渲染，通常和服务端配合使用。</p>
+</li>
+<li><p><code>fetch</code></p>
+<p>组件实例化之后，在页面加载前执行。主要用于客户端获取数据，不支持服务端渲染。</p>
+</li>
+<li><p><code>created</code></p>
+<p>在组件实例化后立即被调用，在服务器端和客户端均可用。常用于初始化数据请求和事件监听器等任务。</p>
+</li>
+<li><p><code>mounted</code></p>
+<p>在组件挂载到页面上后调用，只能在客户端中使用。适合进行 DOM 操作和使用第三方库初始化页面。</p>
+</li>
+<li><p><code>updated</code></p>
+<p>在组件更新时被调用，只能在客户端中使用。常用于更新数据和操作 DOM。</p>
+</li>
+<li><p><code>beforeDestory</code></p>
+<p>在组件被销毁之前调用，适合做一些清理工作或者事件解绑定等任务。</p>
+</li>
+</ol>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>nuxt 将根据 pages 目录下文件自动生成路由配置。</p>
+<h3 id="基础路由"><a href="#基础路由" class="headerlink" title="基础路由"></a>基础路由</h3><p>文件树：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| user/</span><br><span class="line">-----| index.vue</span><br><span class="line">-----| one.vue</span><br><span class="line">--| index.vue</span><br></pre></td></tr></table></figure>
+
+<p>自动生成路由配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">router</span>: &#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;index&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/index.vue&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/user&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/user/index.vue&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;user-one&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/user/one&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/user/one.vue&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h3><p>类似原 vue-router 中 <code>/:id</code>，在 nuxt 中通过 <code>_id.vue</code> 这种下划线命名方式实现。</p>
+<p>文件树：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| _slug/</span><br><span class="line">-----| comments.vue</span><br><span class="line">-----| index.vue</span><br><span class="line">--| users/</span><br><span class="line">-----| _id.vue</span><br><span class="line">--| index.vue</span><br></pre></td></tr></table></figure>
+
+<p>自动生成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">router</span>: &#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;index&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/index.vue&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;users-id&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/users/:id?&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/users/_id.vue&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;slug&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/:slug&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/_slug/index.vue&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;slug-comments&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/:slug/comments&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/_slug/comments.vue&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="路由参数"><a href="#路由参数" class="headerlink" title="路由参数"></a>路由参数</h4><p>在路由组件本地可通过 <code>this.$route.params.parameterName</code>。</p>
+<h3 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h3><p>即子路由。nuxt 中通过创建于子目录同名的 vue 文件实现。</p>
+<blockquote>
+<p>注意：需要在父级添加 <code>&lt;NuxtChild/&gt;</code> ；来显示子组件内容。</p>
+</blockquote>
+<p>文件树：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| users/</span><br><span class="line">-----| _id.vue</span><br><span class="line">-----| index.vue</span><br><span class="line">--| users.vue</span><br></pre></td></tr></table></figure>
+
+<p>自动生成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">router</span>: &#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/users&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&#x27;pages/users.vue&#x27;</span>,</span><br><span class="line">      <span class="attr">children</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">          <span class="attr">component</span>: <span class="string">&#x27;pages/users/index.vue&#x27;</span>,</span><br><span class="line">          <span class="attr">name</span>: <span class="string">&#x27;users&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">path</span>: <span class="string">&#x27;:id&#x27;</span>,</span><br><span class="line">          <span class="attr">component</span>: <span class="string">&#x27;pages/users/_id.vue&#x27;</span>,</span><br><span class="line">          <span class="attr">name</span>: <span class="string">&#x27;users-id&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由拓展"><a href="#路由拓展" class="headerlink" title="路由拓展"></a>路由拓展</h3><h4 id="nuxt-js-x2F-router"><a href="#nuxt-js-x2F-router" class="headerlink" title="@nuxt.js&#x2F;router"></a><a target="_blank" rel="noopener" href="https://github.com/nuxt-community/router-module">@nuxt.js&#x2F;router</a></h4><p>该方式可以使用自己的路由配置来覆盖重写 nuxt 自动生成的路由配置。</p>
+<p>具体使用参考官方库。</p>
+<blockquote>
+<p>注意：我们的 router.js 需要暴露 createRouter 出去。</p>
+</blockquote>
+<h4 id="router-extendRoutes"><a href="#router-extendRoutes" class="headerlink" title="router.extendRoutes"></a><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#extendroutes">router.extendRoutes</a></h4><p>通过 nuxt.config.js 进行拓展路由。</p>
+<p>添加路由：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">router</span>: &#123;</span><br><span class="line">    <span class="title function_">extendRoutes</span>(<span class="params">routes, resolve</span>) &#123;</span><br><span class="line">      routes.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;custom&#x27;</span>,</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;pages/404.vue&#x27;</span>)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>路由排序：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; sortRoutes &#125; <span class="keyword">from</span> <span class="string">&#x27;@nuxt/utils&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">router</span>: &#123;</span><br><span class="line">    <span class="title function_">extendRoutes</span>(<span class="params">routes, resolve</span>) &#123;</span><br><span class="line">      <span class="comment">// Add some routes here ...</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// and then sort them</span></span><br><span class="line">      <span class="title function_">sortRoutes</span>(routes)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>路由配置在 nuxt.config.js 中的 router 模块。</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#base">base: string</a></p>
+<p>路由根路径。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#extendroutes">extendRoutes: function</a></p>
+<p>路由拓展。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#fallback">fallback: boolean</a></p>
+<p>当浏览器不支持 history 模式时，是否回退使用 hash 模式。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v2.nuxt.com/docs/configuration-glossary/configuration-router/#mode">mode: ‘hash’ | ‘history’</a></p>
+<p>配置路由模式，但不建议修改，因为会影响到服务端渲染。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v3.router.vuejs.org/guide/advanced/scroll-behavior.html#async-scrolling">scrollBehavior</a></p>
+<p>路由跳转后配置滚动条行为。</p>
+</li>
+</ol>
+<h2 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h2><p>nuxt 支持传统的数据获取方式，例如 vue 的 mounted 周期中获取数据。但只有使用 nuxt 特有的 hook 才能在服务器端渲染期间呈现数据。</p>
+<p>nuxt 获取数据的钩子有：asyncData、fetch。</p>
+<h3 id="执行周期"><a href="#执行周期" class="headerlink" title="执行周期"></a>执行周期</h3><p><code>fetch</code> 钩子函数和 <code>asyncData</code> 钩子函数都是用于在组件渲染前获取异步数据的钩子函数，但它们的调用周期和触发时机不完全一样。</p>
+<p>在 Nuxt.js 应用程序中，<code>fetch</code> 钩子函数会在服务端渲染（SSR）期间和客户端渲染（CSR）期间分别被调用。具体来说：</p>
+<ul>
+<li>在 SSR 期间，<code>fetch</code> 钩子函数会在服务器端组件实例化之后、页面渲染之前被调用，此时可以获取到异步数据并将其保存到 Vuex store 中，以便在页面渲染时使用。</li>
+<li>在 CSR 期间，<code>fetch</code> 钩子函数会在每次路由导航切换时被调用，此时也可以获取异步数据并更新 Vuex store 中的状态。</li>
+</ul>
+<p>而对于 <code>asyncData</code> 钩子函数，则仅在客户端渲染时被调用，在服务端渲染期间不会执行。具体来说：</p>
+<ul>
+<li>在 CSR 期间，<code>asyncData</code> 钩子函数会在组件实例化之前被调用，并且会等待 Promise 对象被解决后再继续页面的渲染过程。这个阶段可以理解为初始化前。</li>
+<li>在组件实例化完成之后，会进入<code>created</code>生命周期钩子函数，此时组件的 DOM 节点已经生成，但是尚未被渲染到页面上。</li>
+<li>等到组件的 <code>mounted</code> 生命周期钩子函数调用时，组件的 DOM 节点已经成功地渲染到了页面上。</li>
+</ul>
+<p>因此，在 Nuxt.js 应用程序中，如果需要在组件渲染前就获取异步数据并使用，应该优先考虑使用 <code>fetch</code> 钩子函数；如果异步数据获取与页面渲染无关，可以考虑使用 <code>asyncData</code> 钩子函数。</p>
+<h3 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h3><p>在渲染页面前填充状态树(store)数据，不会设置组件的数据，可应用在所有组件上。</p>
+<p>其还提供了 this.$fetchState 用于获取 fetch 状态，并在页面展示相关信息。</p>
+<p>$fetchState 示例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">&quot;$fetchState.pending&quot;</span>&gt;</span>Fetching mountains...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else-if</span>=<span class="string">&quot;$fetchState.error&quot;</span>&gt;</span>An error occurred :(<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Nuxt Mountains<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;mountain of mountains&quot;</span>&gt;</span>&#123;&#123; mountain.title &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;$fetch&quot;</span>&gt;</span>Refresh<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">mountains</span>: []</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">async</span> <span class="title function_">fetch</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">this</span>.<span class="property">mountains</span> = <span class="keyword">await</span> <span class="title function_">fetch</span>(</span></span><br><span class="line"><span class="language-javascript">        <span class="string">&#x27;https://api.nuxtjs.dev/mountains&#x27;</span></span></span><br><span class="line"><span class="language-javascript">      ).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>监听路由参数信息，进行调用 fetch 更新数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">watch</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;$route.query&#x27;</span>: <span class="string">&#x27;$fetch&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">fetch</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// Called also on query changes</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样，在 <code>&lt;nuxt&gt;</code> 组件上使用 <code>keep-alive</code> 可进行组件数据缓存。</p>
+<p>nuxt 还提供了 <code>this.$fetchState.timestamp</code> 用于记录最后一次 fetch 的时间戳，可在缓存组件超过一定时间后，进行数据刷新。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">posts</span>: []</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">activated</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// Call fetch again if last fetch more than 30 sec ago</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">$fetchState</span>.<span class="property">timestamp</span> &lt;= <span class="title class_">Date</span>.<span class="title function_">now</span>() - <span class="number">30000</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">this</span>.$fetch()</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">async</span> <span class="title function_">fetch</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">this</span>.<span class="property">posts</span> = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;https://api.nuxtjs.dev/posts&#x27;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span></span></span><br><span class="line"><span class="language-javascript">        res.<span class="title function_">json</span>()</span></span><br><span class="line"><span class="language-javascript">      )</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="asyncData"><a href="#asyncData" class="headerlink" title="asyncData"></a>asyncData</h3><p>在服务器端获取渲染数据，并返回给当前组件的 data，且不能访问到 this 以及 组件实例。不同于 fetch，该钩子函数只能应用于组件页面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; post.title &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; post.description &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">async</span> <span class="title function_">asyncData</span>(<span class="params">&#123; params, $http &#125;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> post = <span class="keyword">await</span> $http.$get(<span class="string">`https://api.nuxtjs.dev/posts/<span class="subst">$&#123;params.id&#125;</span>`</span>)</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123; post &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Meta-和-SEO"><a href="#Meta-和-SEO" class="headerlink" title="Meta 和 SEO"></a>Meta 和 SEO</h2><h3 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h3><p>nuxt.config.js -&gt; head。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">head</span>: &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;my website title&#x27;</span>,</span><br><span class="line">    <span class="attr">meta</span>: [</span><br><span class="line">      &#123; <span class="attr">charset</span>: <span class="string">&#x27;utf-8&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">name</span>: <span class="string">&#x27;viewport&#x27;</span>, <span class="attr">content</span>: <span class="string">&#x27;width=device-width, initial-scale=1&#x27;</span> &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">hid</span>: <span class="string">&#x27;description&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;description&#x27;</span>,</span><br><span class="line">        <span class="attr">content</span>: <span class="string">&#x27;my website description&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">link</span>: [&#123; <span class="attr">rel</span>: <span class="string">&#x27;icon&#x27;</span>, <span class="attr">type</span>: <span class="string">&#x27;image/x-icon&#x27;</span>, <span class="attr">href</span>: <span class="string">&#x27;/favicon.ico&#x27;</span> &#125;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="局部配置"><a href="#局部配置" class="headerlink" title="局部配置"></a>局部配置</h3><p>对象形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">head</span>: &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;Home page&#x27;</span>,</span><br><span class="line">    <span class="attr">meta</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">hid</span>: <span class="string">&#x27;description&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;description&#x27;</span>,</span><br><span class="line">        <span class="attr">content</span>: <span class="string">&#x27;Home page description&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>函数形式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; title &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">title</span>: <span class="string">&#x27;Home page&#x27;</span></span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">head</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">title</span>: <span class="variable language_">this</span>.<span class="property">title</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">meta</span>: [</span></span><br><span class="line"><span class="language-javascript">          &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">hid</span>: <span class="string">&#x27;description&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">name</span>: <span class="string">&#x27;description&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">content</span>: <span class="string">&#x27;Home page description&#x27;</span></span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">        ]</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="外部资源"><a href="#外部资源" class="headerlink" title="外部资源"></a>外部资源</h3><p>通过 head.script 引入外部资源。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">head</span>: &#123;</span><br><span class="line">    <span class="attr">script</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">src</span>: <span class="string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">link</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">rel</span>: <span class="string">&#x27;stylesheet&#x27;</span>,</span><br><span class="line">        <span class="attr">href</span>: <span class="string">&#x27;https://fonts.googleapis.com/css?family=Roboto&amp;display=swap&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="css"><a href="#css" class="headerlink" title="css"></a>css</h3><p>nuxt 中允许通过配置文件配置全局 css。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">css</span>: [</span><br><span class="line">    <span class="comment">// Load a Node.js module directly (here it&#x27;s a Sass file)</span></span><br><span class="line">    <span class="string">&#x27;bulma&#x27;</span>,</span><br><span class="line">    <span class="comment">// CSS file in the project</span></span><br><span class="line">    <span class="string">&#x27;~/assets/css/main.css&#x27;</span>,</span><br><span class="line">    <span class="comment">// SCSS file in the project</span></span><br><span class="line">    <span class="string">&#x27;~/assets/css/main.scss&#x27;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>并且，nuxt 支持你忽略文件后缀名。但存在优先级：[‘css’, ‘pcss’, ‘postcss’, ‘styl’, ‘stylus’, ‘scss’, ‘sass’, ‘less’]</p>
+<blockquote>
+<p>同名文件，将按照该顺序解析。</p>
+</blockquote>
+<h3 id="外部资源-1"><a href="#外部资源-1" class="headerlink" title="外部资源"></a>外部资源</h3><p>主要通过 head 中的 script 以及 link 实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">head</span>: &#123;</span><br><span class="line">    <span class="attr">script</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">src</span>: <span class="string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">link</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">rel</span>: <span class="string">&#x27;stylesheet&#x27;</span>,</span><br><span class="line">        <span class="attr">href</span>: <span class="string">&#x27;https://fonts.googleapis.com/css?family=Roboto&amp;display=swap&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PostCSS"><a href="#PostCSS" class="headerlink" title="PostCSS"></a>PostCSS</h3><p>nuxt 配置可替代 postcss.config.js。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">postcss</span>: &#123;</span><br><span class="line">      <span class="comment">// Add plugin names as key and arguments as value</span></span><br><span class="line">      <span class="comment">// Install them before as dependencies with npm or yarn</span></span><br><span class="line">      <span class="attr">plugins</span>: &#123;</span><br><span class="line">        <span class="comment">// Disable a plugin by passing false as value</span></span><br><span class="line">        <span class="string">&#x27;postcss-url&#x27;</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="string">&#x27;postcss-nested&#x27;</span>: &#123;&#125;,</span><br><span class="line">        <span class="string">&#x27;postcss-responsive-type&#x27;</span>: &#123;&#125;,</span><br><span class="line">        <span class="string">&#x27;postcss-hexrgba&#x27;</span>: &#123;&#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">preset</span>: &#123;</span><br><span class="line">        <span class="comment">// Change the postcss-preset-env settings</span></span><br><span class="line">        <span class="attr">autoprefixer</span>: &#123;</span><br><span class="line">          <span class="attr">grid</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h3><p>nuxt 通过 <a target="_blank" rel="noopener" href="https://github.com/nuxt/nuxt/tree/2.x-dev/packages/babel-preset-app">@nuxt&#x2F;babel-preset-app</a>，实现 JSX 的编译渲染。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">name</span>: <span class="string">&#x27;World&#x27;</span> &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;red&quot;</span>&gt;</span>&#123;this.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ignore-files"><a href="#Ignore-files" class="headerlink" title="Ignore files"></a>Ignore files</h3><p><strong>.nuxtignore</strong></p>
+<p>您可以使用 .nuxtignore 文件来让 Nuxt 在构建阶段忽略项目根目录中的布局、页面、存储和中间件文件。</p>
+<p>.nuxtignore 文件遵循与 .gitignore 和 .eslintignore 文件相同的规范，其中每行都是一个 glob 模式，指示应忽略哪些文件。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># ignore layout foo.vue</span></span><br><span class="line"></span><br><span class="line">layouts/foo.vue</span><br><span class="line"></span><br><span class="line"><span class="section"># ignore layout files whose name ends with -ignore.vue</span></span><br><span class="line"></span><br><span class="line">layouts/<span class="emphasis">*-ignore.vue</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"># ignore page bar.vue</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">pages/bar.vue</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"># ignore page inside ignore folder</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">pages/ignore/*</span>.vue</span><br><span class="line"></span><br><span class="line"><span class="section"># ignore store baz.js</span></span><br><span class="line"></span><br><span class="line">store/baz.js</span><br><span class="line"></span><br><span class="line"><span class="section"># ignore store files match <span class="emphasis">_.test._</span></span></span><br><span class="line"></span><br><span class="line">store/ignore/<span class="emphasis">_.test._</span></span><br><span class="line"></span><br><span class="line"><span class="section"># ignore middleware files under foo folder except foo/bar.js</span></span><br><span class="line"></span><br><span class="line">middleware/foo/<span class="emphasis">*.js !middleware/foo/bar.js</span></span><br></pre></td></tr></table></figure>
+
+<p>同样，你也可以通过特殊的命名方式来实现忽略文件：<code>-xxx.xxx</code></p>
+<p>在配置文件中也可以通过 ignore 模块配置忽略文件。</p>
+<h3 id="webpack-配置"><a href="#webpack-配置" class="headerlink" title="webpack 配置"></a>webpack 配置</h3><p>nuxt 通过配置文件下 build 模块进 行配置 webpack，build 是一个对象，对象中包含一个 extend 函数。</p>
+<p>该函数接收两个参数，第一个参数是从 nuxt 的 webpack 配置中导出的 webpack 配置对象。第二个参数是一个带有以下布尔属性的上下文对象：<code>&#123; isDev, isClient, isServer, loaders &#125;</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="title function_">extend</span>(<span class="params">config, &#123; isClient &#125;</span>) &#123;</span><br><span class="line">      <span class="comment">// Extend only webpack config for client-bundle</span></span><br><span class="line">      <span class="keyword">if</span> (isClient) &#123;</span><br><span class="line">        config.<span class="property">devtool</span> = <span class="string">&#x27;source-map&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义-chunks"><a href="#自定义-chunks" class="headerlink" title="自定义 chunks"></a>自定义 chunks</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="title function_">extend</span>(<span class="params">config, &#123; isClient &#125;</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isClient) &#123;</span><br><span class="line">        config.<span class="property">optimization</span>.<span class="property">splitChunks</span>.<span class="property">maxSize</span> = <span class="number">200000</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看webpack配置"><a href="#查看webpack配置" class="headerlink" title="查看webpack配置"></a>查看webpack配置</h4><p>通过 <code>nuxt webpack</code> 命令查看最终的 webpack 配置。</p>
+<h4 id="添加webpack-plugins"><a href="#添加webpack-plugins" class="headerlink" title="添加webpack plugins"></a>添加webpack plugins</h4><p>nuxt 通过 build 模块下 <code>plugins: Object</code> 进行添加。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> webpack <span class="keyword">from</span> <span class="string">&#x27;webpack&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">      <span class="keyword">new</span> webpack.<span class="title class_">ProvidePlugin</span>(&#123;</span><br><span class="line">        <span class="comment">// global modules</span></span><br><span class="line">        <span class="attr">$</span>: <span class="string">&#x27;jquery&#x27;</span>,</span><br><span class="line">        <span class="attr">_</span>: <span class="string">&#x27;lodash&#x27;</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="处理音频文件"><a href="#处理音频文件" class="headerlink" title="处理音频文件"></a>处理音频文件</h4><p>音频文件应该由 <code>file-loader</code> 进行处理，但默认并没有进行配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="title function_">extend</span>(<span class="params">config, ctx</span>) &#123;</span><br><span class="line">      config.<span class="property">module</span>.<span class="property">rules</span>.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.(ogg|mp3|wav|mpe?g)$/i</span>,</span><br><span class="line">        <span class="attr">loader</span>: <span class="string">&#x27;file-loader&#x27;</span>,</span><br><span class="line">        <span class="attr">options</span>: &#123;</span><br><span class="line">          <span class="attr">name</span>: <span class="string">&#x27;[path][name].[ext]&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里配置完之后，就可以直接通过 require 直接引入音频文件提供给 audio 标签使用：<code>&lt;audio :src=&quot;require(&#39;@/assets/water.mp3&#39;)&quot; controls&gt;&lt;/audio&gt;</code> </p>
+<p>若不想使用 require 可通过配置 <code>vue-loader</code> 自动加载。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">loaders</span>: &#123;</span><br><span class="line">      <span class="attr">vue</span>: &#123;</span><br><span class="line">        <span class="attr">transformAssetUrls</span>: &#123;</span><br><span class="line">          <span class="attr">audio</span>: <span class="string">&#x27;src&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="title function_">extend</span>(<span class="params">config, ctx</span>) &#123;</span><br><span class="line">      config.<span class="property">module</span>.<span class="property">rules</span>.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.(ogg|mp3|wav|mpe?g)$/i</span>,</span><br><span class="line">        <span class="attr">loader</span>: <span class="string">&#x27;file-loader&#x27;</span>,</span><br><span class="line">        <span class="attr">options</span>: &#123;</span><br><span class="line">          <span class="attr">name</span>: <span class="string">&#x27;[path][name].[ext]&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改主机和端口号"><a href="#修改主机和端口号" class="headerlink" title="修改主机和端口号"></a>修改主机和端口号</h3><p>在配置文件下的 server 模块可进行修改 host 和 port。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">server</span>: &#123;</span><br><span class="line">    <span class="attr">host</span>: <span class="string">&#x27;0&#x27;</span> <span class="comment">// default: localhost</span></span><br><span class="line">    <span class="attr">port</span>: <span class="number">8000</span> <span class="comment">// default: 3000</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但不建议这样做，因为可能在网站托管时引起问题。最好直接在 dev 命令中修改主机和端口号。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;dev:host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nuxt --hostname &#x27;0&#x27; --port 8000&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="异步配置"><a href="#异步配置" class="headerlink" title="异步配置"></a>异步配置</h3><p>nuxt 可将通过异步函数返回值的形式进行配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;https://api.nuxtjs.dev/posts&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">head</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: data.<span class="property">title</span></span><br><span class="line">      <span class="comment">//... rest of config</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="加载条"><a href="#加载条" class="headerlink" title="加载条"></a>加载条</h2><h3 id="自定义进度条"><a href="#自定义进度条" class="headerlink" title="自定义进度条"></a>自定义进度条</h3><p>nuxt 配置文件的 loading 模块下进行配置。</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>color</td>
+<td>String</td>
+<td>‘black’</td>
+<td>CSS color of the progress bar</td>
+<td></td>
+</tr>
+<tr>
+<td>failedColor</td>
+<td>String</td>
+<td>‘red’</td>
+<td>CSS color of the progress bar when an error appended while rendering the route (if data or fetch sent back an error, for example).</td>
+<td></td>
+</tr>
+<tr>
+<td>height</td>
+<td>String</td>
+<td>‘2px’</td>
+<td>Height of the progress bar (used in the style property of the progress bar)</td>
+<td></td>
+</tr>
+<tr>
+<td>throttle</td>
+<td>Number</td>
+<td>200</td>
+<td>In ms, wait for the specified time before displaying the progress bar. Useful for preventing the bar from flashing.</td>
+<td></td>
+</tr>
+<tr>
+<td>duration</td>
+<td>Number</td>
+<td>5000</td>
+<td>In ms, the maximum duration of the progress bar, Nuxt assumes that the route will be rendered before 5 seconds.</td>
+<td></td>
+</tr>
+<tr>
+<td>continuous</td>
+<td>Boolean</td>
+<td>false</td>
+<td>Keep animating progress bar when loading takes longer than duration.</td>
+<td></td>
+</tr>
+<tr>
+<td>css</td>
+<td>Boolean</td>
+<td>true</td>
+<td>Set to false to remove default progress bar styles (and add your own).</td>
+<td></td>
+</tr>
+<tr>
+<td>rtl</td>
+<td>Boolean</td>
+<td>false</td>
+<td>Set the direction of the progress bar from right to left.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="禁用进度条"><a href="#禁用进度条" class="headerlink" title="禁用进度条"></a>禁用进度条</h3><p>通过 <code>loading: false</code> 禁用进度条，无论是全局配置还是局部配置均可。</p>
+<h3 id="编程式调用"><a href="#编程式调用" class="headerlink" title="编程式调用"></a>编程式调用</h3><p>nuxt 提供 <code>$loading</code> 进行直接控制进度条。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$nuxt</span>.<span class="property">$loading</span>.<span class="title function_">start</span>()</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="property">$nuxt</span>.<span class="property">$loading</span>.<span class="title function_">finish</span>(), <span class="number">500</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="内置组件"><a href="#内置组件" class="headerlink" title="内置组件"></a>内置组件</h2><h3 id="Nuxt"><a href="#Nuxt" class="headerlink" title="Nuxt"></a>Nuxt</h3><p>用于显示路由组件，只能用于布局文件(layouts)中使用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/** layouts/default.vue */</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>My nav bar<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Nuxt</span> <span class="attr">:nuxt-child-key</span>=<span class="string">&quot;somekey&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>My footer<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>:nuxt-child-key</code> 将传递给 <code>&lt;RouterView&gt;</code>，以便在动态页面正确处理过渡效果。</p>
+<h3 id="NuxtChild"><a href="#NuxtChild" class="headerlink" title="NuxtChild"></a>NuxtChild</h3><p>用于显示子路由(嵌套路由)。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-| pages/</span><br><span class="line">---| parent/</span><br><span class="line">------| child.vue</span><br><span class="line">---| parent.vue</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>I am the parent view<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">NuxtChild</span> <span class="attr">:foobar</span>=<span class="string">&quot;123&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h3><p>作用于 <code>&lt;NuxtChild&gt;</code> 和 <code>&lt;Nuxt&gt;</code>，进行组件缓存。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Nuxt</span> <span class="attr">keep-alive</span> <span class="attr">:keep-alive-props</span>=<span class="string">&quot;&#123; exclude: [&#x27;modal&#x27;] &#125;&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- will be converted into something like this --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">KeepAlive</span> <span class="attr">:exclude</span>=<span class="string">&quot;[&#x27;modal&#x27;]&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RouterView</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">KeepAlive</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>keep-alive-props</code> 是原 keep-alive 上的一些属性，包括：exclude、include等。</p>
+<h3 id="NuxtLink"><a href="#NuxtLink" class="headerlink" title="NuxtLink"></a>NuxtLink</h3><p>路由跳转。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">NuxtLink</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Home page<span class="tag">&lt;/<span class="name">NuxtLink</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 nuxt 中 NuxtLink 是默认<strong>预取</strong>的，也就是说在浏览器空闲的时候，将会预取并加载资源，以便用户点击链接时他们已经准备好。</p>
+<p>当然你也可以关闭 prefetch。</p>
+<p>局部关闭：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">NuxtLink</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span> <span class="attr">no-prefetch</span>&gt;</span>About page not pre-fetched<span class="tag">&lt;/<span class="name">NuxtLink</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">NuxtLink</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span> <span class="attr">:prefetch</span>=<span class="string">&quot;false&quot;</span>&gt;</span>About page not pre-fetched<span class="tag">&lt;/<span class="name">NuxtLink</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>全局关闭：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">router</span>: &#123;</span><br><span class="line">    <span class="attr">prefetchLinks</span>: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>局部开启：</p>
+<blockquote>
+<p>Nuxt v2.10.0 之后</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">NuxtLink</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span> <span class="attr">prefetch</span>&gt;</span>About page pre-fetched<span class="tag">&lt;/<span class="name">NuxtLink</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="linkActiveClass"><a href="#linkActiveClass" class="headerlink" title="linkActiveClass"></a>linkActiveClass</h3><p>nuxt 默认链接激活类名是：<code>nuxt-link-active</code></p>
+<p>当然你也可以自定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">router</span>: &#123;</span><br><span class="line">    <span class="attr">linkActiveClass</span>: <span class="string">&#x27;my-custom-active-link&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="client-only"><a href="#client-only" class="headerlink" title="client-only"></a>client-only</h3><p>显示仅在客户端渲染的组件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">sidebar</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">client-only</span> <span class="attr">placeholder</span>=<span class="string">&quot;Loading...&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- this component will only be rendered on client-side --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">comments</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">client-only</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用插槽：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">sidebar</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">client-only</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- this component will only be rendered on client-side --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">comments</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!-- loading indicator, rendered on server-side --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">template</span> #<span class="attr">placeholder</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">comments-placeholder</span> /&gt;</span>        </span><br><span class="line">      <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">client-only</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>有时在服务器渲染的页面中，即使使用 $nextTick，<code>&lt;client-only&gt;</code> 中的 $refs 也可能还没有准备好。技巧可能是多次调用 $nextTick：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mounted</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">initClientOnlyComp</span>()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  <span class="title function_">initClientOnlyComp</span>(<span class="params">count = <span class="number">10</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">myComp</span>) &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">initClientOnlyComp</span>(count - <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>在 Nuxt &lt; v2.9.0 中可以使用 <code>&lt;no-ssr&gt;</code> 替代 <code>&lt;client-only&gt;</code></p>
+</blockquote>
+<h2 id="非路由组件"><a href="#非路由组件" class="headerlink" title="非路由组件"></a>非路由组件</h2><h3 id="自动导入"><a href="#自动导入" class="headerlink" title="自动导入"></a>自动导入</h3><p>nuxt 中支持自动引入，在全局配置的 component 属性进行配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">components</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件命名"><a href="#组件命名" class="headerlink" title="组件命名"></a>组件命名</h3><p>非路由组件的命名是基于文件夹名和文件名生成的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">| components/</span><br><span class="line">--| base/</span><br><span class="line">----| foo/</span><br><span class="line">------| Button.vue</span><br><span class="line"></span><br><span class="line">/** 最终的组件名 */</span><br><span class="line">&lt;BaseFooButton /&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>建议还是将最终的组件名提前根据文件夹命名一致。</p>
+</blockquote>
+<p>忽略某个文件夹对命名的影响，可通过 component 下的 dirs 进行配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">components: &#123;</span><br><span class="line">  <span class="built_in">dirs</span>: [</span><br><span class="line">    <span class="string">&#x27;~/components&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;~/components/base&#x27;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h3><p>nuxt 中懒加载直接在组件前面加上 Lazy 即可。</p>
+<p>懒加载的组件在打包的过程中将会被单独分块儿打包，这将优化打包的大小。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Mountains<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">LazyMountainsList</span> <span class="attr">v-if</span>=<span class="string">&quot;show&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-if</span>=<span class="string">&quot;!show&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;show = true&quot;</span>&gt;</span>Show List<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">show</span>: <span class="literal">false</span></span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h2><p>作用于路由，过渡动效。</p>
+<p>有三种写法：string、object、function。</p>
+<p>默认的全局 transition-name 为 page。</p>
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><p>string 类型主要配置 transition 的 name，后续根据 .name-enter-active 等类名编写 css 动效。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  transition: &#x27;home&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;transition name=&quot;home&quot;&gt;&lt;/transition&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .home-enter-active, .home-leave-active &#123; transition: opacity .5s; &#125;</span><br><span class="line">  .home-enter, .home-leave-active &#123; opacity: 0; &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="object"><a href="#object" class="headerlink" title="object"></a>object</h3><p>对象配置的属性相对 string 就多了一些，比如：name、mode、duration等等，以及可以调用一些<a target="_blank" rel="noopener" href="https://v2.vuejs.org/v2/guide/transitions.html#JavaScript-Hooks">钩子函数</a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">transition</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;out-in&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">transition</span>: &#123;</span><br><span class="line">    <span class="title function_">afterLeave</span>(<span class="params">el</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;afterLeave&#x27;</span>, el)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="function"><a href="#function" class="headerlink" title="function"></a>function</h3><p>能够获取到路由信息：to、from。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">transition</span>(<span class="params">to, <span class="keyword">from</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">from</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;slide-left&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> +to.<span class="property">query</span>.<span class="property">page</span> &lt; +<span class="keyword">from</span>.<span class="property">query</span>.<span class="property">page</span> ? <span class="string">&#x27;slide-right&#x27;</span> : <span class="string">&#x27;slide-left&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局配置-1"><a href="#全局配置-1" class="headerlink" title="全局配置"></a>全局配置</h3><p>nuxt.config.js 的全局过渡配置主要有俩：layoutTransition、pageTransition。</p>
+<p>写法和上述一致。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">layoutTransition</span>: <span class="string">&#x27;my-layouts&#x27;</span></span><br><span class="line">  <span class="comment">// or</span></span><br><span class="line">  <span class="attr">layoutTransition</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;my-layouts&#x27;</span>,</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;out-in&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">pageTransition</span>: <span class="string">&#x27;my-page&#x27;</span></span><br><span class="line">  <span class="comment">// or</span></span><br><span class="line">  <span class="attr">pageTransition</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;my-page&#x27;</span>,</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;out-in&#x27;</span>,</span><br><span class="line">    beforeEnter (el) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Before enter...&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>nuxt 中可定义一些自定义函数作为中间件，在（一组）页面渲染前执行。</p>
+<p>共享的中间件应当放置在 <code>/middleware</code> 下，文件名则是中间件的名称。</p>
+<p>每一个中间件函数可接收一个 context 参数。</p>
+<p>通常情况下，中间件将在首次服务端渲染（第一次请求 nuxt app 或者 刷新页面）时以及客户端路由跳转时执行。</p>
+<p>多个中间件的执行顺序：</p>
+<ol>
+<li>nuxt.config.js 中的全局中间件</li>
+<li>layouts 中的中间件</li>
+<li>pages 中的中间件</li>
+</ol>
+<h3 id="Router-Middleware"><a href="#Router-Middleware" class="headerlink" title="Router Middleware"></a>Router Middleware</h3><p>类似路由守卫，需要在 nuxt.config.js 中 router 模块下配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** middleware/stats.js */</span></span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">&#x27;http&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> (<span class="params">&#123; route &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> http.<span class="title function_">post</span>(<span class="string">&#x27;http://my-stats-api.com&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">url</span>: route.<span class="property">fullPath</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** nuxt.config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">router</span>: &#123;</span><br><span class="line">    <span class="attr">middleware</span>: <span class="string">&#x27;stats&#x27;</span> <span class="comment">// middleware: [&quot;stats&quot;],</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名中间件"><a href="#匿名中间件" class="headerlink" title="匿名中间件"></a>匿名中间件</h3><p>局部中间件，直接在特殊的页面中直接通过 middleware 配置当前页面的中间件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Secret page<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">middleware</span>(<span class="params">&#123; store, redirect &#125;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// If the user is not authenticated</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (!store.<span class="property">state</span>.<span class="property">authenticated</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="title function_">redirect</span>(<span class="string">&#x27;/login&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>nuxt 中的插件系统主要功能涵盖：全局注入、Vue 插件、外部包（模块），在 <code>/plugins</code> 中进行管理。</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://v2.nuxt.com/_nuxt/image/5d7783.svg" alt="img"></p>
+<h3 id="inject"><a href="#inject" class="headerlink" title="inject"></a>inject</h3><p>nuxt 允许通过 <code>inject(key, value)</code> 实现将一些函数或变量注入贯穿整个应用中，注入到 $root 以及 context 当中。</p>
+<blockquote>
+<p>重要的是 Vue 的生命周期中只有 beforeCreate 和 created 钩子能在客户端以及服务端中被调用，其他的都只能在客户端中调用。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** plugins/hello.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (&#123; app &#125;, inject) =&gt; &#123;</span><br><span class="line">  <span class="comment">// Inject $hello(msg) in Vue, context and store.</span></span><br><span class="line">  <span class="title function_">inject</span>(<span class="string">&#x27;hello&#x27;</span>, <span class="function"><span class="params">msg</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello <span class="subst">$&#123;msg&#125;</span>!`</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** nuxt.config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;~/plugins/hello.js&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** example-component.vue */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.$hello(<span class="string">&#x27;mounted&#x27;</span>)</span><br><span class="line">    <span class="comment">// will console.log &#x27;Hello mounted!&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">asyncData</span>(<span class="params">&#123; app, $hello &#125;</span>) &#123;</span><br><span class="line">    $hello(<span class="string">&#x27;asyncData&#x27;</span>)</span><br><span class="line">    <span class="comment">// If using Nuxt &lt;= 2.12, use 👇</span></span><br><span class="line">    app.$hello(<span class="string">&#x27;asyncData&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue-Plugins"><a href="#Vue-Plugins" class="headerlink" title="Vue Plugins"></a>Vue Plugins</h3><p>与原生的 Vue 插件安装一样，通过 <code>Vue.use()</code> 进行安装。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** plugins/vue-tooltip.js */</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VTooltip</span> <span class="keyword">from</span> <span class="string">&#x27;v-tooltip&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VTooltip</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/** nuxt.config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;~/plugins/vue-tooltip.js&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于 ES6 的模块，可以通过配置文件下 build.transpile 进行 babel 转义为 ES5。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">transpile</span>: [<span class="string">&#x27;vue-tooltip&#x27;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Client-or-Server-side-only"><a href="#Client-or-Server-side-only" class="headerlink" title="Client or Server side only"></a>Client or Server side only</h3><ol>
+<li><p>通过特殊命名后缀</p>
+<p><code>xxx.client.js</code> 或 <code>xxx.server.js</code> 可限制插件的执行区域。</p>
+</li>
+<li><p>配置下 plugins 模块每个插件通过对象的形式配置，并配置 mode。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">&#x27;~/plugins/both-sides.js&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">&#x27;~/plugins/client-only.js&#x27;</span>, <span class="attr">mode</span>: <span class="string">&#x27;client&#x27;</span> &#125;, <span class="comment">// only on client side</span></span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">&#x27;~/plugins/server-only.js&#x27;</span>, <span class="attr">mode</span>: <span class="string">&#x27;server&#x27;</span> &#125; <span class="comment">// only on server side</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="extendPlugins"><a href="#extendPlugins" class="headerlink" title="extendPlugins"></a>extendPlugins</h3><p>配置文件中 extendPlugins 模块可进行对当前 plugins 配置进行编程式处理（排序、删除）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** nuxt.config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">extendPlugins</span>(<span class="params">plugins</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> pluginIndex = plugins.<span class="title function_">findIndex</span>(</span><br><span class="line">      <span class="function">(<span class="params">&#123; src &#125;</span>) =&gt;</span> src === <span class="string">&#x27;~/plugins/shouldBeFirst.js&#x27;</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">const</span> shouldBeFirstPlugin = plugins[pluginIndex]</span><br><span class="line"></span><br><span class="line">    plugins.<span class="title function_">splice</span>(pluginIndex, <span class="number">1</span>)</span><br><span class="line">    plugins.<span class="title function_">unshift</span>(shouldBeFirstPlugin)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> plugins</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/26/Work/Eccom/CCNA%20(%20R&S%20)/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-04-13 00:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Vue/" title="Vue">
+                        <b>#</b> Vue
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Vue/Nuxt/" title="Nuxt">
+                        <b>#</b> Nuxt
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/03/10/JS/%E5%89%8D%E7%AB%AF%E5%9F%8B%E7%82%B9/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nuxt-js"><span class="toc-text">Nuxt.js</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nuxt"><span class="toc-text">.nuxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pages"><span class="toc-text">pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#components"><span class="toc-text">components</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Assets"><span class="toc-text">Assets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Static"><span class="toc-text">Static</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nuxt-config-js"><span class="toc-text">nuxt.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2"><span class="toc-text">页面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2"><span class="toc-text">动态页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%BD%E7%95%A5%E9%A1%B5%E9%9D%A2"><span class="toc-text">忽略页面</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B1%80"><span class="toc-text">布局</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%B8%83%E5%B1%80"><span class="toc-text">默认布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B8%83%E5%B1%80"><span class="toc-text">自定义布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2"><span class="toc-text">错误页面</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-html"><span class="toc-text">app.html</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#context"><span class="toc-text">context</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%B7%AF%E7%94%B1-params-%E5%8F%82%E6%95%B0"><span class="toc-text">获取路由 params 参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE-store-%E5%B9%B6%E9%87%8D%E5%AE%9A%E5%90%91%EF%BC%88%E9%89%B4%E6%9D%83%EF%BC%89"><span class="toc-text">访问 store 并重定向（鉴权）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Helper"><span class="toc-text">Helper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nuxt-1"><span class="toc-text">$nuxt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%94%A8%E6%88%B7%E6%98%AF%E5%90%A6%E8%81%94%E7%BD%91"><span class="toc-text">检查用户是否联网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE"><span class="toc-text">刷新页面数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8A%A0%E8%BD%BD%E6%9D%A1"><span class="toc-text">控制加载条</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-onNuxtReady"><span class="toc-text">window.onNuxtReady</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Process"><span class="toc-text">Process</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSR"><span class="toc-text">SSR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nuxt%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">Nuxt生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%B7%AF%E7%94%B1"><span class="toc-text">基础路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-text">动态路由</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0"><span class="toc-text">路由参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1"><span class="toc-text">嵌套路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%8B%93%E5%B1%95"><span class="toc-text">路由拓展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nuxt-js-x2F-router"><span class="toc-text">@nuxt.js&#x2F;router</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#router-extendRoutes"><span class="toc-text">router.extendRoutes</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="toc-text">路由配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96"><span class="toc-text">数据获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%91%A8%E6%9C%9F"><span class="toc-text">执行周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fetch"><span class="toc-text">fetch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#asyncData"><span class="toc-text">asyncData</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meta-%E5%92%8C-SEO"><span class="toc-text">Meta 和 SEO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="toc-text">全局配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">局部配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%B5%84%E6%BA%90"><span class="toc-text">外部资源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#css"><span class="toc-text">css</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%B5%84%E6%BA%90-1"><span class="toc-text">外部资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PostCSS"><span class="toc-text">PostCSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSX"><span class="toc-text">JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ignore-files"><span class="toc-text">Ignore files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack-%E9%85%8D%E7%BD%AE"><span class="toc-text">webpack 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-chunks"><span class="toc-text">自定义 chunks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bwebpack%E9%85%8D%E7%BD%AE"><span class="toc-text">查看webpack配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0webpack-plugins"><span class="toc-text">添加webpack plugins</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6"><span class="toc-text">处理音频文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%92%8C%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="toc-text">修改主机和端口号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E9%85%8D%E7%BD%AE"><span class="toc-text">异步配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E6%9D%A1"><span class="toc-text">加载条</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="toc-text">自定义进度条</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E7%94%A8%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="toc-text">禁用进度条</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E8%B0%83%E7%94%A8"><span class="toc-text">编程式调用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">内置组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nuxt"><span class="toc-text">Nuxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NuxtChild"><span class="toc-text">NuxtChild</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#keep-alive"><span class="toc-text">keep-alive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NuxtLink"><span class="toc-text">NuxtLink</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linkActiveClass"><span class="toc-text">linkActiveClass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#client-only"><span class="toc-text">client-only</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E8%B7%AF%E7%94%B1%E7%BB%84%E4%BB%B6"><span class="toc-text">非路由组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%85%A5"><span class="toc-text">自动导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%91%BD%E5%90%8D"><span class="toc-text">组件命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-text">懒加载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1"><span class="toc-text">过渡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#string"><span class="toc-text">string</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#object"><span class="toc-text">object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#function"><span class="toc-text">function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE-1"><span class="toc-text">全局配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Router-Middleware"><span class="toc-text">Router Middleware</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">匿名中间件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-text">插件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inject"><span class="toc-text">inject</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-Plugins"><span class="toc-text">Vue Plugins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-or-Server-side-only"><span class="toc-text">Client or Server side only</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extendPlugins"><span class="toc-text">extendPlugins</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Nuxt.js + '&url=' + http%3A%2F%2Fexample.com%2F2023%2F03%2F05%2Fvue%2FNuxt%2FNuxt.js%25E7%25AC%2594%25E8%25AE%25B0%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2023/03/05/vue/Nuxt/Nuxt.js%E7%AC%94%E8%AE%B0/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body>
+</html>

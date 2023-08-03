@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="keywords" content="前端,Vue,React,JavaScript,NodeJS">
+  
+  <meta name="author" content="AKira" />
+  <meta name="description" content="Akira_Blog" />
+  
+  
+  <title>
+    
+      UmiJS-v4 
+      
+      
+      |
+    
+     Akira_Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/avatar.png">
+    <link rel="icon" href="/images/avatar.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img no-lazy src="/images/AkiraIce.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Akira Ice</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">UmiJS-v4</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-08-02 17:28:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/React/" title="React">
+                    <b>#</b> React
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/React/Umi/" title="Umi">
+                    <b>#</b> Umi
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p><a target="_blank" rel="noopener" href="https://umijs.org/docs/api/api">API</a></p>
+<h1 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h1><p>设计思路包括:</p>
+<ol>
+<li><p>技术收敛</p>
+</li>
+<li><p>插件和插件集</p>
+</li>
+<li><p>import all in umi</p>
+</li>
+<li><p>编译时框架</p>
+</li>
+<li><p>依赖预打包</p>
+</li>
+<li><p>默认快</p>
+</li>
+<li><p>约束与开放</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NDgyODI4MQ==&mid=2247484533&idx=1&sn=9b15a67b88ebc95476fce1798eb49146">4-7 详见</a></p>
+<h2 id="技术收敛"><a href="#技术收敛" class="headerlink" title="技术收敛"></a>技术收敛</h2><ol>
+<li><p>术栈收敛</p>
+</li>
+<li><p>依赖收敛</p>
+</li>
+</ol>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://img.alicdn.com/tfs/TB1hE8ywrr1gK0jSZFDXXb9yVXa-1227-620.png"></p>
+<h2 id="插件和插件集"><a href="#插件和插件集" class="headerlink" title="插件和插件集"></a>插件和插件集</h2><p>拓展一类业务，而不仅仅是拓展某一功能。</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https://img.alicdn.com/tfs/TB1mrhuwqL7gK0jSZFBXXXZZpXa-956-728.png"></p>
+<h2 id="import-all-in-umi"><a href="#import-all-in-umi" class="headerlink" title="import all in umi"></a>import all in umi</h2><p>所有的导入都从 umi 中进行导出，减少 import 数量。</p>
+<p><code>import &#123; connect, useModel, useIntl, useRequest, MicroApp, ... &#125; from &#39;umi&#39;;</code></p>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── config</span><br><span class="line">│   └── config.ts</span><br><span class="line">├── dist</span><br><span class="line">├── mock</span><br><span class="line">│   └── app.ts｜tsx</span><br><span class="line">├── src</span><br><span class="line">│   ├── .umi</span><br><span class="line">│   ├── .umi-production</span><br><span class="line">│   ├── layouts</span><br><span class="line">│   │   ├── BasicLayout.tsx</span><br><span class="line">│   │   ├── index.less</span><br><span class="line">│   ├── models</span><br><span class="line">│   │   ├── global.ts</span><br><span class="line">│   │   └── index.ts</span><br><span class="line">│   ├── pages</span><br><span class="line">│   │   ├── index.less</span><br><span class="line">│   │   └── index.tsx</span><br><span class="line">│   ├── utils // 推荐目录</span><br><span class="line">│   │   └── index.ts</span><br><span class="line">│   ├── services // 推荐目录</span><br><span class="line">│   │   └── api.ts</span><br><span class="line">│   ├── app.(ts|tsx)</span><br><span class="line">│   ├── global.ts</span><br><span class="line">│   ├── global.(css|less|sass|scss)</span><br><span class="line">│   ├── overrides.(css|less|sass|scss)</span><br><span class="line">│   ├── favicon.(ico|gif|png|jpg|jpeg|svg|avif|webp)</span><br><span class="line">│   └── loading.(tsx|jsx)</span><br><span class="line">├── node_modules</span><br><span class="line">│   └── .cache</span><br><span class="line">│       ├── bundler-webpack</span><br><span class="line">│       ├── mfsu</span><br><span class="line">│       └── mfsu-deps</span><br><span class="line">├── .<span class="built_in">env</span></span><br><span class="line">├── plugin.ts</span><br><span class="line">├── .umirc.ts // 与 config/config 文件 2 选一</span><br><span class="line">├── package.json</span><br><span class="line">├── tsconfig.json</span><br><span class="line">└── typings.d.ts</span><br></pre></td></tr></table></figure>
+
+<h1 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h1><h2 id="配置式路由"><a href="#配置式路由" class="headerlink" title="配置式路由"></a>配置式路由</h2><p>同 Vue-Router 路由配置基本一致。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** .umirc.ts or config/config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">/** 嵌套路由 &amp; layout */</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&quot;/&quot;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="string">&quot;@/layouts/index&quot;</span>,</span><br><span class="line">      <span class="attr">routes</span>: [</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&quot;/list&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;list&quot;</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&quot;/admin&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;admin&quot;</span> &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/** redirect */</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&quot;/err&quot;</span>, <span class="attr">redirect</span>: <span class="string">&quot;/list&quot;</span> &#125;,</span><br><span class="line">    <span class="comment">/** wrapper */</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&quot;/user&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;user&quot;</span>, <span class="attr">wrappers</span>: [<span class="string">&quot;@/wrappers/auth&quot;</span>] &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** src/wrappers/auth */</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Navigate</span>, <span class="title class_">Outlet</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;umi&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (props) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; isLogin &#125; = <span class="title function_">useAuth</span>();</span><br><span class="line">  <span class="keyword">if</span> (isLogin) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Outlet</span> /&gt;</span></span>;</span><br><span class="line">  &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Navigate</span> <span class="attr">to</span>=<span class="string">&quot;/login&quot;</span> /&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>wrappers 中的每个组件会给当前的路由组件增加一层嵌套路由，如果你希望路由结构不发生变化，推荐使用高阶组件。先在高阶组件中实现 wrapper 中的逻辑，然后使用该高阶组件装饰对应的路由组件。</p>
+</blockquote>
+<h2 id="约定式路由"><a href="#约定式路由" class="headerlink" title="约定式路由"></a>约定式路由</h2><p>通过文件目录的结构生成路由表。</p>
+<p>比如以下文件结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">  └── pages</span><br><span class="line">    ├── index.tsx</span><br><span class="line">    └── users.tsx</span><br></pre></td></tr></table></figure>
+
+<p>会得到以下路由配置，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&quot;/&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;@/pages/index&quot;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&quot;/users&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;@/pages/users&quot;</span> &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><p>约定，带 $ 前缀的目录或文件为动态路由。若 $ 后不指定参数名，则代表 * 通配，比如以下目录结构：</p>
+<ol>
+<li><p>src&#x2F;pages&#x2F;users&#x2F;$id.tsx 会成为 &#x2F;users&#x2F;:id</p>
+</li>
+<li><p>src&#x2F;pages&#x2F;users&#x2F;$id&#x2F;settings.tsx 会成为 &#x2F;users&#x2F;:id&#x2F;settings</p>
+</li>
+</ol>
+<p>举个完整的例子，比如以下文件结构，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+ pages/</span><br><span class="line">  + foo/</span><br><span class="line">    - <span class="variable">$slug</span>.tsx</span><br><span class="line">  + <span class="variable">$bar</span>/</span><br><span class="line">    - $.tsx</span><br><span class="line">  - index.tsx</span><br></pre></td></tr></table></figure>
+
+<p>会生成路由配置如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&quot;/&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;@/pages/index.tsx&quot;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&quot;/foo/:slug&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;@/pages/foo/$slug.tsx&quot;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&quot;/:bar/*&quot;</span>, <span class="attr">component</span>: <span class="string">&quot;@/pages/$bar/$.tsx&quot;</span> &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由跳转"><a href="#路由跳转" class="headerlink" title="路由跳转"></a>路由跳转</h2><h3 id="History"><a href="#History" class="headerlink" title="History"></a>History</h3><p>和 history 相关的操作，用于获取当前路由信息、执行路由跳转、监听路由变更。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; history &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line">history.<span class="title function_">push</span>(<span class="string">&quot;/list&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** string */</span></span><br><span class="line">history.<span class="title function_">push</span>(<span class="string">&quot;/list?a=b&amp;c=d#anchor&quot;</span>, state);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** object */</span></span><br><span class="line">history.<span class="title function_">push</span>(</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">pathname</span>: <span class="string">&quot;/list&quot;</span>,</span><br><span class="line">    <span class="attr">search</span>: <span class="string">&quot;?a=b&amp;c=d&quot;</span>,</span><br><span class="line">    <span class="attr">hash</span>: <span class="string">&quot;anchor&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/** historyState */</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">some</span>: <span class="string">&quot;state-data&quot;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">history.<span class="title function_">push</span>(&#123;&#125;, state);</span><br><span class="line"></span><br><span class="line">history.<span class="title function_">back</span>();</span><br><span class="line">history.<span class="title function_">go</span>(-<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：history.push 和 history.replace 需要使用 state 需将 state 作为这两个 API 的第二个参数传递</p>
+</blockquote>
+<h3 id="Link-组件跳转"><a href="#Link-组件跳转" class="headerlink" title="Link 组件跳转"></a>Link 组件跳转</h3><p><code>&lt;Link&gt;</code> 是 React 组件，是带路由跳转功能的 <code>&lt;a&gt;</code> 元素。</p>
+<p>类型定义如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">Link</span>(<span class="params">props: &#123;</span></span><br><span class="line"><span class="params">  /** 预加载 */</span></span><br><span class="line"><span class="params">  prefetch?: <span class="built_in">boolean</span>;</span></span><br><span class="line"><span class="params">  to: <span class="built_in">string</span> | Partial&lt;&#123; pathname: <span class="built_in">string</span>; search: <span class="built_in">string</span>; hash: <span class="built_in">string</span> &#125;&gt;;</span></span><br><span class="line"><span class="params">  replace?: <span class="built_in">boolean</span>;</span></span><br><span class="line"><span class="params">  state?: <span class="built_in">any</span>;</span></span><br><span class="line"><span class="params">  /** &lt;Link&gt; -&gt; &lt;a&gt; */</span></span><br><span class="line"><span class="params">  reloadDocument?: <span class="built_in">boolean</span>;</span></span><br><span class="line"><span class="params">&#125;</span>): <span class="title class_">React</span>.<span class="property">ReactElement</span>;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Link</span> &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">IndexPage</span>(<span class="params">&#123; user &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&#123;user.id&#125;</span>&gt;</span>&#123;user.name&#125;<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由参数获取"><a href="#路由参数获取" class="headerlink" title="路由参数获取"></a>路由参数获取</h2><p>路由相关参数有：routeMatch、location、params、query。</p>
+<h3 id="match"><a href="#match" class="headerlink" title="match"></a>match</h3><p><code>useMatch</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> match = <span class="title function_">useMatch</span>(<span class="string">&#x27;/comp/:id&#x27;</span>)</span><br><span class="line"><span class="comment">// match</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;params&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: <span class="string">&quot;paramId&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;pathname&quot;</span>: <span class="string">&quot;/comp/paramId/&quot;</span>,</span><br><span class="line">  <span class="string">&quot;pathnameBase&quot;</span>: <span class="string">&quot;/comp/paramId&quot;</span>,</span><br><span class="line">  <span class="string">&quot;pattern&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;path&quot;</span>: <span class="string">&quot;/comp/:id&quot;</span>,</span><br><span class="line">  <span class="string">&quot;caseSensitive&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">&quot;end&quot;</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="location"><a href="#location" class="headerlink" title="location"></a>location</h3><p><code>useLocation</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> location = <span class="title function_">useLocation</span>();</span><br><span class="line"><span class="comment">// location</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="string">&quot;pathname&quot;</span>: <span class="string">&quot;/path/&quot;</span>,</span><br><span class="line"><span class="string">&quot;search&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line"><span class="string">&quot;hash&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line"><span class="string">&quot;state&quot;</span>: <span class="literal">null</span>,</span><br><span class="line"><span class="string">&quot;key&quot;</span>: <span class="string">&quot;default&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🚨<br>推荐使用 useLocation, 而不是直接访问 history.location. 两者的区别是 pathname 的部分。 history.location.pathname 是完整的浏览器的路径名；而 useLocation 中返回的 pathname 是相对项目配置的 base 的路径。</p>
+<p>举例：项目如果配置 base: ‘&#x2F;testbase’, 当前浏览器地址为 <a target="_blank" rel="noopener" href="https://localhost:8000/testbase/page/apple">https://localhost:8000/testbase/page/apple</a></p>
+<p>history.location.pathname 为 &#x2F;testbase&#x2F;page&#x2F;apple</p>
+<p>useLocation().pathname 为 &#x2F;page&#x2F;apple</p>
+</blockquote>
+<h3 id="Params"><a href="#Params" class="headerlink" title="Params"></a>Params</h3><p><code>useParams</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由配置 /comp/:id</span></span><br><span class="line"><span class="comment">// 当前 location /comp/paramId</span></span><br><span class="line"><span class="keyword">const</span> params = <span class="title function_">useParams</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// params</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="string">&quot;id&quot;</span>: <span class="string">&quot;paramId&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="query"><a href="#query" class="headerlink" title="query"></a>query</h3><p><code>useSearchParams</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当前 location /comp?a=b;</span></span><br><span class="line"><span class="keyword">const</span> [searchParams, setSearchParams] = <span class="title function_">useSearchParams</span>();</span><br><span class="line">searchParams.<span class="title function_">get</span>(<span class="string">&#x27;a&#x27;</span>) <span class="comment">// b</span></span><br><span class="line">searchParams.<span class="title function_">toString</span>() <span class="comment">// a=b</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">setSearchParams</span>(&#123;<span class="attr">a</span>:<span class="string">&#x27;c&#x27;</span>,<span class="attr">d</span>:<span class="string">&#x27;e&#x27;</span>&#125;) <span class="comment">// location 变成 /comp?a=c&amp;d=e</span></span><br><span class="line">searchParams 的 api 参考</span><br></pre></td></tr></table></figure>
+
+<h1 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h1><p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./mock/users.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// 返回值可以是数组形式 GET 默认可以省略</span></span><br><span class="line">  <span class="string">&quot;GET /api/users&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&quot;bar&quot;</span> &#125;,</span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回值也可以是对象形式</span></span><br><span class="line">  <span class="string">&quot;GET /api/users/1&quot;</span>: &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span> &#125;,</span><br><span class="line">  <span class="string">&quot;POST /api/users&quot;</span>: &#123; <span class="attr">result</span>: <span class="string">&quot;true&quot;</span> &#125;,</span><br><span class="line">  <span class="string">&quot;PUT /api/users/1&quot;</span>: &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;new-foo&quot;</span> &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>defineMock</code> 开启 ts 提示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineMock &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineMock</span>(&#123;</span><br><span class="line">  <span class="string">&quot;/api/users&quot;</span>: [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&quot;bar&quot;</span> &#125;,</span><br><span class="line">  ],</span><br><span class="line">  <span class="string">&quot;/api/users/1&quot;</span>: &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span> &#125;,</span><br><span class="line">  <span class="string">&quot;GET /api/users/2&quot;</span>: <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&quot;bar&quot;</span> &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>引入 Mock.js 生成数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mockjs <span class="keyword">from</span> <span class="string">&quot;mockjs&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// 使用 mockjs 等三方库</span></span><br><span class="line">  <span class="string">&quot;GET /api/tags&quot;</span>: mockjs.<span class="title function_">mock</span>(&#123;</span><br><span class="line">    <span class="string">&quot;list|100&quot;</span>: [&#123; <span class="attr">name</span>: <span class="string">&quot;@city&quot;</span>, <span class="string">&quot;value|1-100&quot;</span>: <span class="number">50</span>, <span class="string">&quot;type|0-2&quot;</span>: <span class="number">1</span> &#125;],</span><br><span class="line">  &#125;),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><p>同 vite 一样。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">proxy</span>: &#123;</span><br><span class="line">    <span class="string">&quot;/api&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">target</span>: <span class="string">&quot;http://jsonplaceholder.typicode.com/&quot;</span>,</span><br><span class="line">      <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">pathRewrite</span>: &#123; <span class="string">&quot;^/api&quot;</span>: <span class="string">&quot;&quot;</span> &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="数据预加载"><a href="#数据预加载" class="headerlink" title="数据预加载"></a>数据预加载</h1><p>Umi 会自动根据当前路由或准备跳转的路由，并行地发起他们的数据请求，因此当路由组件加载完成后，已经有马上可以使用的数据了。</p>
+<p>配置开启：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** .umirc.ts */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">clientLoader</span>: &#123;&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>使用方式:</p>
+<p>在路由文件中，除了默认导出的页面组件外，再导出一个 clientLoader 函数，并且在该函数内完成路由数据加载的逻辑。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** pages/.../some_page.tsx */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; useClientLoaderData &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">SomePage</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data &#125; = <span class="title function_">useClientLoaderData</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;data&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">clientLoader</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;/api/data&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="微生成器"><a href="#微生成器" class="headerlink" title="微生成器"></a>微生成器</h1><p>Umi 中内置了众多微生成器，协助你在开发中快速的完成一些繁琐的工作。</p>
+<ol>
+<li><p>页面生成器</p>
+</li>
+<li><p>组件生成器</p>
+</li>
+<li><p>RouteAPI 生成器</p>
+</li>
+<li><p>Mock 生成器</p>
+</li>
+<li><p>Prettier 配置生成器</p>
+</li>
+<li><p>Jest 配置生成器</p>
+</li>
+<li><p>Tailwind CSS 配置生成器</p>
+</li>
+<li><p>DvaJS 配置生成器</p>
+</li>
+<li><p>Precommit 配置生成器</p>
+</li>
+</ol>
+<h1 id="Umi-Max"><a href="#Umi-Max" class="headerlink" title="Umi Max"></a>Umi Max</h1><p>Umi Pro，内置很多插件。</p>
+<h2 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h2><p>集成 Ant Design 的 Layout（ProLayout）。</p>
+<h3 id="启用方式"><a href="#启用方式" class="headerlink" title="启用方式"></a>启用方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** config/config.ts */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">layout</span>: &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;your app title&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建时配置"><a href="#构建时配置" class="headerlink" title="构建时配置"></a>构建时配置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** config/config.ts */</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">layout</span>: &#123;</span><br><span class="line">    <span class="comment">/** 显示在布局左上角的产品名，默认值为包名。 */</span></span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;Ant Design&quot;</span>,</span><br><span class="line">    <span class="comment">/** 是否开始国际化配置。 */</span></span><br><span class="line">    <span class="attr">locale</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行时配置"><a href="#运行时配置" class="headerlink" title="运行时配置"></a>运行时配置</h3><p>运行时配置写在 <code>src/app.tsx</code> 中，key 为 <code>layout</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RunTimeLayoutConfig</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@umijs/max&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">layout</span>: <span class="title class_">RunTimeLayoutConfig</span> = <span class="function">(<span class="params">initialState</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">/** 显示在布局左上角的产品名，默认值为包名 */</span></span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;Ant Design&quot;</span>,</span><br><span class="line">    <span class="comment">/** 显示在布局左上角产品名前的产品 Logo */</span></span><br><span class="line">    <span class="attr">logo</span>: <span class="string">&quot;https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg&quot;</span>,</span><br><span class="line">    <span class="comment">/** 用于运行时配置默认 Layout 的 UI 中，点击退出登录的处理逻辑，默认不做处理 */</span></span><br><span class="line">    <span class="attr">logout</span>: <span class="function">(<span class="params">initialState: <span class="built_in">any</span></span>) =&gt;</span> &#123;&#125;</span><br><span class="line">    <span class="comment">/** 发生错误后的回调（可做一些错误日志上报，打点等） */</span></span><br><span class="line">    <span class="attr">onError</span>: <span class="function">(<span class="params">error: <span class="built_in">Error</span>, info: <span class="built_in">any</span></span>) =&gt;</span> &#123;&#125;;</span><br><span class="line">    <span class="comment">/** 发生错误后展示的组件 */</span></span><br><span class="line">    <span class="title class_">ErrorComponent</span>: <span class="function">(<span class="params">error: <span class="built_in">Error</span></span>) =&gt;</span> <span class="title class_">React</span>.<span class="property">ReactElement</span>&lt;<span class="built_in">any</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他属性见：https://procomponents.ant.design/components/layout#prolayout</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="拓展路由配置"><a href="#拓展路由配置" class="headerlink" title="拓展路由配置"></a>拓展路由配置</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/route.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">IBestAFSRoute</span>[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&quot;/welcome&quot;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="string">&quot;IndexPage&quot;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;欢迎&quot;</span>, <span class="comment">// 兼容此写法</span></span><br><span class="line">    <span class="attr">icon</span>: <span class="string">&quot;testicon&quot;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更多功能查看</span></span><br><span class="line">    <span class="comment">// https://beta-pro.ant.design/docs/advanced-menu</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新页面打开</span></span><br><span class="line">    <span class="attr">target</span>: <span class="string">&quot;_blank&quot;</span>,</span><br><span class="line">    <span class="comment">// 不展示顶栏</span></span><br><span class="line">    <span class="attr">headerRender</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="comment">// 不展示页脚</span></span><br><span class="line">    <span class="attr">footerRender</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="comment">// 不展示菜单</span></span><br><span class="line">    <span class="attr">menuRender</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="comment">// 不展示菜单顶栏</span></span><br><span class="line">    <span class="attr">menuHeaderRender</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="comment">// 权限配置，需要与 plugin-access 插件配合使用</span></span><br><span class="line">    <span class="attr">access</span>: <span class="string">&quot;canRead&quot;</span>,</span><br><span class="line">    <span class="comment">// 隐藏子菜单</span></span><br><span class="line">    <span class="attr">hideChildrenInMenu</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 隐藏自己和子菜单</span></span><br><span class="line">    <span class="attr">hideInMenu</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 在面包屑中隐藏</span></span><br><span class="line">    <span class="attr">hideInBreadcrumb</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 子项往上提，仍旧展示,</span></span><br><span class="line">    <span class="attr">flatMenu</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h2 id="antd"><a href="#antd" class="headerlink" title="antd"></a>antd</h2><p>整合 antd 组件库。</p>
+<h3 id="启用方式-1"><a href="#启用方式-1" class="headerlink" title="启用方式"></a>启用方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** config/config.ts */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">antd</span>: &#123;</span><br><span class="line">    <span class="comment">/** 配置 antd 的 configProvider */</span></span><br><span class="line">    <span class="attr">configProvider</span>: &#123;&#125;,</span><br><span class="line">    <span class="comment">/** 开启暗色主题 */</span></span><br><span class="line">    <span class="attr">dark</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">/** 开启紧凑主题 */</span></span><br><span class="line">    <span class="attr">compact</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">/** 配置 antd 的 babel-plugin-import 按需加载 */</span></span><br><span class="line">    <span class="attr">import</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">/** 配置使用 antd 的样式，默认 less */</span></span><br><span class="line">    <span class="attr">style</span>: <span class="string">&quot;less&quot;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** ---antd.v5--- */</span></span><br><span class="line">    <span class="comment">/** 配置 antd@5 的 theme token，等同于配置 configProvider.theme，且该配置项拥有更高的优先级 */</span></span><br><span class="line">    <span class="attr">theme</span>: &#123;&#125;,</span><br><span class="line">    <span class="comment">/** 配置 antd 的 App 包裹组件，请注意 antd@5.1.0 ~ 5.2.3 仅能通过 appConfig: &#123;&#125; 启用，只有 antd &gt;=5.3.0 才支持更多 App 配置项目 */</span></span><br><span class="line">    <span class="attr">appConfig</span>: &#123;&#125;,</span><br><span class="line">    <span class="comment">/** 配置 antd 的 DatePicker、TimePicker、Calendar 组件是否使用 moment 作为日期处理库，默认为 false */</span></span><br><span class="line">    <span class="attr">momentPicker</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">/** 配置 antd 的 StyleProvider 组件，该组件用于兼容低版本浏览器，如 IE11。当你的项目配置了 legacy 或者 targets 包含 ie 时，会自动进行降级处理，不需要手动配置。 */</span></span><br><span class="line">    <span class="attr">styleProvider</span>: &#123;</span><br><span class="line">      <span class="attr">hashPriority</span>: <span class="string">&quot;high&quot;</span>,</span><br><span class="line">      <span class="attr">legacyTransformer</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://ant.design/components/config-provider-cn?theme=dark">configProvider</a> 属性注入。</p>
+</blockquote>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p><code>@umi/max</code> 内置了数据流管理插件，它是一种基于 <code>hooks</code> 范式的轻量级数据管理方案，可以在 Umi 项目中管理全局的共享数据。</p>
+<h3 id="Create-Model"><a href="#Create-Model" class="headerlink" title="Create Model"></a>Create Model</h3><p>约定式目录结构：</p>
+<ol>
+<li><p><code>src/models/xxx.&#123;js,jsx,ts,tsx&#125;</code></p>
+</li>
+<li><p><code>src/pages/xxx/models/xxx.&#123;js,jsx,ts,tsx&#125;</code></p>
+</li>
+</ol>
+<blockquote>
+<p>注意 namespace 需要全局唯一。</p>
+</blockquote>
+<h3 id="Use-Model"><a href="#Use-Model" class="headerlink" title="Use Model"></a>Use Model</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** src/components/Username/index.tsx */</span></span><br><span class="line"><span class="keyword">import</span> &#123; useModel &#125; <span class="keyword">from</span> <span class="string">&#x27;umi&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Page</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; user, loading &#125; = <span class="title function_">useModel</span>(<span class="string">&#x27;userModel&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 数据过滤 */</span></span><br><span class="line">  <span class="keyword">const</span> &#123; add, minus &#125; = <span class="title function_">useModel</span>(<span class="string">&#x27;counterModel&#x27;</span>, <span class="function">(<span class="params">model</span>) =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">add</span>: model.<span class="property">increment</span>,</span><br><span class="line">    <span class="attr">minus</span>: model.<span class="property">decrement</span>,</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &#123;loading ? <span class="language-xml"><span class="tag">&lt;&gt;</span><span class="tag">&lt;/&gt;</span></span>: <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;user.username&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Global-Init-State"><a href="#Global-Init-State" class="headerlink" title="Global Init State"></a>Global Init State</h3><p>在 <code>src/app.js</code> 内暴露 <code>getInitialState</code> 方法。</p>
+<p>示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** src/app.ts [createInitState] */</span></span><br><span class="line"><span class="keyword">import</span> &#123; fetchInitialData &#125; <span class="keyword">from</span> <span class="string">&quot;@/services/initial&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getInitialState</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> initialData = <span class="keyword">await</span> <span class="title function_">fetchInitialData</span>();</span><br><span class="line">  <span class="keyword">return</span> initialData;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** src/page/xxxComponent.jsx [useInitState] */</span></span><br><span class="line"><span class="keyword">import</span> &#123; useModel &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Page</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; initialState, loading, error, refresh, setInitialState &#125; = <span class="title function_">useModel</span>(<span class="string">&quot;@@initialState&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span>&#123;initialState&#125;<span class="tag">&lt;/&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>对象属性</th>
+<th>类型</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>initialState</td>
+<td>any</td>
+<td>导出的 getInitialState() 方法的返回值</td>
+</tr>
+<tr>
+<td>loading</td>
+<td>boolean</td>
+<td>getInitialState() 或 refresh() 方法是否正在进行中。在首次获取到初始状态前，页面其他部分的渲染都会被阻止</td>
+</tr>
+<tr>
+<td>error</td>
+<td>Error</td>
+<td>如果导出的 getInitialState() 方法运行时报错，报错的错误信息</td>
+</tr>
+<tr>
+<td>refresh</td>
+<td>() &#x3D;&gt; void</td>
+<td>重新执行 getInitialState 方法，并获取新的全局初始状态</td>
+</tr>
+<tr>
+<td>setInitialState</td>
+<td>(state: any) &#x3D;&gt; void</td>
+<td>手动设置 initialState 的值，手动设置完毕会将 loading 置为 false</td>
+</tr>
+</tbody></table>
+<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><p>它基于 axios 和 ahooks 的 useRequest 提供了一套统一的网络请求和错误处理方案，主要 hooks 有：<code>request</code>、<code>useRequest</code></p>
+<h3 id="构建时配置-1"><a href="#构建时配置-1" class="headerlink" title="构建时配置"></a>构建时配置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** config/config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">request</span>: &#123;</span><br><span class="line">    <span class="comment">/** 请求返回数据解构 */</span></span><br><span class="line">    <span class="attr">dataField</span>: <span class="string">&quot;data&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行时配置-1"><a href="#运行时配置-1" class="headerlink" title="运行时配置"></a>运行时配置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** src/app.ts */</span></span><br><span class="line"><span class="keyword">import</span> type &#123; <span class="title class_">RequestConfig</span> &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">request</span>: <span class="title class_">RequestConfig</span> = &#123;</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">1000</span>,</span><br><span class="line">  <span class="comment">/** 请求统一的错误处理方案 */</span></span><br><span class="line">  <span class="attr">errorConfig</span>: &#123;</span><br><span class="line">    <span class="title function_">errorHandler</span>(<span class="params"></span>) &#123;&#125;,</span><br><span class="line">    <span class="title function_">errorThrower</span>(<span class="params"></span>) &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/** 拦截器 */</span></span><br><span class="line">  <span class="attr">requestInterceptors</span>: [],</span><br><span class="line">  <span class="comment">/** 响应器 */</span></span><br><span class="line">  <span class="attr">responseInterceptors</span>: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="API-request"><a href="#API-request" class="headerlink" title="API-request"></a>API-request</h3><p>通过 <code>import &#123; request &#125; from &#39;@@/plugin-request&#39;</code> 你可以使用内置的请求方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">request</span>(<span class="string">&quot;/api/user&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">params</span>: &#123; <span class="attr">name</span>: <span class="number">1</span> &#125;,</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">2000</span>,</span><br><span class="line">  <span class="comment">// other axios options</span></span><br><span class="line">  <span class="attr">skipErrorHandler</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">getResponse</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">requestInterceptors</span>: [],</span><br><span class="line">  <span class="attr">responseInterceptors</span>: [],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="API-useRequest"><a href="#API-useRequest" class="headerlink" title="API-useRequest"></a>API-useRequest</h3><p>插件内置了 @ahooksjs&#x2F;useRequest ，你可以在组件内通过该 Hook 简单便捷的消费数据。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRequest &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Page</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data, error, loading &#125; = <span class="title function_">useRequest</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> services.<span class="title function_">getUserList</span>(<span class="string">&quot;/api/test&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">if</span> (loading) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>loading...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (error) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;error.message&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;data.name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面代码中 data 并不是你后端返回的数据，而是其内部的 data，（因为构建时配置默认是 ‘data’)。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://umijs.org/docs/max/request#umi3-%E5%88%B0-umi4"><strong>Umi3 -&gt; Umi4 变化</strong></a></p>
+<h2 id="Access"><a href="#Access" class="headerlink" title="Access"></a>Access</h2><p>权限管理。</p>
+<h3 id="启用方式-2"><a href="#启用方式-2" class="headerlink" title="启用方式"></a>启用方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">access</span>: &#123;&#125;,</span><br><span class="line">  <span class="comment">/** access 插件依赖 initial State 所以需要同时开启 */</span></span><br><span class="line">  <span class="attr">initialState</span>: &#123;&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="权限定义"><a href="#权限定义" class="headerlink" title="权限定义"></a>权限定义</h3><p>我们约定了 <code>src/access.ts</code> 为我们的权限定义文件，该文件需要默认导出一个方法，导出的方法会在项目初始化时被执行。该方法需要返回一个对象，对象的每一个值就对应定义了一条权限。如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** src/access.ts */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> (<span class="params">initialState</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; userId, role &#125; = initialState;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">canReadFoo</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">canUpdateFoo</span>: role === <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="attr">canDeleteFoo</span>: <span class="function">(<span class="params">foo</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> foo.<span class="property">ownerId</span> === userId;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>路由配置中通过 access 限定权限。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&quot;/pageA&quot;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="string">&quot;PageA&quot;</span>,</span><br><span class="line">    <span class="comment">/** 权限定义返回值的某个 key */</span></span><br><span class="line">    <span class="attr">access</span>: <span class="string">&quot;canReadPageA&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h3 id="API-useAccess"><a href="#API-useAccess" class="headerlink" title="API-useAccess"></a>API-useAccess</h3><p>组件中获取权限相关信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** src/page/xxxComponent */</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useAccess &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">PageA</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; foo &#125; = props;</span><br><span class="line">  <span class="keyword">const</span> access = <span class="title function_">useAccess</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (access.<span class="property">canReadFoo</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果可以读取 Foo，则...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span>TODO<span class="tag">&lt;/&gt;</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">PageA</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="API-Access"><a href="#API-Access" class="headerlink" title="API-Access"></a>API-Access</h3><p>权限控制组件，支持的属性如下：</p>
+<ol>
+<li><p>accessible</p>
+</li>
+<li><p>fallback</p>
+</li>
+<li><p>children</p>
+</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useAccess, <span class="title class_">Access</span> &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">PageA</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; foo &#125; = props;</span><br><span class="line">  <span class="comment">/** access 的成员: canReadFoo, canUpdateFoo, canDeleteFoo */</span></span><br><span class="line">  <span class="keyword">const</span> access = <span class="title function_">useAccess</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (access.<span class="property">canReadFoo</span>) &#123;</span><br><span class="line">    <span class="comment">/** 如果可以读取 Foo，则... */</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Access</span> <span class="attr">accessible</span>=<span class="string">&#123;access.canReadFoo&#125;</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">div</span>&gt;</span>Can not read foo content.<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        Foo content.</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Access</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Access</span> <span class="attr">accessible</span>=<span class="string">&#123;access.canUpdateFoo&#125;</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">div</span>&gt;</span>Can not update foo.<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        Update foo.</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Access</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Access</span> <span class="attr">accessible</span>=<span class="string">&#123;access.canDeleteFoo(foo)&#125;</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">div</span>&gt;</span>Can not delete foo.<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        Delete foo.</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Access</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h2><p>约定在 src&#x2F;locales 目录下引入多语言文件，目录结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">  + locales</span><br><span class="line">    + zh-CN.ts</span><br><span class="line">    + en-US.ts</span><br><span class="line">  pages</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用方式-3"><a href="#启用方式-3" class="headerlink" title="启用方式"></a>启用方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** config/config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">locale</span>: &#123;</span><br><span class="line">    <span class="comment">// 默认使用 src/locales/zh-CN.ts 作为多语言文件</span></span><br><span class="line">    <span class="attr">default</span>: <span class="string">&quot;zh-CN&quot;</span>,</span><br><span class="line">    <span class="attr">baseSeparator</span>: <span class="string">&quot;-&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** src/locales/zh-CN.ts */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">welcome</span>: <span class="string">&#x27;欢迎光临 Umi 的世界！&#x27;</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** src/locales/en-US.ts */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">welcome</span>: <span class="string">&quot;Welcome to Umi&#x27;s world!&quot;</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="FormattedMessage"><a href="#FormattedMessage" class="headerlink" title="FormattedMessage"></a>FormattedMessage</h3><p>通过 UmiMax 预制的 <code>&lt;FormattedMessage /&gt;</code> 组件实现渲染。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">FormattedMessage</span> &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Page</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">FormattedMessage</span> <span class="attr">id</span>=<span class="string">&quot;welcome&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- zh-CN --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>欢迎光临 Umi 的世界！<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- en-US --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Welcome to Umi&#x27;s world!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="组件参数使用"><a href="#组件参数使用" class="headerlink" title="组件参数使用"></a>组件参数使用</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Alert</span> &#125; <span class="keyword">from</span> <span class="string">&quot;antd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useIntl &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Page</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> intl = <span class="title function_">useIntl</span>();</span><br><span class="line">  <span class="keyword">const</span> msg = intl.<span class="title function_">formatMessage</span>(&#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="string">&quot;welcome&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Alert</span> <span class="attr">message</span>=<span class="string">&#123;msg&#125;</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="切换语言"><a href="#切换语言" class="headerlink" title="切换语言"></a>切换语言</h3><p>方式：</p>
+<ol>
+<li><p><code>&lt;SelectLang /&gt;</code></p>
+</li>
+<li><p><code>setLocale()</code></p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** SelectLang UmiMax 预设的切换语言组件 */</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">SelectLang</span> &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Page</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">SelectLang</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 编程式调用 */</span></span><br><span class="line"><span class="keyword">import</span> &#123; setLocale &#125; <span class="keyword">from</span> <span class="string">&quot;umi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 切换时刷新页面 */</span></span><br><span class="line"><span class="title function_">setLocale</span>(<span class="string">&quot;en-US&quot;</span>);</span><br><span class="line"><span class="comment">/** 切换时不刷新页面 */</span></span><br><span class="line"><span class="title function_">setLocale</span>(<span class="string">&quot;en-US&quot;</span>, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** config/config.js */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">locale</span>: &#123;</span><br><span class="line">    <span class="attr">antd</span>: <span class="literal">false</span>, <span class="comment">// 如果项目依赖中包含 `antd`，则默认为 true</span></span><br><span class="line">    <span class="attr">baseNavigator</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">baseSeparator</span>: <span class="string">&quot;-&quot;</span>,</span><br><span class="line">    <span class="attr">default</span>: <span class="string">&quot;zh-CN&quot;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">useLocalStorage</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>配置的详细介绍如下：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>类型</th>
+<th>默认值</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>antd</td>
+<td>Boolean</td>
+<td>false；</td>
+<td>如果项目包含 antd 依赖，则为 true antd 的国际化支持。更多介绍可参见此文档。</td>
+</tr>
+<tr>
+<td>baseNavigator</td>
+<td>Boolean</td>
+<td>true</td>
+<td>开启浏览器语言检测。默认情况下，当前语言环境的识别按照：localStorage 中 umi*locale 值 &gt; 浏览器检测 &gt; default 设置的默认语言 &gt; zh-CN</td>
+</tr>
+<tr>
+<td>baseSeparator</td>
+<td>String</td>
+<td>-</td>
+<td>语言（Language）与国家（Country） 之间的分割符。默认情况下为 -，返回的语言及目录文件为 zh-CN、en-US 和 sk 等。若指定为 *，则 default 默认为 zh_CN。</td>
+</tr>
+<tr>
+<td>default</td>
+<td>String</td>
+<td>zh-CN</td>
+<td>项目默认语言。当检测不到具体语言时，使用 default 设置的默认语言。</td>
+</tr>
+<tr>
+<td>title</td>
+<td>Boolean</td>
+<td>false</td>
+<td>开启标题国际化。</td>
+</tr>
+<tr>
+<td>useLocalStorage</td>
+<td>Boolean</td>
+<td>true</td>
+<td>自动使用 localStorage 保存当前使用的语言。</td>
+</tr>
+</tbody></table>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/07/28/React/Redux/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-08-02 17:28:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/React/" title="React">
+                        <b>#</b> React
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/React/Umi/" title="Umi">
+                        <b>#</b> Umi
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#API"><span class="toc-text">API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-text">设计思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%94%B6%E6%95%9B"><span class="toc-text">技术收敛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6%E5%92%8C%E6%8F%92%E4%BB%B6%E9%9B%86"><span class="toc-text">插件和插件集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import-all-in-umi"><span class="toc-text">import all in umi</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%BC%8F%E8%B7%AF%E7%94%B1"><span class="toc-text">配置式路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E5%AE%9A%E5%BC%8F%E8%B7%AF%E7%94%B1"><span class="toc-text">约定式路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-text">动态路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC"><span class="toc-text">路由跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#History"><span class="toc-text">History</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link-%E7%BB%84%E4%BB%B6%E8%B7%B3%E8%BD%AC"><span class="toc-text">Link 组件跳转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96"><span class="toc-text">路由参数获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#match"><span class="toc-text">match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#location"><span class="toc-text">location</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Params"><span class="toc-text">Params</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#query"><span class="toc-text">query</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mock"><span class="toc-text">Mock</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-text">代理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-text">数据预加载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">微生成器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Umi-Max"><span class="toc-text">Umi Max</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Layout"><span class="toc-text">Layout</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text">启用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%97%B6%E9%85%8D%E7%BD%AE"><span class="toc-text">构建时配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%85%8D%E7%BD%AE"><span class="toc-text">运行时配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="toc-text">拓展路由配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#antd"><span class="toc-text">antd</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E6%96%B9%E5%BC%8F-1"><span class="toc-text">启用方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Model"><span class="toc-text">Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Model"><span class="toc-text">Create Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Model"><span class="toc-text">Use Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Global-Init-State"><span class="toc-text">Global Init State</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request"><span class="toc-text">Request</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%97%B6%E9%85%8D%E7%BD%AE-1"><span class="toc-text">构建时配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%85%8D%E7%BD%AE-1"><span class="toc-text">运行时配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-request"><span class="toc-text">API-request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-useRequest"><span class="toc-text">API-useRequest</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access"><span class="toc-text">Access</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E6%96%B9%E5%BC%8F-2"><span class="toc-text">启用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%AE%9A%E4%B9%89"><span class="toc-text">权限定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="toc-text">路由配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-useAccess"><span class="toc-text">API-useAccess</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-Access"><span class="toc-text">API-Access</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BD%E9%99%85%E5%8C%96"><span class="toc-text">国际化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E6%96%B9%E5%BC%8F-3"><span class="toc-text">启用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FormattedMessage"><span class="toc-text">FormattedMessage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%8F%82%E6%95%B0%E4%BD%BF%E7%94%A8"><span class="toc-text">组件参数使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E8%AF%AD%E8%A8%80"><span class="toc-text">切换语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + UmiJS-v4 + '&url=' + http%3A%2F%2Fexample.com%2F2023%2F08%2F02%2FReact%2FUmi%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2023/08/02/React/Umi/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body>
+</html>
