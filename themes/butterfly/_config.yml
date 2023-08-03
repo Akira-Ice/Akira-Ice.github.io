@@ -365,7 +365,7 @@ twikoo:
 # Giscus
 # https://giscus.app/
 giscus:
-  repo: amoslier/comment
+  repo: Akira-Ice/comment
   repo_id: R_kgDOJFPLYQ
   category_id: DIC_kwDOJFPLYc4CUo33
   theme:
@@ -677,7 +677,7 @@ aside:
       enable: true
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/amoslier
+      link: https://github.com/Akira-Ice
   card_announcement:
     enable: true
     content: helo Akira 🙌

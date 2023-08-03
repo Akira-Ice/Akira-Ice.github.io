@@ -5,4 +5,4 @@ type: "about"
 ## About Me
 - A front-end engineer from China, Like dogs.
 ## Follow Me
-- [Github](https://github.com/amoslier)
+- [Github](https://github.com/Akira-Ice)

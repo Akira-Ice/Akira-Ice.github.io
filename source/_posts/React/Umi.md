@@ -1,7 +1,7 @@
 ---
 title: UmiJS-v4
 date: 2023/08/02 14:05:00
-updated: 2023/08/02 17:28:00
+updated: 2023/08/03 17:09:00
 categories:
   - [React, Umi]
 tags:

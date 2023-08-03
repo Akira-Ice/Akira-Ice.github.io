@@ -7,7 +7,7 @@ title: Akira_Blog
 subtitle: "keep coding..."
 description: "Akira_Blog"
 keywords: 前端,Vue,React,JavaScript,NodeJS
-author: AKira
+author: AKiraIce
 language: zh-CN
 timezone: ""
 
@@ -103,7 +103,7 @@ theme: orange
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/amoslier/amoslier.github.io.git #你的仓库地址
+  repository: https://github.com/Akira-Ice/Akira-Ice.github.io.git #你的仓库地址
   branch: main #绑定的仓库分支
 
 # hexo-hide-posts
