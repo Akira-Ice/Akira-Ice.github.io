@@ -1063,10 +1063,10 @@ figure .pin-copy {
   --color-border-md-table: #4c566a;
 }
 
-@font-face {
+/* @font-face {
   font-family: "JetBrains Mono";
   src: url(/fonts/JetBrainsMono-Regular.woff2) format('woff2');
-}
+} */
 
 * {
   margin: 0;
@@ -1079,7 +1079,7 @@ body {
   letter-spacing: 0.01rem;
   background-color: var(--bg-body);
   transition: color 400ms ease-in-out 0s, background-color 400ms ease-in-out 0s;
-  font-family: "JetBrains Mono", "LXGW WenKai", "PingFang SC", system-ui, "Microsoft YaHei", sans-serif;
+  /* font-family: "JetBrains Mono", "LXGW WenKai", "PingFang SC", system-ui, "Microsoft YaHei", sans-serif; */
 }
 
 body.hidden {
