@@ -215,13 +215,14 @@ var pages = getCurrentPages();
 var page = pages[pages.length - 1];
 // #ifdef APP-PLUS
 var currentWebview = page.$getAppWebview();
-console.log(currentWebview.id);//获得当前webview的id
-console.log(currentWebview.isVisible());//查询当前webview是否可见
+console.log(currentWebview.id); //获得当前webview的id
+console.log(currentWebview.isVisible()); //查询当前webview是否可见
 // #endif
-
 ```
 
 # 参考
+
+## 快速入门
 
 1. [H5(Vue) 转 uni-app](https://ask.dcloud.net.cn/article/36174)
 
@@ -229,26 +230,38 @@ console.log(currentWebview.isVisible());//查询当前webview是否可见
 
 3. [页面生命周期](https://uniapp.dcloud.net.cn/tutorial/page.html#lifecycle)
 
-4. [页面加载常见问题](https://uniapp.dcloud.net.cn/tutorial/page.html#pagefaq)
+4. [UI 组件库](https://ask.dcloud.net.cn/article/35489)
 
-5. [UI 组件库](https://ask.dcloud.net.cn/article/35489)
+5. [uni-app组件](https://uniapp.dcloud.net.cn/component/)
 
-6. [导航栏开发指南](https://ask.dcloud.net.cn/article/34921)
+## 常见问题
 
-7. [导航栏示例](https://ext.dcloud.net.cn/plugin?id=1765)
+1. [页面加载常见问题](https://uniapp.dcloud.net.cn/tutorial/page.html#pagefaq)
 
-8. [全局数据流方案](https://ask.dcloud.net.cn/article/35021)
+## 导航栏
 
-9. [页面通信方案](https://uniapp.dcloud.net.cn/tutorial/page.html#%E9%A1%B5%E9%9D%A2%E9%80%9A%E8%AE%AF)。
+1. [导航栏开发指南](https://ask.dcloud.net.cn/article/34921)
 
-10. [页面通信 API](https://uniapp.dcloud.net.cn/api/window/communication.html)
+2. [导航栏示例](https://ext.dcloud.net.cn/plugin?id=1765)
 
-11. [小程序浏览器内核细节参考](https://ask.dcloud.net.cn/article/1318)。
+## 数据通信
 
-12. [pages.json](https://uniapp.dcloud.net.cn/collocation/pages#pages) 中配置。
+1. [全局数据流方案](https://ask.dcloud.net.cn/article/35021)
 
-13. [navigator](https://uniapp.dcloud.net.cn/component/navigator)、[API](https://uniapp.dcloud.net.cn/api/router)
+2. [页面通信方案](https://uniapp.dcloud.net.cn/tutorial/page.html#%E9%A1%B5%E9%9D%A2%E9%80%9A%E8%AE%AF)。
 
-14. [renderJS](https://uniapp.dcloud.io/tutorial/renderjs)
+3. [页面通信 API](https://uniapp.dcloud.net.cn/api/window/communication.html)
 
-15. [WebviewObject](http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.WebviewObject)
+4. [小程序浏览器内核细节参考](https://ask.dcloud.net.cn/article/1318)。
+
+## API 文档
+
+1. [pages.json](https://uniapp.dcloud.net.cn/collocation/pages#pages) 中配置。
+
+2. [navigator](https://uniapp.dcloud.net.cn/component/navigator)
+
+3. [API](https://uniapp.dcloud.net.cn/api/router)
+
+4. [renderJS](https://uniapp.dcloud.io/tutorial/renderjs)
+
+5. [WebviewObject](http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.WebviewObject)
