@@ -153,6 +153,26 @@ uni-app 提供内置 css 变量：
 > 小程序和 App 的 js 运行在 jscore 下而不是浏览器里，没有浏览器专用的 js 对象。若三方库中使用到这些 API 需要在插件市场寻找替代品。
 > APP 端可在 [renderJS](https://uniapp.dcloud.io/tutorial/renderjs) 中操作浏览器对象。
 
+# nvue
+
+采用原生渲染，但 css 会有限制。
+
+**注意：**
+
+1. 只能使用 v-if 进行显隐。
+
+2. 只支持 flex 布局。
+
+3. 布局不能使用百分比、没有媒体查询。
+
+4. 不能在 style 中引入字体文件。
+
+5. 内容只能在 \<text\> 中，且仅 text 中文字可设置颜色、大小。
+
+6. nvue 页面布局默认 column，需要在 manifest.json -> app-plus -> nvue -> flex-direction 进行修改，仅 uni-app 生效。
+
+7. nvue 切换横竖屏时可能导致样式出现问题，建议有 nvue 的页面锁定手机方向。
+
 # API
 
 ## getApp()
@@ -220,6 +240,50 @@ console.log(currentWebview.isVisible()); //查询当前webview是否可见
 // #endif
 ```
 
+## dom
+
+通过 uni.requireNativePlugin 引入 App 原生插件：`uni.requireNativePlugin('dom')`。
+
+### addRule
+
+Weex 提供 DOM.addRule 以加载自定义字体。
+
+```ts
+interface IContentObject {
+  fontFamily: string;
+  src: string;
+}
+function addRule(type: string, contentObject: IContentObject) {}
+```
+
+### scrollToElement
+
+滚动 ref 对应组件到可视区域，仅可作用于可滚动组件的子组件：`<scroller>、<list>、<waterfall>` 等可滚动组件中。
+
+```ts
+interface IOptions {
+  /** 偏移 */
+  offset: number;
+  /** 动画 */
+  animated: boolean;
+}
+function scrollToElement(ref: IRefDom, options: IOptions) {}
+```
+
+### getComponentRect
+
+获取节点外框 computed。
+
+```ts
+function getComponentRect(ref, callback) {}
+```
+
+## animation
+
+指定组件执行动画。
+
+[animation](https://uniapp.dcloud.net.cn/tutorial/nvue-api.html#animation)
+
 # 参考
 
 ## 快速入门
@@ -232,11 +296,13 @@ console.log(currentWebview.isVisible()); //查询当前webview是否可见
 
 4. [UI 组件库](https://ask.dcloud.net.cn/article/35489)
 
-5. [uni-app组件](https://uniapp.dcloud.net.cn/component/)
+5. [uni-app 组件](https://uniapp.dcloud.net.cn/component/)
 
 ## 常见问题
 
 1. [页面加载常见问题](https://uniapp.dcloud.net.cn/tutorial/page.html#pagefaq)
+
+2. [nvue 开发与 vue 开发的常见区别](https://uniapp.dcloud.net.cn/tutorial/nvue-outline.html#nvue%E5%BC%80%E5%8F%91%E4%B8%8Evue%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8C%BA%E5%88%AB)
 
 ## 导航栏
 
